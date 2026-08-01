@@ -1,4 +1,6 @@
 import pytest
+import json
+from pathlib import Path
 from fastapi.testclient import TestClient
 
 from agent_service.app import app
@@ -28,6 +30,24 @@ def test_normalizes_sdk_text(client: TestClient, monkeypatch: pytest.MonkeyPatch
     monkeypatch.setattr("agent_service.app.invoke", fake_invoke)
     response = client.post("/api/reasoning_engine", json={"class_method": "query", "input": {"message": "次のバスは何時？"}})
     assert response.json() == {"output": "8:35発、9:00着です。金沢テスト病院経由で約25分かかります。"}
+
+
+def test_accepts_agent_platform_json_string_body(client: TestClient, monkeypatch: pytest.MonkeyPatch) -> None:
+    async def fake_invoke(message: object) -> str:
+        assert message == "次のバスは何時？"
+        return "8:35発、9:00着です。"
+
+    monkeypatch.setattr("agent_service.app.invoke", fake_invoke)
+    response = client.post(
+        "/api/reasoning_engine",
+        json=json.dumps({"class_method": "query", "input": {"message": "次のバスは何時？"}}),
+    )
+    assert response.json() == {"output": "8:35発、9:00着です。"}
+
+
+def test_container_does_not_run_as_root() -> None:
+    dockerfile = Path("Dockerfile").read_text()
+    assert "USER agent" in dockerfile
 
 
 @pytest.mark.parametrize(

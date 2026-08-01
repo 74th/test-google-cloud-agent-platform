@@ -12,7 +12,7 @@ import urllib.request
 def endpoint(agent_resource: str, location: str) -> str:
     if not agent_resource.startswith("projects/"):
         raise ValueError("--agent-resource は projects/.../reasoningEngines/... の完全名で指定してください。")
-    return f"https://{location}-aiplatform.googleapis.com/v1/{agent_resource}/api/reasoning_engine"
+    return f"https://{location}-aiplatform.googleapis.com/v1/{agent_resource}:query"
 
 
 def token() -> str:

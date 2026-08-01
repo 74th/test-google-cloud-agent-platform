@@ -44,15 +44,15 @@ Claude Agent SDK は Vertex AI モードで実行し、`ClaudeAgentOptions` に�
 
 ### デプロイ設定を明示し、Vertex AI 認証を外部管理する
 
-リポジトリには、プロジェクト（既定値は `nnyn-dev`）、ロケーション、イメージまたはアーティファクト設定、エージェントランタイムのデプロイ先を明示的な入力として受け取るデプロイスクリプトを含める。スクリプトは実行前に非シークレット値を検証し、文書化された Google Cloud ワークフローを通じてコンテナをビルド・公開し、エージェントをデプロイして、デプロイ識別子またはエンドポイントを出力する。
+リポジトリには、プロジェクト（既定値は `nnyn-dev`）、ロケーション、エージェントランタイムのデプロイ先を明示的な入力として受け取るデプロイスクリプトを含める。イメージ用 Artifact Registry リポジトリは Terraform output から取得する。スクリプトは実行前に非シークレット値を検証し、`gcloud auth configure-docker` で Artifact Registry の認証を設定してローカル Docker でコンテナをビルド・push し、エージェントをデプロイして、デプロイ識別子またはエンドポイントを出力する。Cloud Build は使用しない。
 
 Claude API キーは使用しない。デプロイ設定は Vertex AI プロジェクト、推論リージョン、モデル ID の非機微な環境変数を注入し、コンテナは実行サービスアカウントの Application Default Credentials で Vertex AI を呼び出す。認証情報をソース、イメージ、コマンド出力、コミット済み設定に含めてはならない。手動コンソールでのデプロイは、再現・レビューできないため採用しない。
 
 ### Terraform で専用ランタイムサービスアカウントを管理する
 
-`terraform/` は Agent Platform のコンテナ専用サービスアカウントを作成し、デプロイ時にそのメールアドレスを `service_account` として指定する。このアカウントには Agent Platform と Vertex AI の推論に必要な `roles/aiplatform.user` だけを付与する。Secret Manager 権限、プロジェクト全体の Editor、Owner は付与しない。
+`terraform/` は Agent Platform のコンテナ専用サービスアカウントと、`us-central1` の Docker Artifact Registry リポジトリ `agent-hosting-20260801` を作成し、デプロイ時にサービスアカウントのメールアドレスを `service_account` として指定する。リポジトリ ID は Artifact Registry の命名規則に従い英字で開始する。このアカウントには Agent Platform と Vertex AI の推論に必要な `roles/aiplatform.user` だけを付与する。Agent Runtime サービスエージェントには当該リポジトリだけの `roles/artifactregistry.reader` を付与する。Secret Manager 権限、プロジェクト全体の Editor、Owner は付与しない。
 
-Terraform の入力は `project_id`（既定値 `nnyn-dev`）と Agent Platform のホスティング先 `location`（既定値 `us-central1`）とし、Claude API キーやシークレット ID は受け取らない。デプロイスクリプトは Terraform output から得たランタイムサービスアカウントを必須入力として使用し、Vertex AI 用にプロジェクト・グローバル推論エンドポイント・Haiku 4.5 固定モデルを渡す。
+Terraform の入力は `project_id`（既定値 `nnyn-dev`）と Agent Platform のホスティング先 `location`（既定値 `us-central1`）とし、Claude API キーやシークレット ID は受け取らない。デプロイスクリプトは Terraform output から得たランタイムサービスアカウントと Artifact Registry リポジトリを使用し、Vertex AI 用にプロジェクト・グローバル推論エンドポイント・Haiku 4.5 固定モデルを渡す。
 
 ### ローカルクライアントを簡潔な認証付きスモークテストツールにする
 
@@ -72,7 +72,7 @@ Python クライアントは Application Default Credentials または文書化�
 
 1. `nnyn-dev` の対象リージョンについて、サポートされた Google Cloud Agent Platform コンテナランタイム契約と必要な API を確認する。
 2. コンテナ、スキル、アダプター、デプロイスクリプト、ローカルスモークテストクライアントを実装し、本番認証情報を埋め込まずにローカルで検証する。
-3. `nnyn-dev` に認証し、必要なアーティファクトおよびエージェントリソースを作成または選択して、デプロイスクリプトを実行する。
+3. `nnyn-dev` に認証し、Terraform を適用して必要な API、Artifact Registry リポジトリ、および実行サービスアカウントを作成してから、デプロイスクリプトを実行する。
 4. 出力されたデプロイ識別子またはエンドポイントをローカルで設定し、`次のバスは何時？` を呼び出す。成功結果を実装検証の記録に残す。
 5. 文書化されたクリーンアップコマンドに従って新規作成したエージェントデプロイとイメージを削除し、ロールバックする。既存リポジトリに保護すべきデプロイ済み動作はない。
 

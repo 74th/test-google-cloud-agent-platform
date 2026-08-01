@@ -7,7 +7,8 @@
 - Google Cloud Agent Platform でホスト可能な、コンテナ化された Claude Agent SDK サービスを追加する。
 - 金沢さくら台三丁目と金沢みらい駅の架空路線を対象とする日本語のテスト用バス時刻表スキルを追加し、約25分かかる病院経由便への注意も含める。
 - Google Cloud プロジェクト `nnyn-dev` を対象とするデプロイ自動化を追加する。
-- Terraform により、Agent Platform 上の Claude Agent SDK コンテナ専用のサービスアカウントと Vertex AI 推論用の最小権限 IAM バインディングを管理する。
+- Terraform により、Agent Platform 上の Claude Agent SDK コンテナ専用のサービスアカウント、Vertex AI 推論用の最小権限 IAM バインディング、`us-central1` のテスト用 Docker Artifact Registry リポジトリを管理する。
+- コンテナイメージはローカル Docker でビルドして Artifact Registry へ push し、Cloud Build は使用しない。
 - Claude Agent SDK が Vertex AI をサービスアカウント認証で使用し、Vertex AI の固定モデル ID `claude-haiku-4-5@20251001` を使用するよう明示的に設定する。
 - デプロイ済みのエージェントサービスにプロンプトを送って応答を表示するローカル Python クライアントを追加し、`次のバスは何時？` のユースケースを検証する。
 - 前提条件、デプロイ手順、エンドポイント設定、テスト手順を文書化する。

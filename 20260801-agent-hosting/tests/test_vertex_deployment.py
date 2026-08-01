@@ -24,3 +24,10 @@ def test_deployment_uses_service_account_vertex_authentication() -> None:
     }
     assert "ANTHROPIC_API_KEY" not in env
     assert config["service_account"].startswith("claude-agent-runtime@")
+
+
+def test_deployment_uses_the_agent_platform_client() -> None:
+    script = open("scripts/deploy_agent.py").read()
+    assert "from agentplatform import Client" in script
+    assert "google.cloud.aiplatform import vertexai" not in script
+    assert "operation.name.rsplit" in script

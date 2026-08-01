@@ -5,6 +5,8 @@ COPY pyproject.toml README.md ./
 COPY agent_service ./agent_service
 COPY workspace/.claude/skills/bus-schedule/SKILL.md ./workspace/.claude/skills/bus-schedule/SKILL.md
 RUN pip install --no-cache-dir .
+RUN useradd --create-home --uid 10001 agent
+USER agent
 
 EXPOSE 8080
 CMD ["uvicorn", "agent_service.app:app", "--host", "0.0.0.0", "--port", "8080"]

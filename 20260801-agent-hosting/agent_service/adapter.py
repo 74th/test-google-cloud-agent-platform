@@ -27,7 +27,7 @@ def validate_message(message: object) -> str:
 def _prompt(message: str, now: datetime | None = None) -> str:
     current = (now or datetime.now(ZoneInfo("Asia/Tokyo"))).astimezone(ZoneInfo("Asia/Tokyo"))
     return (
-        "workspace/.claude/skills/bus-schedule/SKILL.md の「金沢テストバス時刻表」を必ず使い、"
+        ".claude/skills/bus-schedule/SKILL.md の「金沢テストバス時刻表」を必ず使い、"
         "質問へ日本語で簡潔に回答してください。外部の時刻表を参照せず、"
         f"現在時刻は日本標準時 {current:%Y-%m-%d %H:%M} です。\n\n利用者の質問: {message}"
     )
@@ -39,7 +39,7 @@ async def invoke(message: object) -> str:
     try:
         from claude_agent_sdk import ClaudeAgentOptions, ResultMessage, query
 
-        options = ClaudeAgentOptions(cwd=str(WORKSPACE), model=MODEL)
+        options = ClaudeAgentOptions(cwd=str(WORKSPACE), model=MODEL, permission_mode="bypassPermissions")
         async for event in query(prompt=_prompt(text), options=options):
             if isinstance(event, ResultMessage):
                 result = getattr(event, "result", None)

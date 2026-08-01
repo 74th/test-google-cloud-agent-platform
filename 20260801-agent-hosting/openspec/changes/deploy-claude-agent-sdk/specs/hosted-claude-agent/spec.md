@@ -22,6 +22,20 @@ Web チャット UI を導入する前に、ローカル Python クライアン�
 - **WHEN** 運用者が `us-central1` を指定して Terraform を適用した場合
 - **THEN** Terraform は専用の実行サービスアカウントを出力し、デプロイ手順はそのメールアドレスを Agent Platform の `service_account` に指定する
 
+### Requirement: Container image repository is Terraform-managed
+プロジェクトは、`us-central1` に Docker Artifact Registry リポジトリ `agent-hosting-20260801` を Terraform で作成する SHALL。リポジトリ ID は Artifact Registry の命名規則に従い英字で開始する SHALL。Terraform は Agent Runtime のサービスエージェントへ当該リポジトリだけの読み取り権限を付与し、デプロイスクリプトはリポジトリ名を Terraform output から取得する SHALL。
+
+#### Scenario: Deploy after Terraform creates the image repository
+- **WHEN** 運用者が Terraform を適用してからデプロイスクリプトを実行する
+- **THEN** スクリプトは環境変数によるリポジトリ名の指定を必要とせず、ローカル Docker でビルドしたコンテナイメージを Terraform output の `agent-hosting-20260801` に push する
+
+### Requirement: Deployment builds and pushes images locally
+デプロイスクリプトは、ローカル Docker でコンテナイメージをビルドし、Artifact Registry の Docker 認証を設定してイメージを push する SHALL。Cloud Build を呼び出してはならない。
+
+#### Scenario: Build and publish image without Cloud Build
+- **WHEN** 運用者が Docker と Google Cloud 認証を備えたローカル環境でデプロイスクリプトを実行する
+- **THEN** スクリプトは `docker build` と `docker push` を実行し、Cloud Build のジョブを作成しない
+
 ### Requirement: Agent SDK uses Claude Haiku 4.5 on Vertex AI
 Claude Agent SDK を呼び出すアダプターは Vertex AI モードを有効にし、Vertex AI のモデル ID `claude-haiku-4-5@20251001` を明示的に設定する SHALL。
 

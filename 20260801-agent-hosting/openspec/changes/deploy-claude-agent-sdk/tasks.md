@@ -18,6 +18,8 @@
 - [x] 2.7 Terraform に、ランタイムサービスアカウントへの Vertex AI 推論に必要な最小権限を追加し、Claude API キーまたは Secret Manager 読み取り権限を削除する。
 - [x] 2.8 デプロイスクリプトが Terraform output の専用サービスアカウントを必須入力として Agent Platform へ渡し、Vertex AI のプロジェクト・推論リージョン・固定モデル設定を注入するように、設定例と文書を更新する。
 - [x] 2.9 Terraform の format/validate とサービスアカウント／IAM／API キー非露出を確認するテストを更新する。
+- [x] 2.10 `us-central1` のテスト用 Docker Artifact Registry リポジトリ `agent-hosting-20260801`、Artifact Registry API、有効な Agent Runtime サービスエージェントのリポジトリ読み取り権限を Terraform で管理し、デプロイスクリプト・設定例・テストを Terraform output 利用へ更新する。
+- [x] 2.11 Cloud Build API と Cloud Build のデプロイ経路を削除し、ローカル Docker によるビルド、Artifact Registry 認証、イメージ push の経路とテストを追加する。
 
 ## 3. ローカル呼び出しとドキュメント
 
@@ -29,6 +31,6 @@
 ## 4. エンドツーエンド検証
 
 - [x] 4.1 エージェントコンテナをビルドし、クラウドへデプロイする前にサポートされたローカルまたは契約レベルのチェックを実行する。
-- [ ] 4.2 `us-central1` と Terraform で作成したサービスアカウント、および Vertex AI で有効化した Claude Haiku 4.5 を用いて、`nnyn-dev` の設定済み Agent Platform 環境にデプロイする。
-- [ ] 4.3 `次のバスは何時？` を指定してデプロイ済みエージェントに対するローカル Python スモークテストを実行し、応答が表示されることを確認する。
-- [ ] 4.4 制御された時刻または該当時刻で、所要時間の長い兼六・ひがし茶屋コースへの回答に出発／到着時刻と金沢テスト病院経由／約25分の注意がともに含まれることを確認し、結果を記録する。
+- [x] 4.2 `us-central1` と Terraform で作成したサービスアカウント／Artifact Registry リポジトリ、および Vertex AI で有効化した Claude Haiku 4.5 を用いて、`nnyn-dev` の設定済み Agent Platform 環境にデプロイする（`projects/776113568960/locations/us-central1/reasoningEngines/4788401176510988288`）。
+- [x] 4.3 `次のバスは何時？` を指定してデプロイ済みエージェントに対するローカル Python スモークテストを実行し、応答が表示されることを確認する。
+- [x] 4.4 制御された時刻または該当時刻で、所要時間の長い兼六・ひがし茶屋コースへの回答に出発／到着時刻と金沢テスト病院経由／約25分の注意がともに含まれることを確認し、結果を記録する（2026-08-01 11:06 JST、11:35 発・12:00 着、金沢テスト病院経由・約25分）。

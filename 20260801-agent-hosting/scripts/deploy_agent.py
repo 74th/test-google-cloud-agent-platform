@@ -40,11 +40,12 @@ def main() -> None:
     parser.add_argument("--service-account", required=True)
     args = parser.parse_args()
 
-    from google.cloud.aiplatform import vertexai
+    from agentplatform import Client
 
-    client = vertexai.Client(project=args.project, location=args.location)
-    remote_agent = client.agent_engines.create(config=build_config(args))
-    print(remote_agent.api_resource.name)
+    client = Client(project=args.project, location=args.location)
+    config = client.agent_engines._create_config(mode="create", agent=None, **build_config(args))
+    operation = client.agent_engines._create(config=config)
+    print(operation.name.rsplit("/operations/", maxsplit=1)[0])
 
 
 if __name__ == "__main__":

@@ -6,9 +6,7 @@
 
 - Python 3.12、Docker、Google Cloud CLI
 - `gcloud auth application-default login` 済みの Google Cloud 認証
-- `nnyn-dev`（または `PROJECT_ID`）で有効化済みの Vertex AI API、Cloud Build API、Artifact Registry API
-- `us-central1` の Artifact Registry リポジトリ（別の対応リージョンを使う場合は Terraform とデプロイで同じ値にする）
-- Terraform を実行できる権限。Terraform は Agent Platform コンテナ専用のサービスアカウントと Vertex AI 推論権限を作成する
+- Terraform を実行できる権限。Terraform は Vertex AI／Artifact Registry API、Agent Platform コンテナ専用のサービスアカウント、Vertex AI 推論権限、および `us-central1` の Docker Artifact Registry リポジトリを作成する
 - Vertex AI Model Garden で有効化済みの Claude Haiku 4.5
 
 Google Cloud Agent Platform はカスタムコンテナに `0.0.0.0:8080` の待受けを求めます。本実装は、SDK 標準呼び出し用の `query`／`stream_query` と `/api/reasoning_engine`／`/api/stream_reasoning_engine` を公開します。詳細は [ランタイム契約](https://cloud.google.com/gemini-enterprise-agent-platform/scale/runtime/runtime-contract) と [コンテナイメージのデプロイ](https://cloud.google.com/gemini-enterprise-agent-platform/scale/runtime/deploy-an-agent) を参照してください。
@@ -36,7 +34,7 @@ curl -X POST localhost:8080/api/reasoning_engine \
 
 このエージェントはサービスアカウントの Application Default Credentials を使い、Vertex AI の `claude-haiku-4-5@20251001` を明示して Claude Agent SDK を実行します。API キーと Secret Manager は使用しません。Claude Code の Vertex AI 設定は [公式ガイド](https://code.claude.com/docs/en/google-vertex-ai) に従います。
 
-まず Terraform で専用の実行サービスアカウントを作成します。このアカウントには Vertex AI 推論に必要な `roles/aiplatform.user` のみを付与します。
+まず Terraform で専用の実行サービスアカウントと Docker Artifact Registry リポジトリ `agent-hosting-20260801` を作成します。この ID は Artifact Registry の命名規則に従い英字で開始します。このアカウントには Vertex AI 推論に必要な `roles/aiplatform.user` のみを付与します。Agent Runtime のサービスエージェントには、このテスト用リポジトリの読み取り権限だけを付与します。
 
 ```bash
 cd terraform
@@ -47,14 +45,15 @@ terraform apply
 cd ..
 ```
 
-Terraform はこの実行サービスアカウントに `roles/aiplatform.user` を付与します。Claude API キーと Secret Manager の権限は作成しません。
+Terraform はこの実行サービスアカウントに `roles/aiplatform.user` を付与し、`agent-hosting-20260801` リポジトリを作成します。Claude API キーと Secret Manager の権限は作成しません。
+
+デプロイスクリプトはローカルの Docker でイメージをビルドし、`gcloud auth configure-docker` で Artifact Registry の認証を設定してから push します。Cloud Build は使用しません。
 
 値を含めない [`.env.example`](.env.example) を参考に残りの環境変数を設定します。
 
 ```bash
 export PROJECT_ID=nnyn-dev
 export LOCATION=us-central1
-export AR_REPOSITORY=<Artifact Registry リポジトリ名>
 export VERTEX_PROJECT_ID=nnyn-dev
 export VERTEX_REGION=global
 ./scripts/deploy.sh

@@ -11,9 +11,9 @@ def main() -> None:
     parser.add_argument("--location", required=True)
     parser.add_argument("--agent-resource", required=True)
     args = parser.parse_args()
-    from google.cloud.aiplatform import vertexai
+    from agentplatform import Client
 
-    vertexai.Client(project=args.project, location=args.location).agent_engines.delete(name=args.agent_resource)
+    Client(project=args.project, location=args.location).agent_engines.delete(name=args.agent_resource)
     print(f"削除を要求しました: {args.agent_resource}")
 
 
