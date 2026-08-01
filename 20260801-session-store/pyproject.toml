@@ -1,0 +1,31 @@
+[project]
+name = "claude-agent-session-store-verification"
+version = "0.1.0"
+description = "Google Cloud Agent Platform Session Store と Claude Agent SDK のプロセス間再開を検証するサンプル"
+requires-python = ">=3.11"
+dependencies = [
+  "claude-agent-sdk==0.1.35",
+  "google-cloud-aiplatform==1.153.1",
+  # claude-agent-sdk 0.1.35 の in-process MCP ヘルパーと互換な API を維持する。
+  "mcp==1.29.0",
+  "python-dotenv==1.1.1",
+]
+
+[project.optional-dependencies]
+test = ["pytest==8.4.1"]
+
+[project.scripts]
+claude-session-store-verify = "claude_session_store.cli:main"
+
+[build-system]
+requires = ["setuptools>=80"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["claude_session_store*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+  "live_vertex: Vertex AI と Claude Agent SDK を実際に呼び出す課金対象の統合テスト",
+]
