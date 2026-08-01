@@ -5,7 +5,7 @@ Web チャット UI を導入する前に、ローカル Python クライアン�
 ## ADDED Requirements
 
 ### Requirement: Hosted agent deployment is reproducible
-プロジェクトは、Claude Agent SDK サービスを Google Cloud プロジェクト `nnyn-dev` の Google Cloud Agent Platform にデプロイする、バージョン管理されたコンテナおよびデプロイ用アセットを提供する SHALL。デプロイ設定は、ロケーションやランタイム認証情報を含む環境固有の値を、シークレットのハードコードではなく文書化された入力から取得する SHALL。
+プロジェクトは、Claude Agent SDK サービスを Google Cloud プロジェクト `nnyn-dev` の Google Cloud Agent Platform にデプロイする、バージョン管理されたコンテナ、Terraform、およびデプロイ用アセットを提供する SHALL。主なロケーションの既定値は `us-central1` とし、コンテナは専用サービスアカウントの Application Default Credentials を使用して Vertex AI の Claude モデルを呼び出す SHALL。Claude API キーや Secret Manager シークレットをデプロイ設定へ含めてはならない。
 
 #### Scenario: Deploy with configured prerequisites
 - **WHEN** 運用者が文書化された Google Cloud 認証、プロジェクトアクセス権、ロケーション、Claude 認証情報の設定を与え、デプロイ手順を実行した場合
@@ -14,6 +14,20 @@ Web チャット UI を導入する前に、ローカル Python クライアン�
 #### Scenario: Missing required deployment configuration
 - **WHEN** 運用者が必須の非シークレット設定値を指定せずにデプロイ手順を実行した場合
 - **THEN** 手順はデプロイ前に失敗し、不足している値と指定方法を示すメッセージを出力する
+
+### Requirement: Agent runtime uses a Terraform-managed service account
+プロジェクトは、Claude Agent SDK コンテナが Agent Platform 上で実行されるための専用サービスアカウントを Terraform で作成し、デプロイに使用する SHALL。Terraform は当該サービスアカウントに Vertex AI 推論に必要な最小限の IAM 権限を付与する SHALL。Claude API キーや Secret Manager 読み取り権限を作成してはならない。
+
+#### Scenario: Deploy with Terraform-managed runtime identity
+- **WHEN** 運用者が `us-central1` を指定して Terraform を適用した場合
+- **THEN** Terraform は専用の実行サービスアカウントを出力し、デプロイ手順はそのメールアドレスを Agent Platform の `service_account` に指定する
+
+### Requirement: Agent SDK uses Claude Haiku 4.5 on Vertex AI
+Claude Agent SDK を呼び出すアダプターは Vertex AI モードを有効にし、Vertex AI のモデル ID `claude-haiku-4-5@20251001` を明示的に設定する SHALL。
+
+#### Scenario: Invoke the packaged agent
+- **WHEN** 有効なテキストプロンプトがエージェントランタイムへ送られた場合
+- **THEN** アダプターはサービスアカウント認証と `claude-haiku-4-5@20251001` を指定した Claude Agent SDK オプションで問い合わせを実行する
 
 ### Requirement: Agent accepts and returns text conversations
 ホストされたサービスは、文書化された Agent Platform 呼び出しインターフェースを通じてテキストプロンプトを受け付け、呼び出し元が表示できる形式でエージェントのテキスト応答を返す SHALL。リクエストを処理できない場合、サービスは明確な呼び出し失敗を呼び出し元に返す SHALL。
