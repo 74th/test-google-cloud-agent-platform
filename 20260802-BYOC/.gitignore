@@ -1,2 +1,4 @@
-.env
-.work
+.venv/
+__pycache__/
+*.egg-info/
+results/

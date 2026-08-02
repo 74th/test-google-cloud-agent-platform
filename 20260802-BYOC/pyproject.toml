@@ -1,7 +1,34 @@
 [project]
-name = "20260802-adk-wrapping"
+name = "byoc-query-verification"
 version = "0.1.0"
-description = "Add your description here"
+description = "Gemini Enterprise Agent Platform BYOC query operation verifier"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "fastapi>=0.115,<1",
+    "google-auth>=2.35,<3",
+    "google-cloud-aiplatform>=1.144,<2",
+    "google-cloud-logging>=3.11,<4",
+    "google-cloud-storage>=2.18,<4",
+    "httpx>=0.27,<1",
+    "uvicorn[standard]>=0.30,<1",
+]
+
+[project.scripts]
+byoc-runtime = "byoc_runtime.app:run"
+byoc-verify = "scripts.verify:main"
+byoc-query-job = "scripts.query_job:main"
+
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["byoc_runtime*", "scripts*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+
+[dependency-groups]
+dev = ["pytest>=8.3,<9", "pytest-asyncio>=0.24,<1"]
