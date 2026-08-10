@@ -1,0 +1,6 @@
+このCodexが動いている環境は
+gcloud auth login
+gcloud auth application-default login
+gcloud components install kubectl
+を実行済みだよ
+terraformでapplyして環境を変更したり、kubectlでアクセスして変更を適用して大丈夫だよ
