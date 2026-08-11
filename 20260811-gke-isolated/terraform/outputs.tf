@@ -42,3 +42,13 @@ output "image_uri" {
   description = "デプロイスクリプトで使用する既定のイメージ URI。"
   value       = "${var.artifact_registry_location}-docker.pkg.dev/${var.project_id}/${google_artifact_registry_repository.agent.repository_id}/test:latest"
 }
+
+output "artifact_repository_id" {
+  description = "Terraform が所有する Artifact Registry リポジトリ ID。"
+  value       = google_artifact_registry_repository.agent.repository_id
+}
+
+output "artifact_registry_location" {
+  description = "Terraform が所有する Artifact Registry のロケーション。"
+  value       = google_artifact_registry_repository.agent.location
+}

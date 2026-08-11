@@ -57,6 +57,7 @@ locals {
     "container.googleapis.com",
     "iam.googleapis.com",
     "iamcredentials.googleapis.com",
+    "logging.googleapis.com",
     "serviceusage.googleapis.com",
     "sts.googleapis.com",
   ])

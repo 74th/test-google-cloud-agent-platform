@@ -54,7 +54,7 @@ variable "artifact_registry_location" {
 variable "artifact_repository_id" {
   description = "Artifact Registry リポジトリ ID。"
   type        = string
-  default     = "claude-agent"
+  default     = "test-gke-isolated"
 }
 
 variable "kubernetes_namespace" {
