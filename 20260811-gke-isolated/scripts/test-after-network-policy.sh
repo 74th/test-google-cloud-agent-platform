@@ -10,7 +10,9 @@ require_command() {
 
 require_command kubectl
 kubectl rollout status deployment/test --timeout=5m
-POD="$(kubectl get pods -l app=test,component=isolated-claude-agent -o jsonpath='{.items[0].metadata.name}')"
+POD="$(kubectl get pods -l app=test,component=isolated-claude-agent \
+  --field-selector=status.phase=Running --sort-by=.metadata.creationTimestamp \
+  -o name | tail -n 1 | cut -d/ -f2)"
 echo "New exec target Pod: ${POD}"
 echo "Phase: after network policy"
 

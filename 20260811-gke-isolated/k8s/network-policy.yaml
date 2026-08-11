@@ -24,10 +24,20 @@ spec:
           port: 53
         - protocol: TCP
           port: 53
-    # GKE Metadata Server used by Workload Identity Federation for GKE.
+    # GKE Dataplane V2 metadata server used by Workload Identity Federation.
     - to:
         - ipBlock:
             cidr: 169.254.169.252/32
       ports:
         - protocol: TCP
+          port: 987
+        - protocol: TCP
           port: 988
+    - to:
+        - ipBlock:
+            cidr: 169.254.169.254/32
+      ports:
+        - protocol: TCP
+          port: 80
+        - protocol: TCP
+          port: 8080

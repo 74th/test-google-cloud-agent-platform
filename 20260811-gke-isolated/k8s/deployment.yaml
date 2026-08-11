@@ -19,10 +19,21 @@ spec:
         component: isolated-claude-agent
     spec:
       serviceAccountName: test
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: test
           image: __IMAGE_URI__
           imagePullPolicy: Always
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
           env:
             - name: GOOGLE_CLOUD_PROJECT
               value: __PROJECT_ID__
@@ -32,6 +43,8 @@ spec:
               value: global
             - name: CLAUDE_CODE_USE_VERTEX
               value: "1"
+            - name: HOME
+              value: /home/node
           resources:
             requests:
               cpu: 100m

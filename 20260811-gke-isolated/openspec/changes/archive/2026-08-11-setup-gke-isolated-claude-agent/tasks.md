@@ -18,7 +18,7 @@
 - [x] 3.2 専用ラベル、`test` KSA、Vertex 用環境変数、差し替え可能な image を持ち、`kubectl exec` 用に常駐する `test` Deployment を作る
 - [x] 3.3 対象 Pod の egress をデフォルト拒否し、クラスタ DNS と Workload Identity metadata endpoint だけを許可する標準 NetworkPolicy を別適用可能な形で作る
 - [x] 3.4 `github.com`、`aiplatform.googleapis.com`、`bigquery.googleapis.com` の TCP 443 だけを許可する GKE FQDNNetworkPolicy を別適用可能な形で作る
-- [ ] 3.5 マニフェストの client-side/server-side dry-run を行い、通常リソースだけを適用する経路と通信制御を追加適用する経路が分離されていることを確認する
+- [x] 3.5 マニフェストの client-side/server-side dry-run を行い、通常リソースだけを適用する経路と通信制御を追加適用する経路が分離されていることを確認する
 
 ## 4. 人間が再実行できる操作スクリプト
 
@@ -31,14 +31,14 @@
 
 ## 5. 実環境での基準検証
 
-- [ ] 5.1 Terraform plan をレビューして apply し、`test-isolated` が `us-central1-a`、`default` subnet、Dataplane V2 有効、`e2-standard-2` 1 ノードであることを gcloud/kubectl で確認する
-- [ ] 5.2 image を Artifact Registry に push して通常マニフェストだけを deploy し、Pod が `test` KSA で Ready になることと長期サービスアカウント鍵がないことを確認する
-- [ ] 5.3 通信制御未適用の状態で GitHub keys、Claude Agent SDK の GitHub 要約、BigQuery 公開データクエリがすべて成功するまで原因を修正し、出力を確認する
+- [x] 5.1 Terraform plan をレビューして apply し、`test-isolated` が `us-central1-a`、`default` subnet、Dataplane V2 有効、`e2-standard-2` 1 ノードであることを gcloud/kubectl で確認する
+- [x] 5.2 image を Artifact Registry に push して通常マニフェストだけを deploy し、Pod が `test` KSA で Ready になることと長期サービスアカウント鍵がないことを確認する
+- [x] 5.3 通信制御未適用の状態で GitHub keys、Claude Agent SDK の GitHub 要約、BigQuery 公開データクエリがすべて成功するまで原因を修正し、出力を確認する
 
 ## 6. 許可リスト適用後の検証
 
-- [ ] 6.1 標準 NetworkPolicy と FQDNNetworkPolicy を適用し、選択対象、DNS、metadata endpoint、および許可 FQDN が意図した値であることを確認する
-- [ ] 6.2 新しい `kubectl exec` 接続で GitHub keys、Claude Agent SDK の GitHub 要約、BigQuery クエリが引き続き成功することを確認する
-- [ ] 6.3 `curl http://checkip.amazonaws.com` が timeout 内に失敗し、未許可ホストの応答本文を取得できないことを確認する
-- [ ] 6.4 必要な正規 endpoint が不足した場合は実行ログと DNS 観測を記録し、正確な FQDN だけを許可リストへ追加して制限前後の全テストを再実行する
-- [ ] 6.5 最終的なスクリプトを先頭から再実行して受入シナリオを再現し、README の手順と実際のコマンド・期待結果が一致することを確認する
+- [x] 6.1 標準 NetworkPolicy と FQDNNetworkPolicy を適用し、選択対象、DNS、metadata endpoint、および許可 FQDN が意図した値であることを確認する
+- [x] 6.2 新しい `kubectl exec` 接続で GitHub keys、Claude Agent SDK の GitHub 要約、BigQuery クエリが引き続き成功することを確認する
+- [x] 6.3 `curl http://checkip.amazonaws.com` が timeout 内に失敗し、未許可ホストの応答本文を取得できないことを確認する
+- [x] 6.4 必要な正規 endpoint が不足した場合は実行ログと DNS 観測を記録し、正確な FQDN だけを許可リストへ追加して制限前後の全テストを再実行する
+- [x] 6.5 最終的なスクリプトを先頭から再実行して受入シナリオを再現し、README の手順と実際のコマンド・期待結果が一致することを確認する

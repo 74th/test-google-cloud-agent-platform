@@ -52,7 +52,7 @@ Terraform だけを実行する場合に利用できる `terraform/terraform.tfv
    ./scripts/test-after-network-policy.sh
    ```
 
-期待する結果は、GitHub keys の取得成功、Claude Agent SDK の応答、BigQuery の出力（`ROWS: ...` または明示的な `NO_ROWS: ...`）です。policy 適用後は `checkip.amazonaws.com` への接続が有限時間内に失敗し、応答本文を取得できないことが必要です。
+期待する結果は、GitHub keys の取得成功、Claude Agent SDK の応答、BigQuery の出力（`ROWS: ...` または明示的な `NO_ROWS: ...`）です。policy 適用後は `checkip.amazonaws.com` への接続が有限時間内に失敗し、応答本文を取得できないことが必要です。Workload Identity 用には GKE Dataplane V2 の metadata endpoint（`169.254.169.252:987/988` と `169.254.169.254:80/8080`）だけを許可します。
 
 ## 手動確認
 
@@ -67,7 +67,7 @@ kubectl exec deploy/test -- curl --connect-timeout 3 --max-time 10 http://checki
 
 ## トラブルシューティングと観測した endpoint
 
-Claude または BigQuery が policy 適用後だけ失敗する場合は、コマンドのエラーを記録し、クライアントが実際に使用した正確な endpoint の DNS を観測してください。その正確な FQDN だけを `k8s/fqdn-network-policy.yaml` に追加し、基準テスト、policy の再適用、適用後テストの順に再実行します。allowlist を `0.0.0.0/0`、`*.com`、または広範囲な `*.googleapis.com` に置き換えてはいけません。
+Claude または BigQuery が policy 適用後だけ失敗する場合は、コマンドのエラーを記録し、クライアントが実際に使用した正確な endpoint の DNS を観測してください。その正確な FQDN だけを `k8s/fqdn-network-policy.yaml` に追加し、基準テスト、policy の再適用、適用後テストの順に再実行します。Claude の GitHub 要約はコンテナ内で `github.com` を取得してから Claude Agent SDK に内容を渡すため、`api.github.com` や `claude.ai` のような補助 endpoint は許可していません。allowlist を `0.0.0.0/0`、`*.com`、または広範囲な `*.googleapis.com` に置き換えてはいけません。
 
 ## ロールバックと削除
 

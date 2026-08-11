@@ -15,7 +15,7 @@ require_command kubectl
 
 echo "Selector: app=test,component=isolated-claude-agent"
 echo "Allowed FQDNs: github.com, aiplatform.googleapis.com, bigquery.googleapis.com"
-echo "Allowed in-cluster egress: kube-dns UDP/TCP 53 and metadata 169.254.169.252:988"
+echo "Allowed in-cluster egress: kube-dns UDP/TCP 53 and GKE metadata endpoints 169.254.169.252:987/988, 169.254.169.254:80/8080"
 
 echo "--- Client-side dry-run ---"
 kubectl apply --dry-run=client -f "${POLICY_DIR}/network-policy.yaml"
