@@ -1,0 +1,2 @@
+claude-agent-sdk==0.2.135
+google-cloud-bigquery==3.43.0

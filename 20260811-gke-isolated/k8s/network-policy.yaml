@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: test-default-deny-egress
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: test
+      component: isolated-claude-agent
+  policyTypes:
+    - Egress
+  egress:
+    # kube-dns is the only in-cluster service needed by the workload.
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              k8s-app: kube-dns
+      ports:
+        - protocol: UDP
+          port: 53
+        - protocol: TCP
+          port: 53
+    # GKE Metadata Server used by Workload Identity Federation for GKE.
+    - to:
+        - ipBlock:
+            cidr: 169.254.169.252/32
+      ports:
+        - protocol: TCP
+          port: 988

@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test
+  namespace: default
+  labels:
+    app: test
+    component: isolated-claude-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test
+      component: isolated-claude-agent
+  template:
+    metadata:
+      labels:
+        app: test
+        component: isolated-claude-agent
+    spec:
+      serviceAccountName: test
+      containers:
+        - name: test
+          image: __IMAGE_URI__
+          imagePullPolicy: Always
+          env:
+            - name: GOOGLE_CLOUD_PROJECT
+              value: __PROJECT_ID__
+            - name: ANTHROPIC_VERTEX_PROJECT_ID
+              value: __PROJECT_ID__
+            - name: CLOUD_ML_REGION
+              value: global
+            - name: CLAUDE_CODE_USE_VERTEX
+              value: "1"
+          resources:
+            requests:
+              cpu: 100m
+              memory: 512Mi
+            limits:
+              cpu: 1
+              memory: 2Gi

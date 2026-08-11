@@ -1,0 +1,18 @@
+apiVersion: networking.gke.io/v1alpha1
+kind: FQDNNetworkPolicy
+metadata:
+  name: test-allow-approved-fqdns
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: test
+      component: isolated-claude-agent
+  egress:
+    - matches:
+        - name: github.com
+        - name: aiplatform.googleapis.com
+        - name: bigquery.googleapis.com
+      ports:
+        - protocol: "TCP"
+          port: 443

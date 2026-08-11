@@ -33,11 +33,11 @@ Google、Google Beta、Kubernetes の各 provider を使い、プロジェクト
 
 単一ノードの要件を曖昧にする regional cluster は採用しない。新規 VPC は不要であり、利用者指定の `default` サブネットを優先する。
 
-Terraform は必要な Service Usage API、Artifact Registry リポジトリ、Google Service Account（GSA）、IAM も所有する。これにより、コンテナイメージ名や IAM 主体を output として後段スクリプトへ受け渡せる。
+Terraform は必要な Service Usage API、Artifact Registry リポジトリ、KSA principal への IAM 付与も所有する。これにより、コンテナイメージ名や IAM principal を output として後段スクリプトへ受け渡せる。
 
-### 2. Workload Identity Federation for GKE で KSA と GSA を関連付ける
+### 2. Workload Identity Federation for GKE で KSA principal に直接付与する
 
-`test` Kubernetes Service Account（KSA）を専用 GSA に annotation で関連付け、GSA に `roles/aiplatform.user` と `roles/bigquery.jobUser` をプロジェクト単位で付与する。GSA には KSA 主体の `roles/iam.workloadIdentityUser` binding を付与する。ノード OAuth scope は `cloud-platform` とするが、実際の認可範囲は IAM で絞る。
+専用 GSA は作成せず、`test` Kubernetes Service Account（KSA）を Workload Identity Federation for GKE の IAM principal として直接指定する。Project Number、Project ID、namespace、KSA 名から `principal://iam.googleapis.com/projects/.../locations/global/workloadIdentityPools/.../subject/ns/.../sa/...` を組み立て、その principal に `roles/aiplatform.user` と `roles/bigquery.jobUser` をプロジェクト単位で付与する。KSA の GSA annotation や `roles/iam.workloadIdentityUser` binding は使用しない。ノード OAuth scope は `cloud-platform` とするが、実際の認可範囲は IAM で絞る。
 
 サービスアカウント鍵の Secret 配布やユーザ ADC の Pod へのマウントは、長期資格情報が残るため採用しない。公開 BigQuery データセットは公開読み取り権限を利用し、利用者プロジェクト側にはジョブ実行権限だけを与える。
 
@@ -53,7 +53,7 @@ SDK をホストへ直接インストールする案は再現性が低く、検�
 
 `k8s/` には KSA と `test` Deployment の通常マニフェストを置き、通信制御は別ファイル（または別 kustomize overlay）にする。Deployment は専用ラベルを持ち、すべてのポリシーはそのラベルだけを選択する。この分離により、制限前の基準テストが通るまで通信制御を適用しない手順を構造的に保つ。
 
-マニフェスト内の GSA 名、プロジェクト ID、イメージ URL は固定値を複製せず、デプロイスクリプトが Terraform output から安全に置換または `kubectl set image` で注入する。
+マニフェスト内の IAM principal、プロジェクト ID、イメージ URL は固定値を複製せず、デプロイスクリプトが Terraform output から安全に確認または `kubectl set image` で注入する。KSA マニフェストには GSA annotation を付与しない。
 
 ### 5. 標準 NetworkPolicy と GKE FQDNNetworkPolicy を組み合わせる
 

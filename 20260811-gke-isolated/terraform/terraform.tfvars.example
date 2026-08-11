@@ -1,0 +1,3 @@
+# このファイルを terraform.tfvars にコピーするか、同じ値を -var で渡す。
+# region、zone、network、subnet の既定値は variables.tf で定義している。
+project_id = "nnyn-dev"

@@ -22,7 +22,7 @@ Claude Agent SDK を GKE 上で安全に実行し、Vertex AI と BigQuery の�
 
 ## Impact
 
-- `terraform/`: GKE、ネットワーク設定、Artifact Registry、Workload Identity および IAM の構成。
+- `terraform/`: GKE、ネットワーク設定、Artifact Registry、Workload Identity および KSA principal への IAM の構成。
 - `container/`: Claude Agent SDK と BigQuery 検証用 Python コード、およびコンテナイメージ定義。
 - `k8s/`: Service Account、Deployment、外向き通信ポリシーのマニフェスト。
 - `scripts/`: プロビジョニング、ビルド・デプロイ、通信制御適用前後の検証を人間が実行できるスクリプト。
