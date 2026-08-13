@@ -55,6 +55,7 @@ locals {
     "bigquery.googleapis.com",
     "cloudresourcemanager.googleapis.com",
     "container.googleapis.com",
+    "dns.googleapis.com",
     "iam.googleapis.com",
     "iamcredentials.googleapis.com",
     "logging.googleapis.com",
@@ -73,6 +74,18 @@ resource "google_project_service" "required" {
   project            = var.project_id
   service            = each.value
   disable_on_destroy = false
+}
+
+# 既存 VPC に関連付ける単一の Cloud DNS Policy。DNS Query Logging は VPC 全体に適用される。
+resource "google_dns_policy" "gke_dns_logging" {
+  name           = "gke-dns-logging"
+  enable_logging = true
+
+  networks {
+    network_url = data.google_compute_network.default.id
+  }
+
+  depends_on = [google_project_service.required["dns.googleapis.com"]]
 }
 
 # Workload Identity Federation for GKE を有効にした単一ゾーン Dataplane V2 クラスタ。

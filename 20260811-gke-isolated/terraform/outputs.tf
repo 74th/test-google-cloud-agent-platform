@@ -28,6 +28,16 @@ output "subnetwork_name" {
   value       = data.google_compute_subnetwork.default.name
 }
 
+output "dns_policy_name" {
+  description = "Terraform が管理する Cloud DNS Policy 名。"
+  value       = google_dns_policy.gke_dns_logging.name
+}
+
+output "dns_policy_enable_logging" {
+  description = "Terraform が管理する Cloud DNS Policy の Query Logging 設定。"
+  value       = google_dns_policy.gke_dns_logging.enable_logging
+}
+
 output "workload_iam_principal" {
   description = "Kubernetes ServiceAccount に対応する直接指定 IAM principal。"
   value       = local.workload_iam_principal
