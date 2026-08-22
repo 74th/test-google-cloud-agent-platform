@@ -1,0 +1,16 @@
+Metadata-Version: 2.4
+Name: 20260822-agent-gateway
+Version: 0.1.0
+Summary: Claude Agent SDK BYOC agent for Agent Gateway egress validation
+Requires-Python: >=3.12
+Description-Content-Type: text/markdown
+Requires-Dist: claude-agent-sdk==0.1.9
+Requires-Dist: fastapi==0.115.14
+Requires-Dist: google-auth==2.47.0
+Requires-Dist: uvicorn[standard]==0.35.0
+Provides-Extra: deploy
+Requires-Dist: google-cloud-aiplatform==1.144.0; extra == "deploy"
+Provides-Extra: test
+Requires-Dist: httpx==0.28.1; extra == "test"
+Requires-Dist: pytest==8.4.1; extra == "test"
+Requires-Dist: pytest-asyncio==1.1.0; extra == "test"

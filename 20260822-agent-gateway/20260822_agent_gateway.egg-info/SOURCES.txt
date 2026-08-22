@@ -1,0 +1,9 @@
+pyproject.toml
+20260822_agent_gateway.egg-info/PKG-INFO
+20260822_agent_gateway.egg-info/SOURCES.txt
+20260822_agent_gateway.egg-info/dependency_links.txt
+20260822_agent_gateway.egg-info/requires.txt
+20260822_agent_gateway.egg-info/top_level.txt
+agent_service/__init__.py
+agent_service/adapter.py
+agent_service/app.py

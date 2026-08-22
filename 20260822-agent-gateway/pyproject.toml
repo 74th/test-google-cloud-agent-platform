@@ -1,0 +1,30 @@
+[project]
+name = "20260822-agent-gateway"
+version = "0.1.0"
+description = "Claude Agent SDK BYOC agent for Agent Gateway egress validation"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "claude-agent-sdk==0.1.9",
+    "fastapi==0.115.14",
+    "google-auth==2.47.0",
+    "uvicorn[standard]==0.35.0",
+]
+
+[build-system]
+requires = ["setuptools==80.9.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["agent_service*", "scripts*"]
+
+[project.optional-dependencies]
+deploy = ["google-cloud-aiplatform==1.144.0"]
+test = ["httpx==0.28.1", "pytest==8.4.1", "pytest-asyncio==1.1.0"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+
+[tool.uv]
+package = true

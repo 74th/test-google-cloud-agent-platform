@@ -1,0 +1,29 @@
+{
+  "agentGatewayCard": {
+    "mtlsEndpoint": "projects/y8894566221cd1831p-tp/regions/us-central1/serviceAttachments/unitkind1-swp-mtls-psc-sa",
+    "rootCertificates": [
+      "-----BEGIN CERTIFICATE-----\nMIIDwzCCAqugAwIBAgITHEVX6FaJ1cVhJ86i/F9HUkxYszANBgkqhkiG9w0BAQsF\nADBfMSUwIwYDVQQKExxHb29nbGUgQ2xvdWQgTWFuYWdlZCBTZXJ2aWNlMTYwNAYD\nVQQDEy1BZ2VudCBHYXRld2F5IFRMUyBJbnNwZWN0aW9uIENBICh1cy1jZW50cmFs\nMSkwHhcNMjYwODIwMjIzNzI1WhcNMzYwODE3MjIzNzI0WjBfMSUwIwYDVQQKExxH\nb29nbGUgQ2xvdWQgTWFuYWdlZCBTZXJ2aWNlMTYwNAYDVQQDEy1BZ2VudCBHYXRl\nd2F5IFRMUyBJbnNwZWN0aW9uIENBICh1cy1jZW50cmFsMSkwggEiMA0GCSqGSIb3\nDQEBAQUAA4IBDwAwggEKAoIBAQCuisVNPLj35kNLMB1eGM9HWl6/FhlI4YZ34jFx\nLsjnMnYGkkJ29BcmopDqQ7NeZxaYMcu0Qj5YjU5W4Z3IQXUM/+fOTcjm8E6VworX\nFyEn7k7Fgm1KNRtshnIBAmgp3buZU0J4RN8za3Jg2k2VTlyfKy/11F/oiPjtyXpe\n32C5p5D6e8PDirT6PfgLGMwzM6zvPIGw5yg4fcdN6FeTWeNZm5ET3s2n8J+1CGIj\nJ2KwOcjUlzy9JT/X1HQWJUM/GfGj+uiNfnwBZQluoHuH8jcBdKlPI89XRwEJX9C9\nm7/3eSIyt5rlY3sbiwPSOw5HxayMsSyKZIK3hvO3pTX6ckmFAgMBAAGjeDB2MA4G\nA1UdDwEB/wQEAwIBJjATBgNVHSUEDDAKBggrBgEFBQcDATAPBgNVHRMBAf8EBTAD\nAQH/MB0GA1UdDgQWBBR0Q9bS+9oR1pYrV3iW2OBC+jGT2jAfBgNVHSMEGDAWgBR0\nQ9bS+9oR1pYrV3iW2OBC+jGT2jANBgkqhkiG9w0BAQsFAAOCAQEAXmCq2HN8bQ7k\n57Utr0FpGSaOQT8hxc2Pg8q+iXMHOfCqPdWAS1s3BkQlWkD8RGp7p9oc5RlPltp0\nhSJI4FbD20x56VLn7oaKYappmeeAgPKW1b9WzjA+fO27hocFCeHw9L9L+mOfN5ez\n/GWiyOCGx8oeGMV2URoOSf12iN1Lu/XW+iCU+/uM6GH6snBMX3rmUi5DnPISdVg0\nj/V0tGVHNQdpnYiyPx0K3aAlaBwVoiM5iVSSzdGCWfpyHsx65rhThWLFAeewhUig\ncVkp9EN5RUvkBeRnXnGYL2tD7lJ4YQbNeZf1zJE0ExvhE2L0BwighI7odufTdjAb\ncPIXLCbItg==\n-----END CERTIFICATE-----\n"
+    ],
+    "serviceExtensionsServiceAccount": "service-122306729336@gcp-sa-dep.iam.gserviceaccount.com"
+  },
+  "createTime": "2026-08-22T13:38:15.542788942Z",
+  "description": "20260822 default-deny Agent-to-Anywhere gateway; GitHub endpoint is allowlisted by registry IAM.",
+  "etag": "b-kwDf_C84Bm6noAi0zmWQNL-JkvwztqM3umNu1qI-4",
+  "googleManaged": {
+    "governedAccessPath": "AGENT_TO_ANYWHERE"
+  },
+  "labels": {
+    "goog-terraform-provisioned": "true",
+    "managed_by": "terraform",
+    "project": "agent-gateway-egress",
+    "validation": "20260822-agent-gateway"
+  },
+  "name": "projects/nnyn-dev/locations/us-central1/agentGateways/agw-20260822-egress",
+  "protocols": [
+    "MCP"
+  ],
+  "registries": [
+    "//agentregistry.googleapis.com/projects/nnyn-dev/locations/us-central1"
+  ],
+  "updateTime": "2026-08-22T13:40:36.071893019Z"
+}

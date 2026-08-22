@@ -1,0 +1,716 @@
+[
+  {
+    "httpRequest": {
+      "latency": "6.875262s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "7.0.2.2:1026",
+      "requestMethod": "CONNECT",
+      "requestSize": "180040",
+      "responseSize": "4622",
+      "status": 200
+    },
+    "insertId": "1yrr7qgexlky1",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {},
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "240.0.0.2:443",
+        "matchedRules": [
+          {
+            "name": "default_denied"
+          }
+        ]
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "1zzLlbN/0xfhr8jnjiUKbq1fzLWymTfJrQ+1jZ79vEA",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      }
+    },
+    "logName": "projects/nnyn-dev/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-08-22T15:18:58.615549602Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "agw-20260822-egress",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "us-central1",
+        "network_name": "projects/y8894566221cd1831p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "776113568960"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-08-22T15:18:50.203442Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "2.378411s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "7.0.2.2:1025",
+      "requestMethod": "POST",
+      "requestSize": "5370",
+      "requestUrl": "https://aiplatform.googleapis.com/v1/projects/nnyn-dev/locations/global/publishers/anthropic/models/claude-haiku-4-5@20251001:streamRawPredict",
+      "responseSize": "2586",
+      "serverIp": "173.194.206.95:443",
+      "status": 200,
+      "userAgent": "claude-cli/2.0.49 (external, sdk-py, agent-sdk/0.1.9)"
+    },
+    "insertId": "1yrr7qgexlkxy",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {
+        "agentRegistryResource": "projects/776113568960/locations/us-central1/endpoints/agentregistry-00000000-0000-0000-fd58-d189577bf14f"
+      },
+      "authzPolicyInfo": {
+        "policies": [
+          {
+            "name": "projects/122306729336/locations/us-central1/authzPolicies/agw-20260822-iap-policy",
+            "result": "ALLOWED"
+          }
+        ],
+        "result": "ALLOWED"
+      },
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "aiplatform.googleapis.com",
+        "matchedRules": [
+          {
+            "action": "ALLOWED",
+            "name": "default_denied"
+          }
+        ],
+        "requestWasTlsIntercepted": true,
+        "serverNameIndication": "aiplatform.googleapis.com"
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "1zzLlbN/0xfhr8jnjiUKbq1fzLWymTfJrQ+1jZ79vEA",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      },
+      "tlsSniHostname": "aiplatform.googleapis.com"
+    },
+    "logName": "projects/nnyn-dev/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-08-22T15:18:58.494726785Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "agw-20260822-egress",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "us-central1",
+        "network_name": "projects/y8894566221cd1831p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "776113568960"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-08-22T15:18:50.207711Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "1.367521s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "7.0.2.2:1025",
+      "requestMethod": "POST",
+      "requestSize": "51433",
+      "requestUrl": "https://aiplatform.googleapis.com/v1/projects/nnyn-dev/locations/global/publishers/anthropic/models/claude-haiku-4-5@20251001:streamRawPredict",
+      "responseSize": "1392",
+      "serverIp": "173.194.206.95:443",
+      "status": 200,
+      "userAgent": "claude-cli/2.0.49 (external, sdk-py, agent-sdk/0.1.9)"
+    },
+    "insertId": "1yrr7qgexlkxx",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {
+        "agentRegistryResource": "projects/776113568960/locations/us-central1/endpoints/agentregistry-00000000-0000-0000-fd58-d189577bf14f"
+      },
+      "authzPolicyInfo": {
+        "policies": [
+          {
+            "name": "projects/122306729336/locations/us-central1/authzPolicies/agw-20260822-iap-policy",
+            "result": "ALLOWED"
+          }
+        ],
+        "result": "ALLOWED"
+      },
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "aiplatform.googleapis.com",
+        "matchedRules": [
+          {
+            "action": "ALLOWED",
+            "name": "default_denied"
+          }
+        ],
+        "requestWasTlsIntercepted": true,
+        "serverNameIndication": "aiplatform.googleapis.com"
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "1zzLlbN/0xfhr8jnjiUKbq1fzLWymTfJrQ+1jZ79vEA",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      },
+      "tlsSniHostname": "aiplatform.googleapis.com"
+    },
+    "logName": "projects/nnyn-dev/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-08-22T15:18:58.494726785Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "agw-20260822-egress",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "us-central1",
+        "network_name": "projects/y8894566221cd1831p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "776113568960"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-08-22T15:18:50.209177Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "2.523581s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "7.0.2.2:1025",
+      "requestMethod": "POST",
+      "requestSize": "5370",
+      "requestUrl": "https://aiplatform.googleapis.com/v1/projects/nnyn-dev/locations/global/publishers/anthropic/models/claude-haiku-4-5@20251001:streamRawPredict",
+      "responseSize": "1904",
+      "serverIp": "74.125.201.95:443",
+      "status": 200,
+      "userAgent": "claude-cli/2.0.49 (external, sdk-py, agent-sdk/0.1.9)"
+    },
+    "insertId": "1p3tdwseqfwqn",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {
+        "agentRegistryResource": "projects/776113568960/locations/us-central1/endpoints/agentregistry-00000000-0000-0000-fd58-d189577bf14f"
+      },
+      "authzPolicyInfo": {
+        "policies": [
+          {
+            "name": "projects/122306729336/locations/us-central1/authzPolicies/agw-20260822-iap-policy",
+            "result": "ALLOWED"
+          }
+        ],
+        "result": "ALLOWED"
+      },
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "aiplatform.googleapis.com",
+        "matchedRules": [
+          {
+            "action": "ALLOWED",
+            "name": "default_denied"
+          }
+        ],
+        "requestWasTlsIntercepted": true,
+        "serverNameIndication": "aiplatform.googleapis.com"
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "1zzLlbN/0xfhr8jnjiUKbq1fzLWymTfJrQ+1jZ79vEA",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      },
+      "tlsSniHostname": "aiplatform.googleapis.com"
+    },
+    "logName": "projects/nnyn-dev/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-08-22T15:19:02.525436602Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "agw-20260822-egress",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "us-central1",
+        "network_name": "projects/y8894566221cd1831p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "776113568960"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-08-22T15:18:50.209725Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.631321s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "7.0.2.2:1026",
+      "requestMethod": "GET",
+      "requestSize": "135",
+      "requestUrl": "https://github.com/74th",
+      "responseSize": "136205",
+      "serverIp": "140.82.112.4:443",
+      "status": 200,
+      "userAgent": "20260822-agent-gateway-webfetch/1.0"
+    },
+    "insertId": "1orwxqzda974",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {
+        "agentRegistryResource": "projects/776113568960/locations/us-central1/endpoints/agentregistry-00000000-0000-0000-1074-d20d43ac319a"
+      },
+      "authzPolicyInfo": {
+        "policies": [
+          {
+            "name": "projects/122306729336/locations/us-central1/authzPolicies/agw-20260822-iap-policy",
+            "result": "ALLOWED"
+          }
+        ],
+        "result": "ALLOWED"
+      },
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "github.com",
+        "matchedRules": [
+          {
+            "action": "ALLOWED",
+            "name": "default_denied"
+          }
+        ],
+        "requestWasTlsIntercepted": true,
+        "serverNameIndication": "github.com"
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "1zzLlbN/0xfhr8jnjiUKbq1fzLWymTfJrQ+1jZ79vEA",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      },
+      "tlsSniHostname": "github.com"
+    },
+    "logName": "projects/nnyn-dev/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-08-22T15:18:56.341687824Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "agw-20260822-egress",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "us-central1",
+        "network_name": "projects/y8894566221cd1831p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "776113568960"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-08-22T15:18:51.873096Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.399768s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "7.0.2.2:1025",
+      "requestMethod": "POST",
+      "requestSize": "125921",
+      "requestUrl": "https://aiplatform.googleapis.com/v1/projects/nnyn-dev/locations/global/publishers/anthropic/models/count-tokens:rawPredict",
+      "responseSize": "707",
+      "serverIp": "173.194.206.95:443",
+      "status": 400,
+      "userAgent": "claude-cli/2.0.49 (external, sdk-py, agent-sdk/0.1.9)"
+    },
+    "insertId": "1yrr7qgexlkxz",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {
+        "agentRegistryResource": "projects/776113568960/locations/us-central1/endpoints/agentregistry-00000000-0000-0000-fd58-d189577bf14f"
+      },
+      "authzPolicyInfo": {
+        "policies": [
+          {
+            "name": "projects/122306729336/locations/us-central1/authzPolicies/agw-20260822-iap-policy",
+            "result": "ALLOWED"
+          }
+        ],
+        "result": "ALLOWED"
+      },
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "aiplatform.googleapis.com",
+        "matchedRules": [
+          {
+            "action": "ALLOWED",
+            "name": "default_denied"
+          }
+        ],
+        "requestWasTlsIntercepted": true,
+        "serverNameIndication": "aiplatform.googleapis.com"
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "1zzLlbN/0xfhr8jnjiUKbq1fzLWymTfJrQ+1jZ79vEA",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      },
+      "tlsSniHostname": "aiplatform.googleapis.com"
+    },
+    "logName": "projects/nnyn-dev/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-08-22T15:18:58.494726785Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "agw-20260822-egress",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "us-central1",
+        "network_name": "projects/y8894566221cd1831p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "776113568960"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "WARNING",
+    "timestamp": "2026-08-22T15:18:52.511158Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "4.105523s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "7.0.2.2:1025",
+      "requestMethod": "POST",
+      "requestSize": "175383",
+      "requestUrl": "https://aiplatform.googleapis.com/v1/projects/nnyn-dev/locations/global/publishers/anthropic/models/claude-haiku-4-5@20251001:streamRawPredict",
+      "responseSize": "3498",
+      "serverIp": "173.194.206.95:443",
+      "status": 200,
+      "userAgent": "claude-cli/2.0.49 (external, sdk-py, agent-sdk/0.1.9)"
+    },
+    "insertId": "1yrr7qgexlky0",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {
+        "agentRegistryResource": "projects/776113568960/locations/us-central1/endpoints/agentregistry-00000000-0000-0000-fd58-d189577bf14f"
+      },
+      "authzPolicyInfo": {
+        "policies": [
+          {
+            "name": "projects/122306729336/locations/us-central1/authzPolicies/agw-20260822-iap-policy",
+            "result": "ALLOWED"
+          }
+        ],
+        "result": "ALLOWED"
+      },
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "aiplatform.googleapis.com",
+        "matchedRules": [
+          {
+            "action": "ALLOWED",
+            "name": "default_denied"
+          }
+        ],
+        "requestWasTlsIntercepted": true,
+        "serverNameIndication": "aiplatform.googleapis.com"
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "1zzLlbN/0xfhr8jnjiUKbq1fzLWymTfJrQ+1jZ79vEA",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      },
+      "tlsSniHostname": "aiplatform.googleapis.com"
+    },
+    "logName": "projects/nnyn-dev/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-08-22T15:18:58.615549602Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "agw-20260822-egress",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "us-central1",
+        "network_name": "projects/y8894566221cd1831p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "776113568960"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-08-22T15:18:52.930588Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "4.085878s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "7.0.2.2:1028",
+      "requestMethod": "CONNECT",
+      "requestSize": "106251",
+      "responseSize": "7456",
+      "status": 200
+    },
+    "insertId": "1nxxc00f1d5dbm",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {},
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "240.0.0.2:443",
+        "matchedRules": [
+          {
+            "name": "default_denied"
+          }
+        ]
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "1zzLlbN/0xfhr8jnjiUKbq1fzLWymTfJrQ+1jZ79vEA",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      }
+    },
+    "logName": "projects/nnyn-dev/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-08-22T15:19:32.532381896Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "agw-20260822-egress",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "us-central1",
+        "network_name": "projects/y8894566221cd1831p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "776113568960"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-08-22T15:19:25.695915Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "2.318219s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "7.0.2.2:1025",
+      "requestMethod": "POST",
+      "requestSize": "5370",
+      "requestUrl": "https://aiplatform.googleapis.com/v1/projects/nnyn-dev/locations/global/publishers/anthropic/models/claude-haiku-4-5@20251001:streamRawPredict",
+      "responseSize": "2594",
+      "serverIp": "74.125.126.95:443",
+      "status": 200,
+      "userAgent": "claude-cli/2.0.49 (external, sdk-py, agent-sdk/0.1.9)"
+    },
+    "insertId": "1o8smjxev8exw",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {
+        "agentRegistryResource": "projects/776113568960/locations/us-central1/endpoints/agentregistry-00000000-0000-0000-fd58-d189577bf14f"
+      },
+      "authzPolicyInfo": {
+        "policies": [
+          {
+            "name": "projects/122306729336/locations/us-central1/authzPolicies/agw-20260822-iap-policy",
+            "result": "ALLOWED"
+          }
+        ],
+        "result": "ALLOWED"
+      },
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "aiplatform.googleapis.com",
+        "matchedRules": [
+          {
+            "action": "ALLOWED",
+            "name": "default_denied"
+          }
+        ],
+        "requestWasTlsIntercepted": true,
+        "serverNameIndication": "aiplatform.googleapis.com"
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "1zzLlbN/0xfhr8jnjiUKbq1fzLWymTfJrQ+1jZ79vEA",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      },
+      "tlsSniHostname": "aiplatform.googleapis.com"
+    },
+    "logName": "projects/nnyn-dev/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-08-22T15:19:36.463101013Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "agw-20260822-egress",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "us-central1",
+        "network_name": "projects/y8894566221cd1831p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "776113568960"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-08-22T15:19:25.696913Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "2.139402s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "7.0.2.2:1027",
+      "requestMethod": "POST",
+      "requestSize": "5370",
+      "requestUrl": "https://aiplatform.googleapis.com/v1/projects/nnyn-dev/locations/global/publishers/anthropic/models/claude-haiku-4-5@20251001:streamRawPredict",
+      "responseSize": "2447",
+      "serverIp": "173.194.206.95:443",
+      "status": 200,
+      "userAgent": "claude-cli/2.0.49 (external, sdk-py, agent-sdk/0.1.9)"
+    },
+    "insertId": "17akncheydl2x",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {
+        "agentRegistryResource": "projects/776113568960/locations/us-central1/endpoints/agentregistry-00000000-0000-0000-fd58-d189577bf14f"
+      },
+      "authzPolicyInfo": {
+        "policies": [
+          {
+            "name": "projects/122306729336/locations/us-central1/authzPolicies/agw-20260822-iap-policy",
+            "result": "ALLOWED"
+          }
+        ],
+        "result": "ALLOWED"
+      },
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "aiplatform.googleapis.com",
+        "matchedRules": [
+          {
+            "action": "ALLOWED",
+            "name": "default_denied"
+          }
+        ],
+        "requestWasTlsIntercepted": true,
+        "serverNameIndication": "aiplatform.googleapis.com"
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "1zzLlbN/0xfhr8jnjiUKbq1fzLWymTfJrQ+1jZ79vEA",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      },
+      "tlsSniHostname": "aiplatform.googleapis.com"
+    },
+    "logName": "projects/nnyn-dev/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-08-22T15:19:29.095551522Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "agw-20260822-egress",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "us-central1",
+        "network_name": "projects/y8894566221cd1831p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "776113568960"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-08-22T15:19:25.700512Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "1.863528s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "7.0.2.2:1028",
+      "requestMethod": "POST",
+      "requestSize": "51565",
+      "requestUrl": "https://aiplatform.googleapis.com/v1/projects/nnyn-dev/locations/global/publishers/anthropic/models/claude-haiku-4-5@20251001:streamRawPredict",
+      "responseSize": "1651",
+      "serverIp": "74.125.201.95:443",
+      "status": 200,
+      "userAgent": "claude-cli/2.0.49 (external, sdk-py, agent-sdk/0.1.9)"
+    },
+    "insertId": "1nxxc00f1d5dbk",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {
+        "agentRegistryResource": "projects/776113568960/locations/us-central1/endpoints/agentregistry-00000000-0000-0000-fd58-d189577bf14f"
+      },
+      "authzPolicyInfo": {
+        "policies": [
+          {
+            "name": "projects/122306729336/locations/us-central1/authzPolicies/agw-20260822-iap-policy",
+            "result": "ALLOWED"
+          }
+        ],
+        "result": "ALLOWED"
+      },
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "aiplatform.googleapis.com",
+        "matchedRules": [
+          {
+            "action": "ALLOWED",
+            "name": "default_denied"
+          }
+        ],
+        "requestWasTlsIntercepted": true,
+        "serverNameIndication": "aiplatform.googleapis.com"
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "1zzLlbN/0xfhr8jnjiUKbq1fzLWymTfJrQ+1jZ79vEA",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      },
+      "tlsSniHostname": "aiplatform.googleapis.com"
+    },
+    "logName": "projects/nnyn-dev/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-08-22T15:19:32.532381896Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "agw-20260822-egress",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "us-central1",
+        "network_name": "projects/y8894566221cd1831p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "776113568960"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-08-22T15:19:25.702083Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.064421s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "7.0.2.2:1029",
+      "requestMethod": "CONNECT",
+      "requestSize": "3597",
+      "responseSize": "2436",
+      "status": 200
+    },
+    "insertId": "1nxxc00f1d5dbl",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {},
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "240.0.0.2:443",
+        "matchedRules": [
+          {
+            "name": "default_denied"
+          }
+        ]
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "1zzLlbN/0xfhr8jnjiUKbq1fzLWymTfJrQ+1jZ79vEA",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      }
+    },
+    "logName": "projects/nnyn-dev/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-08-22T15:19:32.532381896Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "agw-20260822-egress",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "us-central1",
+        "network_name": "projects/y8894566221cd1831p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "776113568960"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-08-22T15:19:27.829845Z"
+  }
+]

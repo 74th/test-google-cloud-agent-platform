@@ -1,0 +1,92 @@
+{
+  "name": "projects/776113568960/locations/us-central1/reasoningEngines/7911550761069182976",
+  "displayName": "20260822-agent-gateway-claude-local-webfetch-r5",
+  "spec": {
+    "classMethods": [
+      {
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "message"
+          ]
+        },
+        "api_mode": "",
+        "name": "query"
+      },
+      {
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "message"
+          ]
+        },
+        "api_mode": "stream",
+        "name": "stream_query"
+      }
+    ],
+    "deploymentSpec": {
+      "env": [
+        {
+          "name": "CLAUDE_CODE_USE_VERTEX",
+          "value": "1"
+        },
+        {
+          "name": "ANTHROPIC_VERTEX_PROJECT_ID",
+          "value": "nnyn-dev"
+        },
+        {
+          "name": "CLOUD_ML_REGION",
+          "value": "global"
+        },
+        {
+          "name": "ANTHROPIC_MODEL",
+          "value": "claude-haiku-4-5@20251001"
+        },
+        {
+          "name": "ANTHROPIC_DEFAULT_HAIKU_MODEL",
+          "value": "claude-haiku-4-5@20251001"
+        },
+        {
+          "name": "VERTEX_REGION_CLAUDE_HAIKU_4_5",
+          "value": "global"
+        },
+        {
+          "name": "AGENT_GATEWAY_RESOURCE",
+          "value": "projects/nnyn-dev/locations/us-central1/agentGateways/agw-20260822-egress"
+        },
+        {
+          "name": "GOOGLE_CLOUD_AGENT_ENGINE_ENABLE_TELEMETRY",
+          "value": "true"
+        }
+      ],
+      "agentGatewayConfig": {
+        "agentToAnywhereConfig": {
+          "agentGateway": "projects/nnyn-dev/locations/us-central1/agentGateways/agw-20260822-egress"
+        }
+      }
+    },
+    "agentFramework": "custom",
+    "identityType": "AGENT_IDENTITY",
+    "effectiveIdentity": "agents.global.proj-776113568960.system.id.goog/resources/aiplatform/projects/776113568960/locations/us-central1/reasoningEngines/7911550761069182976",
+    "containerSpec": {
+      "imageUri": "us-central1-docker.pkg.dev/nnyn-dev/agent-gateway-20260822/claude-agent-gateway:20260822-r17"
+    }
+  },
+  "createTime": "2026-08-22T14:26:35.270532Z",
+  "updateTime": "2026-08-22T15:18:35.657610Z",
+  "contextSpec": {
+    "memoryBankConfig": {
+      "generationConfig": {}
+    }
+  }
+}

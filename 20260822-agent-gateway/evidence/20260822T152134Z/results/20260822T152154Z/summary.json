@@ -1,0 +1,147 @@
+{
+  "timestamp": "20260822T152154Z",
+  "results": [
+    {
+      "case": "github",
+      "prompt": "https://github.com/74th の内容を要約して",
+      "exit_code": 0,
+      "expected_host": "github.com",
+      "expected_disposition": "allow",
+      "matched_log_entries": [
+        {
+          "httpRequest": {
+            "latency": "0.631321s",
+            "protocol": "HTTP/1.1",
+            "remoteIp": "7.0.2.2:1026",
+            "requestMethod": "GET",
+            "requestSize": "135",
+            "requestUrl": "https://github.com/74th",
+            "responseSize": "136205",
+            "serverIp": "140.82.112.4:443",
+            "status": 200,
+            "userAgent": "20260822-agent-gateway-webfetch/1.0"
+          },
+          "insertId": "1orwxqzda974",
+          "jsonPayload": {
+            "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+            "agentGatewayInfo": {
+              "agentRegistryResource": "projects/776113568960/locations/us-central1/endpoints/agentregistry-00000000-0000-0000-1074-d20d43ac319a"
+            },
+            "authzPolicyInfo": {
+              "policies": [
+                {
+                  "name": "projects/122306729336/locations/us-central1/authzPolicies/agw-20260822-iap-policy",
+                  "result": "ALLOWED"
+                }
+              ],
+              "result": "ALLOWED"
+            },
+            "enforcedGatewaySecurityPolicy": {
+              "hostname": "github.com",
+              "matchedRules": [
+                {
+                  "action": "ALLOWED",
+                  "name": "default_denied"
+                }
+              ],
+              "requestWasTlsIntercepted": true,
+              "serverNameIndication": "github.com"
+            },
+            "mtls": {
+              "clientCertChainVerified": "false",
+              "clientCertError": "client_cert_validation_not_performed",
+              "clientCertPresent": "true",
+              "clientCertSha256Fingerprint": "1zzLlbN/0xfhr8jnjiUKbq1fzLWymTfJrQ+1jZ79vEA",
+              "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+              "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+            },
+            "tlsSniHostname": "github.com"
+          },
+          "logName": "projects/nnyn-dev/logs/networkservices.googleapis.com%2Fgateway_requests",
+          "receiveTimestamp": "2026-08-22T15:18:56.341687824Z",
+          "resource": {
+            "labels": {
+              "gateway_name": "agw-20260822-egress",
+              "gateway_type": "SECURE_WEB_GATEWAY",
+              "location": "us-central1",
+              "network_name": "projects/y8894566221cd1831p-tp/global/networks/uk1-25feb-2-vpc4",
+              "resource_container": "776113568960"
+            },
+            "type": "networkservices.googleapis.com/Gateway"
+          },
+          "severity": "INFO",
+          "timestamp": "2026-08-22T15:18:51.873096Z"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "case": "cao-default-deny",
+      "prompt": "https://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html は日本の国民の祝日についての広報ページだよ。この内容を見て、2027年の祝日を全て教えて。",
+      "exit_code": 0,
+      "expected_host": "www8.cao.go.jp",
+      "expected_disposition": "deny",
+      "matched_log_entries": [
+        {
+          "insertId": "11sqfaye4uo52",
+          "labels": {
+            "iap.googleapis.com/audited_resource_name": "projects/776113568960/locations/global/endpoints/unregisteredEndpoint",
+            "iap.googleapis.com/audited_resource_type": "agentregistry.googleapis.com/Endpoint"
+          },
+          "logName": "projects/nnyn-dev/logs/cloudaudit.googleapis.com%2Fdata_access",
+          "protoPayload": {
+            "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+            "authenticationInfo": {},
+            "authorizationInfo": [
+              {
+                "granted": false,
+                "permission": "iap.webServiceVersions.egressViaIAP",
+                "permissionType": "ADMIN_READ",
+                "resource": "projects/nnyn-dev/locations/global/iap_web/agentRegistry/endpoints/unregisteredEndpoint",
+                "resourceAttributes": {
+                  "service": "iap.googleapis.com",
+                  "type": "iap.googleapis.com/WebServiceVersion"
+                }
+              }
+            ],
+            "methodName": "AuthorizeUser",
+            "request": {
+              "@type": "type.googleapis.com/cloud.security.gatekeeper.AuthorizeUserRequest",
+              "httpRequest": {
+                "url": "https://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html"
+              },
+              "policy_version": "POLICY_VERSION_V1"
+            },
+            "requestMetadata": {
+              "destinationAttributes": {},
+              "requestAttributes": {}
+            },
+            "resourceName": "unregisteredEndpoint",
+            "serviceName": "iap.googleapis.com",
+            "status": {
+              "code": 7,
+              "message": "Permission Denied"
+            }
+          },
+          "receiveTimestamp": "2026-08-22T15:19:29.521557490Z",
+          "resource": {
+            "labels": {
+              "method": "AuthorizeUser",
+              "project_id": "nnyn-dev",
+              "service": "iap.googleapis.com"
+            },
+            "type": "audited_resource"
+          },
+          "severity": "ERROR",
+          "timestamp": "2026-08-22T15:19:27.892357398Z"
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "constraints": [
+    "Evidence records are not a substitute for inspecting gateway logs.",
+    "No destroy was run."
+  ]
+}

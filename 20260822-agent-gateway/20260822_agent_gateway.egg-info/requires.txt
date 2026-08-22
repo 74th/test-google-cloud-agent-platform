@@ -1,0 +1,12 @@
+claude-agent-sdk==0.1.9
+fastapi==0.115.14
+google-auth==2.47.0
+uvicorn[standard]==0.35.0
+
+[deploy]
+google-cloud-aiplatform==1.144.0
+
+[test]
+httpx==0.28.1
+pytest==8.4.1
+pytest-asyncio==1.1.0
