@@ -51,6 +51,12 @@ resource "google_project_iam_member" "runtime_user" {
   member  = "serviceAccount:${google_service_account.runtime.email}"
 }
 
+resource "google_project_iam_member" "runtime_service_usage_consumer" {
+  project = var.project_id
+  role    = "roles/serviceusage.serviceUsageConsumer"
+  member  = "serviceAccount:${google_service_account.runtime.email}"
+}
+
 resource "google_storage_bucket_iam_member" "runtime_output" {
   bucket = google_storage_bucket.query_jobs.name
   role   = "roles/storage.objectAdmin"

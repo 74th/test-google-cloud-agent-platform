@@ -34,6 +34,31 @@ async def test_root_and_unary_endpoints_have_identical_success_responses(client,
 
 
 @pytest.mark.asyncio
+async def test_root_accepts_gcs_query_input_without_operation_name(client, monkeypatch):
+    delays = []
+
+    async def fast(delay_seconds):
+        delays.append(delay_seconds)
+        return "OK"
+
+    monkeypatch.setattr("byoc_runtime.app.agent.query", fast)
+    response = await client.post("/", json={"input": {"verification_id": "gcs-1", "delay_seconds": 960}})
+    assert response.status_code == 200
+    assert response.json() == {"output": "OK"}
+    assert delays == [960]
+
+
+@pytest.mark.asyncio
+async def test_root_rejects_missing_or_invalid_long_running_input(client):
+    missing = await client.post("/", json={"input": {}})
+    negative = await client.post("/", json={"input": {"verification_id": "gcs-2", "delay_seconds": -1}})
+    too_long = await client.post("/", json={"input": {"verification_id": "gcs-3", "delay_seconds": 3601}})
+    unsupported = await client.post("/", json={"class_method": "stream_query", "input": {"verification_id": "gcs-4"}})
+    assert [response.status_code for response in (missing, negative, too_long)] == [422, 422, 422]
+    assert unsupported.status_code == 400
+
+
+@pytest.mark.asyncio
 async def test_stream_endpoint(client, monkeypatch):
     async def stream():
         yield "Streaming OK"

@@ -1,7 +1,16 @@
 import json
 from datetime import UTC, datetime
 
-from scripts.query_job import build_log_filter, evaluate_evidence, safe_log_summary
+import pytest
+
+from scripts.query_job import (
+    _call_api,
+    build_log_filter,
+    effective_timeout_seconds,
+    evaluate_evidence,
+    query_payload,
+    safe_log_summary,
+)
 
 
 def log(event, request_id="request-1", **fields):
@@ -29,6 +38,18 @@ def test_log_filter_contains_agent_and_bounded_window():
     assert started.isoformat() in filter_
     assert ended.isoformat() in filter_
     assert 'textPayload:"http_received"' in filter_
+    assert 'jsonPayload.event="http_received"' in filter_
+    assert "proxy-container" in filter_
+
+
+def test_query_payload_and_long_running_timeout_are_explicit():
+    assert json.loads(query_payload("marker-1", 960)) == {
+        "input": {"verification_id": "marker-1", "delay_seconds": 960}
+    }
+    assert effective_timeout_seconds(10, None) == 900
+    assert effective_timeout_seconds(10, 120) == 120
+    assert effective_timeout_seconds(960, None) == 1560
+    assert effective_timeout_seconds(960, 60) == 1560
 
 
 def test_success_evaluation_has_all_four_stages_and_no_secret():
@@ -82,3 +103,75 @@ def test_missing_cloud_evidence_is_undetermined_and_log_summary_is_allowlisted()
     serialized = json.dumps(summary)
     assert "do-not-persist" not in serialized
     assert summary["event"] == "query_completed"
+
+
+def test_proxy_log_summary_is_allowlisted_and_preserves_permission_classification():
+    summary = safe_log_summary({
+        "severity": "ERROR",
+        "labels": {"container_name": "proxy-container"},
+        "jsonPayload": {
+            "stage": "gcs_input",
+            "error_code": 403,
+            "permission_name": "serviceusage.services.use",
+            "message": "Authorization: Bearer secret https://example.test/?token=secret",
+        },
+    })
+    serialized = json.dumps(summary)
+    assert summary["container_name"] == "proxy-container"
+    assert summary["permission_name"] == "serviceusage.services.use"
+    assert "secret" not in serialized
+    assert "message" not in summary
+
+
+def test_evaluation_includes_gcs_input_and_proxy_failure_stage():
+    log_evidence = {
+        "root_received": [],
+        "marker_events": [],
+        "proxy_errors": [{"container_name": "proxy-container", "error_code": 403}],
+        "search_complete": True,
+    }
+    result = evaluate_evidence(
+        log_evidence=log_evidence,
+        status_history=[{"state": "FAILED", "result": "container terminated"}],
+        input={"uri": "gs://bucket/input.json", "exists": True},
+        output={"uri": "gs://bucket/output.json", "exists": False},
+    )
+    assert result["result"] == "GCS入力取得失敗"
+    assert result["stages"]["gcs_input"]["state"] == "failure"
+
+
+def test_api_call_prints_before_after_and_complete_response(capsys):
+    response = _call_api(
+        "test.example.get",
+        lambda: {"state": "RUNNING", "nested": [1, {"value": "full"}]},
+        request={"name": "operations/1"},
+    )
+
+    assert response["nested"][1]["value"] == "full"
+    records = [json.loads(line) for line in capsys.readouterr().out.splitlines()]
+    assert [record["phase"] for record in records] == ["before", "after"]
+    assert records[0]["state"] == "calling"
+    assert records[0]["request"] == {"name": "operations/1"}
+    assert records[1]["state"] == "completed"
+    assert records[1]["response"] == {"state": "RUNNING", "nested": [1, {"value": "full"}]}
+    assert records[0]["call_id"] == records[1]["call_id"]
+
+
+def test_api_trace_can_summarize_non_serializable_log_entries(capsys):
+    _call_api("logging.list_entries", lambda: [object()], response_for_trace=lambda values: {"count": len(values)})
+    records = [json.loads(line) for line in capsys.readouterr().out.splitlines()]
+    assert records[-1]["response"] == {"count": 1}
+
+
+def test_api_call_prints_failed_after_state(capsys):
+    with pytest.raises(RuntimeError, match="api failed"):
+        _call_api("test.example.fail", lambda: (_ for _ in ()).throw(RuntimeError("api failed")))
+
+    records = [json.loads(line) for line in capsys.readouterr().out.splitlines()]
+    assert records[0]["state"] == "calling"
+    assert records[1]["state"] == "failed"
+    assert records[1]["error"] == {
+        "type": "RuntimeError",
+        "message": "api failed",
+        "repr": "RuntimeError('api failed')",
+    }

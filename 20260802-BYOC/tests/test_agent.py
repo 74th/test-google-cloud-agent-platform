@@ -25,6 +25,14 @@ async def test_unary_methods_wait_then_return_ok(method):
 
 
 @pytest.mark.asyncio
+async def test_unary_method_accepts_long_running_delay_without_blocking():
+    fake = FakeTime()
+    agent = DummyAgent(sleep=fake.sleep, clock=lambda: fake.now)
+    assert await agent.query(960) == "OK"
+    assert fake.sleeps == [960]
+
+
+@pytest.mark.asyncio
 @pytest.mark.parametrize("method", ["stream_query", "async_stream_query"])
 async def test_stream_methods_emit_ordered_chunks(method):
     fake = FakeTime()
