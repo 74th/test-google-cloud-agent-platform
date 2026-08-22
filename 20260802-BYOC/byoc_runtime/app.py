@@ -35,7 +35,8 @@ async def lifecycle(request: Request, call_next):
             async for chunk in original_body:
                 yield chunk
         finally:
-            event("http_completed", request_id=request_id, started=started, path=request.url.path, status=response.status_code)
+            event("http_completed", request_id=request_id, started=started, path=request.url.path,
+                  method=request.method, status=response.status_code)
 
     response.body_iterator = body_with_completion()
     return response
@@ -69,6 +70,7 @@ def normalize_payload(payload: RuntimeRequest | str) -> RuntimeRequest:
         raise HTTPException(status_code=422, detail="Invalid runtime request.") from exc
 
 
+@app.post("/")
 @app.post("/api/reasoning_engine")
 async def reasoning_engine(payload: RuntimeRequest | str, request: Request) -> dict[str, str]:
     payload = normalize_payload(payload)

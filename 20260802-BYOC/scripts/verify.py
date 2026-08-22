@@ -16,7 +16,7 @@ async def local(base_url: str, method: str, verification_id: str) -> AsyncIterat
         async with client.stream("POST", endpoint, json={"class_method": method, "input": {"verification_id": verification_id}}) as response:
             response.raise_for_status()
             if method in ("query", "async_query"):
-                yield {"response": response.json(), "elapsed_ms": round((time.monotonic()-started)*1000, 1)}
+                yield {"response": json.loads(await response.aread()), "elapsed_ms": round((time.monotonic()-started)*1000, 1)}
             else:
                 async for line in response.aiter_lines():
                     if line: yield {"response": json.loads(line), "elapsed_ms": round((time.monotonic()-started)*1000, 1)}

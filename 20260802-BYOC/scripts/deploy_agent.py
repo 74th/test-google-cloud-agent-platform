@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
+from datetime import UTC, datetime
 
 CLASS_METHODS = [
     {"name": "query", "api_mode": "", "parameters": {"type": "object", "properties": {"verification_id": {"type": "string"}}, "required": ["verification_id"]}},
@@ -26,9 +27,17 @@ def main() -> None:
     parser.add_argument("--result", type=Path, default=Path("results/deployment.json"))
     args = parser.parse_args()
     import agentplatform
+    deployed_at = datetime.now(UTC).isoformat()
     remote = agentplatform.Client(project=args.project, location=args.location).agent_engines.create(config=build_config(args))
     args.result.parent.mkdir(parents=True, exist_ok=True)
-    args.result.write_text(json.dumps({"resource_name": remote.api_resource.name, "operation_schemas": remote.operation_schemas()}, default=str, ensure_ascii=False, indent=2) + "\n")
+    args.result.write_text(json.dumps({
+        "resource_name": remote.api_resource.name,
+        "image_uri": args.image_uri,
+        "deployed_at": deployed_at,
+        "revision": "traffic_split_always_latest",
+        "revision_source": "Agent Engine API traffic_config",
+        "operation_schemas": remote.operation_schemas(),
+    }, default=str, ensure_ascii=False, indent=2) + "\n")
     print(remote.api_resource.name)
 
 

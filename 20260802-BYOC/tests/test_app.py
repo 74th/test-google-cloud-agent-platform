@@ -21,6 +21,19 @@ async def test_unary_endpoint(client, monkeypatch):
 
 
 @pytest.mark.asyncio
+async def test_root_and_unary_endpoints_have_identical_success_responses(client, monkeypatch):
+    async def fast(): return "OK"
+    monkeypatch.setattr("byoc_runtime.app.agent.query", fast)
+    payload = {"class_method": "query", "input": {"verification_id": "same-1"}}
+
+    root_response = await client.post("/", json=payload)
+    unary_response = await client.post("/api/reasoning_engine", json=payload)
+
+    assert root_response.status_code == unary_response.status_code == 200
+    assert root_response.json() == unary_response.json() == {"output": "OK"}
+
+
+@pytest.mark.asyncio
 async def test_stream_endpoint(client, monkeypatch):
     async def stream():
         yield "Streaming OK"
@@ -37,6 +50,24 @@ async def test_invalid_operation_and_payload_are_safe_4xx(client):
     assert invalid_endpoint.status_code == 400
     assert invalid_payload.status_code == 422
     assert "bad value" not in invalid_payload.text
+
+
+@pytest.mark.asyncio
+async def test_root_invalid_payload_logs_lifecycle_without_body_or_secret(client, caplog, monkeypatch):
+    from byoc_runtime.logging import logger
+
+    monkeypatch.setattr(logger, "propagate", True)
+    response = await client.post(
+        "/",
+        json={"class_method": "query", "input": {"verification_id": "bad value!", "secret": "do-not-log"}},
+    )
+
+    assert response.status_code == 422
+    messages = "\n".join(record.message for record in caplog.records)
+    assert '"event": "http_received"' in messages
+    assert '"event": "http_completed"' in messages
+    assert "bad value" not in messages
+    assert "do-not-log" not in messages
 
 
 @pytest.mark.asyncio
