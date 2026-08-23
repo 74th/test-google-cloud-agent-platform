@@ -30,6 +30,8 @@ initialize → tools/list → tools/call
 
 Cloud Run と GKE のどちらも、Agent Registry への登録は [`scripts/registry.sh`](scripts/registry.sh) から `gcloud agent-registry services create/update` を実行しました。MCP Server の表示名、説明、interface URL、`JSONRPC` protocol binding、Tool spec はこの登録処理で渡しています。
 
+Cloud Runの発見後実行はローカルoperatorが専用invoker identityのID tokenを取得して行い、GKEの発見後実行は同一クラスタ内のNode.js検証Podが行いました。どちらもAgent RuntimeまたはClaude Agent SDKからの実行ではありません。
+
 GKEのDeployment Manifestには、MCP Server／ToolをAgent Registryへ登録するためのメタデータやannotationは記述していません。Manifest内のannotationはWorkload Identity用だけです。したがって、今回確認したのは「GKE上のMCP Serverを手動でAgent Registryに登録して利用する方式」であり、Manifestを監視するcontrollerなどによる自動登録方式ではありません。
 
 ## 構成
@@ -56,7 +58,7 @@ GKEのDeployment Manifestには、MCP Server／ToolをAgent Registryへ登録す
 | Cloud Run 認証済み実行 | PASS | `initialize`、`tools/list`、`validate_echo` が HTTP 200 |
 | Cloud Run 未認証実行 | PASS | MCP 応答前に HTTP 403 で拒否 |
 | Cloud Run scaling | PASS | `min=0`、`max=3`。idle 時の instance count `0` を観測 |
-| Cloud Run Agent Registry | PASS | 登録・検索・発見 URL 経由の実行に成功 |
+| Cloud Run Agent Registry | PASS | ローカルoperatorが登録・検索・発見URLへのIAM認証付き直接実行に成功 |
 | GKE Standard 構築 | PASS | 専用 VPC、secondary range、`e2-small` 1ノードで Ready |
 | GKE MCP 実行 | PASS | Deployment rollout、validation Job、Pod 内 smoke test に成功 |
 | GKE Agent Registry | PASS | cluster-local URLを発見し、同一クラスタ内のNode.js検証Podから実行に成功 |
@@ -113,6 +115,7 @@ MCP Server Pod :8080
 | MCP protocol | 確認済み | `initialize`、`tools/list`、正常／異常Tool call |
 | Agent Registry手動登録 | 確認済み | `gcloud`によるcreate/update、Tool spec、interface登録 |
 | Registry発見後の実行 | 確認済み | 検索結果のURLを使ったin-cluster実行 |
+| Agent RuntimeからCloud Runへの通信 | 未確認 | Cloud Runはローカルoperatorから呼び出しておりAgent Runtimeは使用していない |
 | Agent RuntimeからGKEへの通信 | 未確認 | GKE外のAgent Runtimeからcluster-local URLへ接続していない |
 | Claude Agent SDKとの連携 | 未確認 | Claude Agent SDKは起動しておらず、検証PodはNode.js smoke client |
 | ManifestベースのMCPメタデータ登録 | 未確認 | MCP固有annotation、CRD、controllerによる登録は使用していない |
@@ -138,6 +141,10 @@ Docker を使った確認は [`docs/runbook.md`](docs/runbook.md) の Local chec
 Cloud Run と GKE の構築、immutable image digest の指定、Agent Registry 登録、検証コマンドは [`docs/runbook.md`](docs/runbook.md) にまとめています。
 
 検証結果の詳細は [`docs/validation-report.md`](docs/validation-report.md)、個別の sanitized evidence は [`evidence/`](evidence/) を参照してください。
+
+## 次の検証
+
+Agent Registryによる接続先管理、Agent Gatewayによるdefault-denyの外向き認可、Cloud Run／GKE endpoint側の認可、およびAgent Runtime上のClaude Agent SDKによるTool実行は、OpenSpec change [`validate-agent-runtime-mcp-access-control`](openspec/changes/validate-agent-runtime-mcp-access-control/proposal.md) で計画しています。この項目はProposal作成済み・実装前であり、現時点のPASSには含めません。
 
 ## 次回、同じ手動登録方式で構築するもの
 
