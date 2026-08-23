@@ -44,7 +44,7 @@ terraform apply tfplan
 cd ..
 ```
 
-`terraform apply` は API、専用 Artifact Registry、Runtime service account、必要最小限の IAM binding、Google 管理の Agent Gateway を作成します。`20260801-agent-hosting` のリソースは作成・変更しません。
+`terraform apply` は API、専用 Artifact Registry、必要最小限の IAM binding、Google 管理の Agent Gateway を作成します。Runtime は Agent Identity を使うため、Runtime 専用 Service Account は作成しません。`20260801-agent-hosting` のリソースは作成・変更しません。
 
 ### egress-policy.yaml の位置づけ
 
@@ -134,4 +134,4 @@ Runner は UTC の timestamp directory に、正確な入力、応答、stderr�
 3. このリポジトリの `terraform/` directory で plan を確認してから `terraform destroy` を実行し、この state だけを削除します。`20260801-agent-hosting` や別 workspace から destroy してはいけません。
 4. `20260822` の名前と label を使って Artifact Registry、service account、Agent Gateway を再確認します。
 
-deploy に失敗した場合は、`terraform show`、Agent Gateway export、Agent Registry endpoint の状態、Runtime の deploy spec、Gateway log を確認します。よくある原因は Model Garden model の無効化、`roles/aiplatform.user` の不足、Artifact Registry reader binding の不足、リージョン不一致、endpoint 未登録、BYOC Gateway root certificate の未信頼です。
+deploy に失敗した場合は、`terraform show`、Agent Gateway export、Agent Registry endpoint の状態、Runtime の deploy spec、Gateway log を確認します。よくある原因は Model Garden model の無効化、Agent Identity の設定不備、Artifact Registry reader binding の不足、リージョン不一致、endpoint 未登録、BYOC Gateway root certificate の未信頼です。

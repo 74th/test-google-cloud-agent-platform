@@ -12,7 +12,6 @@ def test_deploy_config_has_full_gateway_and_vertex_environment() -> None:
         image_uri="us-central1-docker.pkg.dev/nnyn-dev/repo/image:latest",
         vertex_project="nnyn-dev",
         vertex_region="global",
-        service_account="runtime@nnyn-dev.iam.gserviceaccount.com",
         agent_gateway="projects/nnyn-dev/locations/us-central1/agentGateways/agw-20260822-egress",
     )
     config = deploy_agent.build_config(args)
@@ -20,7 +19,7 @@ def test_deploy_config_has_full_gateway_and_vertex_environment() -> None:
     assert config["env_vars"]["ANTHROPIC_VERTEX_PROJECT_ID"] == "nnyn-dev"
     assert config["env_vars"]["CLOUD_ML_REGION"] == "global"
     assert "AGENT_GATEWAY_RESOURCE" not in config["env_vars"]
-    assert config["service_account"].endswith("gserviceaccount.com")
+    assert config["identity_type"] == "AGENT_IDENTITY"
 
 
 def test_gateway_patch_uses_agent_to_anywhere_config() -> None:

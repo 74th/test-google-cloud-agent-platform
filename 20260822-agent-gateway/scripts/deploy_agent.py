@@ -46,7 +46,6 @@ def build_config(args: argparse.Namespace) -> dict[str, object]:
                 },
             },
         ],
-        "service_account": args.service_account,
         "identity_type": "AGENT_IDENTITY",
     }
 
@@ -92,7 +91,6 @@ def main() -> None:
     parser.add_argument("--display-name", required=True)
     parser.add_argument("--vertex-project", required=True)
     parser.add_argument("--vertex-region", required=True)
-    parser.add_argument("--service-account", required=True)
     parser.add_argument("--agent-gateway", required=True)
     args = parser.parse_args()
 
@@ -101,10 +99,6 @@ def main() -> None:
 
         client = vertexai.Client(project=args.project, location=args.location)
         config = build_config(args)
-        # Agent Gateway requires Agent Identity. The Vertex API rejects a
-        # service_account field together with AGENT_IDENTITY; the Terraform
-        # service account remains managed for the non-identity IAM contract.
-        config.pop("service_account", None)
         remote = client.agent_engines.create(config=config)
         api_resource = getattr(remote, "api_resource", None)
         resource = (

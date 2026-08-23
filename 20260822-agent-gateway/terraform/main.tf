@@ -43,19 +43,6 @@ resource "google_artifact_registry_repository" "agent_images" {
   depends_on = [google_project_service.services["artifactregistry.googleapis.com"]]
 }
 
-resource "google_service_account" "runtime" {
-  project      = var.project_id
-  account_id   = "agent-gateway-20260822-runtime"
-  display_name = "20260822 Agent Gateway validation runtime"
-  description  = "Dedicated runtime identity for the 20260822 Agent Gateway validation."
-}
-
-resource "google_project_iam_member" "runtime_aiplatform_user" {
-  project = var.project_id
-  role    = "roles/aiplatform.user"
-  member  = "serviceAccount:${google_service_account.runtime.email}"
-}
-
 resource "google_artifact_registry_repository_iam_member" "agent_runtime_reader" {
   project    = var.project_id
   location   = google_artifact_registry_repository.agent_images.location

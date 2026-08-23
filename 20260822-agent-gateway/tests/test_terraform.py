@@ -28,8 +28,9 @@ def test_gateway_uses_official_resource_and_fixed_nightly_provider() -> None:
 
 def test_iam_is_narrow_and_no_secret_manager_or_api_key() -> None:
     main = (TERRAFORM / "main.tf").read_text()
-    assert 'role    = "roles/aiplatform.user"' in main
     assert 'role       = "roles/artifactregistry.reader"' in main
+    assert "google_service_account" not in main
+    assert "roles/aiplatform.user" not in main
     assert "secretmanager" not in main.lower()
     assert "roles/editor" not in main.lower()
     assert "roles/owner" not in main.lower()

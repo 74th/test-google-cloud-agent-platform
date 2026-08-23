@@ -1,8 +1,3 @@
-output "runtime_service_account_email" {
-  description = "Dedicated Agent Runtime service account."
-  value       = google_service_account.runtime.email
-}
-
 output "artifact_registry_repository_id" {
   description = "Dedicated Docker repository ID."
   value       = google_artifact_registry_repository.agent_images.repository_id
