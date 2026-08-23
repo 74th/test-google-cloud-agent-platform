@@ -1,0 +1,24 @@
+{
+  "tools": [
+    {
+      "name": "validate_echo",
+      "description": "Return a deterministic validation response for the 20260823-mcp-server experiment.",
+      "inputSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Text to include in the validation response.",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        },
+        "required": ["message"]
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    }
+  ]
+}

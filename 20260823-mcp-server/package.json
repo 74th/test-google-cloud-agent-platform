@@ -1,0 +1,23 @@
+{
+  "name": "mcp-server-20260823-mcp-server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "node src/server.js",
+    "start": "node src/server.js",
+    "test": "vitest run",
+    "check:tool-spec": "node scripts/check-tool-spec.mjs",
+    "smoke": "node scripts/local-smoke.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.30.0",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "vitest": "4.1.11"
+  }
+}

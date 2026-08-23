@@ -1,0 +1,106 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: 20260823-mcp-server
+  labels:
+    experiment: 20260823-mcp-server
+    component: server
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: mcp-server
+  namespace: 20260823-mcp-server
+  labels:
+    experiment: 20260823-mcp-server
+    component: server
+  annotations:
+    iam.gke.io/gcp-service-account: __GKE_WORKLOAD_SERVICE_ACCOUNT__
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mcp-20260823-mcp-server
+  namespace: 20260823-mcp-server
+  labels:
+    experiment: 20260823-mcp-server
+    component: server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mcp-20260823-mcp-server
+  template:
+    metadata:
+      labels:
+        app: mcp-20260823-mcp-server
+        experiment: 20260823-mcp-server
+    spec:
+      serviceAccountName: mcp-server
+      containers:
+        - name: mcp-server
+          image: __IMAGE_DIGEST__
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+          env:
+            - name: PORT
+              value: "8080"
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1000
+            capabilities:
+              drop: ["ALL"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mcp-20260823-mcp-server
+  namespace: 20260823-mcp-server
+  labels:
+    experiment: 20260823-mcp-server
+    component: server
+spec:
+  type: ClusterIP
+  selector:
+    app: mcp-20260823-mcp-server
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: mcp-20260823-validation
+  namespace: 20260823-mcp-server
+  labels:
+    experiment: 20260823-mcp-server
+    component: validation
+spec:
+  backoffLimit: 0
+  ttlSecondsAfterFinished: 300
+  template:
+    metadata:
+      labels:
+        experiment: 20260823-mcp-server
+    spec:
+      restartPolicy: Never
+      serviceAccountName: mcp-server
+      containers:
+        - name: validation
+          image: __IMAGE_DIGEST__
+          command: ["node", "scripts/local-smoke.mjs"]
+          env:
+            - name: SMOKE_URL
+              value: "http://mcp-20260823-mcp-server"
+            - name: PORT
+              value: "8080"

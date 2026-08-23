@@ -1,0 +1,14 @@
+project_id       = "nnyn-dev"
+region           = "us-central1"
+zone             = "us-central1-a"
+name_prefix      = "mcp-20260823-mcp-server"
+experiment_label = "20260823-mcp-server"
+
+# Replace with the digest printed by `gcloud artifacts docker images describe`.
+container_image = "us-central1-docker.pkg.dev/nnyn-dev/mcp-20260823-mcp-server/mcp-server@sha256:0000000000000000000000000000000000000000000000000000000000000000"
+
+# Cloud Run is the first phase. Set true only after reviewing the second plan.
+enable_gke   = false
+node_cidr    = "10.240.0.0/20"
+pod_cidr     = "10.241.0.0/16"
+service_cidr = "10.242.0.0/20"

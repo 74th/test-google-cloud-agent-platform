@@ -1,0 +1,8 @@
+node_modules/
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+.env
+evidence/raw/
+evidence/generated/
