@@ -1,6 +1,7 @@
 import asyncio
 import sys
 import types
+import urllib.error
 
 import pytest
 
@@ -85,3 +86,52 @@ def test_sdk_exception_is_normalized(monkeypatch: pytest.MonkeyPatch) -> None:
     with pytest.raises(adapter.AgentInvocationError, match="認証情報") as exc:
         asyncio.run(adapter.invoke("hi"))
     assert "secret token" not in str(exc.value)
+
+
+def test_web_fetch_rejects_non_http_scheme(monkeypatch: pytest.MonkeyPatch) -> None:
+    called = False
+
+    def urlopen(*args, **kwargs):
+        nonlocal called
+        called = True
+        raise AssertionError("urlopen should not be called")
+
+    monkeypatch.setattr(adapter.urllib.request, "urlopen", urlopen)
+    assert "url must use" in adapter._fetch_url("ftp://example.test/page")
+    assert called is False
+
+
+def test_web_fetch_returns_content_and_applies_size_limit(monkeypatch: pytest.MonkeyPatch) -> None:
+    class Headers:
+        def get_content_charset(self):
+            return "utf-8"
+
+    class Response:
+        status = 200
+        headers = Headers()
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_):
+            return None
+
+        def geturl(self):
+            return "https://example.test/final"
+
+        def read(self, size):
+            assert size == adapter.MAX_FETCH_BYTES + 1
+            return ("x" * (size + 20)).encode()
+
+    monkeypatch.setattr(adapter.urllib.request, "urlopen", lambda *args, **kwargs: Response())
+    result = adapter._fetch_url("https://example.test/page")
+    assert len(result) == adapter.MAX_FETCH_BYTES
+
+
+def test_web_fetch_reports_http_403(monkeypatch: pytest.MonkeyPatch) -> None:
+    error = urllib.error.HTTPError(
+        "https://example.test/page", 403, "Forbidden", {}, None
+    )
+    monkeypatch.setattr(adapter.urllib.request, "urlopen", lambda *args, **kwargs: (_ for _ in ()).throw(error))
+    result = adapter._fetch_url("https://example.test/page")
+    assert "could not be retrieved" in result

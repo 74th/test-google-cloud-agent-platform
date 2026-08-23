@@ -14,9 +14,18 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 POLICY_FILE = ROOT / "terraform" / "egress-policy.yaml"
 ESSENTIAL_GOOGLE_ENDPOINTS = {
-    "agentregistry": "https://agentregistry.googleapis.com",
-    "aiplatform": "https://us-central1-aiplatform.googleapis.com",
-    "logging": "https://logging.googleapis.com",
+    "agentregistry": {
+        "url": "https://agentregistry.googleapis.com",
+        "service": "agw-20260822-agentregistry",
+    },
+    "aiplatform": {
+        "url": "https://aiplatform.googleapis.com",
+        "service": "agw-20260822-aiplatform",
+    },
+    "logging": {
+        "url": "https://logging.googleapis.com",
+        "service": "agw-20260822-logging",
+    },
 }
 
 
@@ -73,8 +82,22 @@ def register_github(project: str, location: str, service: str) -> str:
     return run(github_service_command(project, location, service))
 
 
-def register_essential_google(project: str, location: str, service: str, url: str) -> str:
-    return run(endpoint_service_command(project, location, service, url, f"20260822 managed {service}"))
+def essential_google_service_command(project: str, location: str, name: str) -> list[str]:
+    try:
+        endpoint = ESSENTIAL_GOOGLE_ENDPOINTS[name]
+    except KeyError as exc:
+        raise ValueError(f"未知の Google 管理 endpoint です: {name}") from exc
+    return endpoint_service_command(
+        project,
+        location,
+        endpoint["service"],
+        endpoint["url"],
+        f"20260822 managed {name}",
+    )
+
+
+def register_essential_google(project: str, location: str, name: str) -> str:
+    return run(essential_google_service_command(project, location, name))
 
 
 def apply_allow_policy(project: str, location: str, endpoint_id: str, principal: str) -> None:
@@ -163,8 +186,7 @@ def main() -> None:
     managed = sub.add_parser("register-managed")
     managed.add_argument("--project", default=os.environ.get("PROJECT_ID", "nnyn-dev"))
     managed.add_argument("--location", default=os.environ.get("LOCATION", "us-central1"))
-    managed.add_argument("--service", required=True)
-    managed.add_argument("--url", required=True)
+    managed.add_argument("--name", choices=sorted(ESSENTIAL_GOOGLE_ENDPOINTS), required=True)
     allow = sub.add_parser("allow-github")
     allow.add_argument("--project", required=True)
     allow.add_argument("--location", required=True)
@@ -189,7 +211,7 @@ def main() -> None:
     if args.command == "register-github":
         print(register_github(args.project, args.location, args.service), end="")
     elif args.command == "register-managed":
-        print(register_essential_google(args.project, args.location, args.service, args.url), end="")
+        print(register_essential_google(args.project, args.location, args.name), end="")
     elif args.command == "allow-github":
         apply_allow_policy(args.project, args.location, args.endpoint, args.principal)
     elif args.command == "export":

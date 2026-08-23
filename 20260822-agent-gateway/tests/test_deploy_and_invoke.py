@@ -19,7 +19,7 @@ def test_deploy_config_has_full_gateway_and_vertex_environment() -> None:
     assert config["env_vars"]["ANTHROPIC_MODEL"] == deploy_agent.VERTEX_HAIKU_MODEL
     assert config["env_vars"]["ANTHROPIC_VERTEX_PROJECT_ID"] == "nnyn-dev"
     assert config["env_vars"]["CLOUD_ML_REGION"] == "global"
-    assert config["env_vars"]["AGENT_GATEWAY_RESOURCE"].endswith("agw-20260822-egress")
+    assert "AGENT_GATEWAY_RESOURCE" not in config["env_vars"]
     assert config["service_account"].endswith("gserviceaccount.com")
 
 
@@ -64,6 +64,10 @@ def test_gateway_commands_and_paging() -> None:
         ]
     )
     assert gateway.collect_log_pages(lambda _: next(pages)) == [{"host": "github.com"}, {"host": "target"}]
+
+    managed = gateway.essential_google_service_command("nnyn-dev", "us-central1", "aiplatform")
+    assert "https://aiplatform.googleapis.com" in " ".join(managed)
+    assert "www8.cao.go.jp" not in " ".join(managed)
 
 
 def test_allow_policy_rejects_unqualified_principal():

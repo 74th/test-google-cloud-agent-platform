@@ -46,36 +46,11 @@ cd ..
 
 `terraform apply` creates API enablements, a dedicated Artifact Registry, the runtime service account, narrow IAM bindings, and the Google-managed Agent Gateway. It does not create or modify resources from `20260801-agent-hosting`.
 
-Agent Gateway's root CA is returned as a sensitive Terraform output. For a BYOC image, retrieve it after the gateway exists and pass it as a build argument, as required by the [official BYOC gateway guidance](https://cloud.google.com/gemini-enterprise-agent-platform/scale/runtime/agent-gateway-runtime-deploy):
-
-```bash
-terraform -chdir=terraform output -raw agent_gateway_root_certificates > /tmp/agent-gateway-roots.pem
-docker build --build-arg AGENT_GATEWAY_ROOT_CERTIFICATES="$(cat /tmp/agent-gateway-roots.pem)" .
-```
-
-## Register the one allowed endpoint
-
-Agent Gateway itself has no host-by-host deny list. [terraform/egress-policy.yaml](terraform/egress-policy.yaml) is the reviewable contract: `default_action: DENY`, with only `github.com` listed. The operational registration uses Agent Registry:
-
-```bash
-uv run python scripts/gateway.py register-github
-gcloud agent-registry endpoints list --project=nnyn-dev --location=us-central1
-```
-
-Use the endpoint ID returned by the list command and the deployed Agent Runtime identity principal when applying the IAP egressor binding:
-
-```bash
-uv run python scripts/gateway.py allow-github \
-  --project=nnyn-dev --location=us-central1 \
-  --endpoint=ENDPOINT_ID \
-  --principal='principal://agents.global.org-PROJECT_NUMBER.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER/locations/us-central1/reasoningEngines/ENGINE_ID'
-```
-
-Do not register the unapproved test host. The intended evidence is a gateway decision log for that host with default-deny, not an individual deny policy.
-
 ## Build and deploy the BYOC agent
 
 After `terraform apply`, `scripts/deploy.sh` configures Docker authentication, builds and pushes the dedicated image, creates the custom container Agent Runtime, and patches its `agentToAnywhereConfig` to the Terraform Agent Gateway resource. The image sets `CLAUDE_CODE_USE_VERTEX=1`, the `nnyn-dev` Vertex project, `global` inference region, and `claude-haiku-4-5@20251001`.
+
+The script retrieves the Gateway root CA and passes it to the real image build. A bare `docker build` without that certificate is only a local, non-deploying build and is not part of the reproducible deployment procedure.
 
 ```bash
 ./scripts/deploy.sh
@@ -84,27 +59,56 @@ export AGENT_RESOURCE=projects/PROJECT_NUMBER/locations/us-central1/reasoningEng
 
 The runtime contract is `POST /api/reasoning_engine` for `query`, `POST /api/stream_reasoning_engine` for `stream_query`, and `GET /health`. The SDK has only the `WebFetch` tool. It must fetch a requested URL before answering and must explicitly report a fetch failure without filling in content from memory.
 
+## Register endpoints and authorize GitHub
+
+Agent Gateway itself has no host-by-host deny list. [terraform/egress-policy.yaml](terraform/egress-policy.yaml) is the reviewable contract: `default_action: DENY`, with only `github.com` in the user-controlled Web allow list. The Google-managed services needed by Agent Platform (`agentregistry.googleapis.com`, `aiplatform.googleapis.com`, and `logging.googleapis.com`) are documented separately and are not arbitrary Web destinations.
+
+First inspect the existing registry. Do not recreate an endpoint that is already listed:
+
+```bash
+gcloud agent-registry endpoints list --project=nnyn-dev --location=us-central1
+```
+
+If a required managed endpoint is absent, register it with the fixed URL and resource name encoded by the helper. The helper accepts only the three documented Google-managed names:
+
+```bash
+uv run python scripts/gateway.py register-managed --name agentregistry
+uv run python scripts/gateway.py register-managed --name aiplatform
+uv run python scripts/gateway.py register-managed --name logging
+```
+
+Register GitHub if it is absent, then use the endpoint ID returned by the list command and the deployed Agent Runtime identity principal when applying the IAP egressor binding. The identity principal is available only after `deploy.sh` creates the Runtime:
+
+```bash
+uv run python scripts/gateway.py register-github
+gcloud agent-registry endpoints list --project=nnyn-dev --location=us-central1
+uv run python scripts/gateway.py allow-github \
+  --project=nnyn-dev --location=us-central1 \
+  --endpoint=ENDPOINT_ID \
+  --principal='principal://agents.global.org-PROJECT_NUMBER.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER/locations/us-central1/reasoningEngines/ENGINE_ID'
+```
+
+Do not register the unapproved test host. The intended evidence is a gateway decision log for that host with default-deny, not an individual deny policy.
+
 ## Run the live validation
 
-Export the gateway configuration and collect logs before or immediately after the two calls. Agent Gateway logs use monitored resource `networkservices.googleapis.com/Gateway`.
+Export the gateway configuration before the calls. The validation runner invokes both prompts first and then collects Gateway and IAP logs, so the evidence is tied to the calls it evaluates. Agent Gateway logs use monitored resource `networkservices.googleapis.com/Gateway`.
 
 ```bash
 mkdir -p evidence/live
 gcloud network-services agent-gateways describe agw-20260822-egress \
   --project=nnyn-dev --location=us-central1 --format=json > evidence/live/gateway.json
-gcloud logging read \
-  'resource.type="networkservices.googleapis.com/Gateway" AND resource.labels.location="us-central1" AND resource.labels.gateway_name="agw-20260822-egress"' \
-  --project=nnyn-dev --format=json --order=asc > evidence/live/gateway-logs.json
-gcloud logging read \
-  'protoPayload.serviceName="iap.googleapis.com"' \
-  --project=nnyn-dev --format=json --order=asc > evidence/live/iap-logs.json
+export VALIDATION_SINCE="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 uv run python scripts/validate.py \
   --agent-resource "$AGENT_RESOURCE" \
   --location us-central1 \
-  --logs evidence/live/gateway-logs.json
+  --collect-after \
+  --project nnyn-dev \
+  --gateway agw-20260822-egress \
+  --since "$VALIDATION_SINCE"
 ```
 
-The runner creates a UTC timestamped directory containing each exact input, response, stderr, exit status, matched allow/deny log entries, the policy copy, and `summary.json`. The GitHub case passes only when a non-empty response and an `allow` record for `github.com` are present. The 2027 holiday case passes only when the response says the page could not be confirmed and a `deny` record for `www8.cao.go.jp` is present. A response alone never proves network access.
+The runner creates a UTC timestamped directory containing each exact input, response, stderr, exit status, matched allow/deny log entries, the policy copy, the collected logs, and `summary.json`. The GitHub case requires a response referring to both GitHub and `74th`, plus an `allow` record for `github.com`. The 2027 holiday case requires a fetch-failure response without a holiday list, plus a `deny` record for `www8.cao.go.jp`. A response alone never proves network access.
 
 ## Evidence and report
 

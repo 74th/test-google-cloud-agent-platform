@@ -1,7 +1,7 @@
 from pathlib import Path
 
 
-TERRAFORM = Path("terraform")
+TERRAFORM = Path(__file__).resolve().parents[1] / "terraform"
 
 
 def test_gateway_is_default_deny_and_only_github_is_web_allow() -> None:
@@ -10,7 +10,9 @@ def test_gateway_is_default_deny_and_only_github_is_web_allow() -> None:
     assert "default_action: DENY" in policy
     assert "host: github.com" in policy
     assert "www8.cao.go.jp" not in policy
-    assert "deny:" not in policy.lower()
+    web_policy = policy.split("google_managed_services:", 1)[0]
+    assert web_policy.count("host: ") == 1
+    assert not any(line.lstrip().startswith(("action:", "deny:")) for line in web_policy.splitlines())
 
 
 def test_gateway_uses_official_resource_and_fixed_nightly_provider() -> None:

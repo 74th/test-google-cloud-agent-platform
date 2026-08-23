@@ -1,3 +1,4 @@
+README.md
 pyproject.toml
 20260822_agent_gateway.egg-info/PKG-INFO
 20260822_agent_gateway.egg-info/SOURCES.txt
@@ -7,3 +8,14 @@ pyproject.toml
 agent_service/__init__.py
 agent_service/adapter.py
 agent_service/app.py
+scripts/__init__.py
+scripts/delete_agent.py
+scripts/deploy_agent.py
+scripts/gateway.py
+scripts/invoke_agent.py
+scripts/validate.py
+tests/test_adapter.py
+tests/test_deploy_and_invoke.py
+tests/test_runtime_contract.py
+tests/test_terraform.py
+tests/test_validation_runner.py

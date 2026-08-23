@@ -25,7 +25,6 @@ def build_config(args: argparse.Namespace) -> dict[str, object]:
             "ANTHROPIC_MODEL": VERTEX_HAIKU_MODEL,
             "ANTHROPIC_DEFAULT_HAIKU_MODEL": VERTEX_HAIKU_MODEL,
             "VERTEX_REGION_CLAUDE_HAIKU_4_5": "global",
-            "AGENT_GATEWAY_RESOURCE": args.agent_gateway,
         },
         "class_methods": [
             {

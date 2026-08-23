@@ -8,4 +8,16 @@ allowed_endpoints:
     scheme: https
     port: 443
     reason: validation target
-google_managed_services: managed-by-agent-platform
+google_managed_services:
+  - host: agentregistry.googleapis.com
+    scheme: https
+    port: 443
+    reason: Agent Platform registry control plane
+  - host: aiplatform.googleapis.com
+    scheme: https
+    port: 443
+    reason: Vertex AI model inference
+  - host: logging.googleapis.com
+    scheme: https
+    port: 443
+    reason: Cloud Logging evidence collection

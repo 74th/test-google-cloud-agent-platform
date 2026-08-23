@@ -1,6 +1,6 @@
 import json
 
-from scripts.validate import CASES, log_host_and_disposition, run_case
+from scripts.validate import CASES, log_host_and_disposition, response_matches, run_case
 
 
 def test_runner_normalizes_gateway_and_iap_decisions() -> None:
@@ -30,8 +30,8 @@ def test_runner_saves_prompt_response_status_and_log_evidence(tmp_path):
 
     def invoke(case):
         if case.name == "github":
-            return 0, "GitHub page summary", ""
-        return 0, "ページを取得できず、回答を補完しません。", ""
+            return 0, "GitHub 74th page summary", ""
+        return 0, "ページを取得できません。回答を補完しません。", ""
 
     result = run_case(CASES[0], tmp_path / "github", invoke, {}, logs)
     assert result["passed"] is True
@@ -40,4 +40,11 @@ def test_runner_saves_prompt_response_status_and_log_evidence(tmp_path):
 
     result = run_case(CASES[1], tmp_path / "cao", invoke, {}, logs)
     assert result["passed"] is True
-    assert "www8.cao.go.jp" not in (tmp_path / "cao" / "result.json").read_text() or True
+    assert json.loads((tmp_path / "cao" / "result.json").read_text())["matched_log_entries"]
+
+
+def test_runner_rejects_unrelated_or_incomplete_responses():
+    assert response_matches(CASES[0], "GitHub 74th のページを要約しました。")
+    assert not response_matches(CASES[0], "処理が完了しました。")
+    assert response_matches(CASES[1], "ページを取得できませんでした。祝日一覧は補完しません。")
+    assert not response_matches(CASES[1], "2027年の祝日:\n- 1月1日")

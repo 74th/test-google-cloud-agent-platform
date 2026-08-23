@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import subprocess
 import sys
 from dataclasses import dataclass
@@ -75,6 +76,40 @@ def invoke_command(agent_resource: str, location: str, prompt: str) -> list[str]
     ]
 
 
+def response_matches(case: Case, stdout: str) -> bool:
+    """Check the response contract without treating any non-empty text as success."""
+    response = stdout.strip()
+    if not response:
+        return False
+    lowered = response.casefold()
+    if case.name == "github":
+        return (
+            "github" in lowered
+            and "74th" in lowered
+            and not any(marker in lowered for marker in ("取得できません", "取得に失敗", "アクセスできません"))
+        )
+    failure_markers = ("取得できません", "取得できず", "取得に失敗", "アクセスできません", "接続できません", "拒否")
+    return bool(re.search("|".join(map(re.escape, failure_markers)), response)) and not re.search(
+        r"(?:^|[\n、])\s*[-・]\s*\d{1,2}月\d{1,2}日", response
+    )
+
+
+def update_case_result(
+    case: Case, evidence_dir: Path, result: dict[str, Any], logs: list[dict[str, Any]]
+) -> dict[str, Any]:
+    matched = []
+    for entry in logs:
+        host, disposition = log_host_and_disposition(entry)
+        if host == case.expected_host and disposition == case.expected_disposition:
+            matched.append(entry)
+    result["matched_log_entries"] = matched
+    result["passed"] = (
+        result["exit_code"] == 0 and response_matches(case, result["response"]) and bool(matched)
+    )
+    (evidence_dir / "result.json").write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return result
+
+
 def run_case(
     case: Case,
     evidence_dir: Path,
@@ -88,24 +123,33 @@ def run_case(
     (evidence_dir / "response.txt").write_text(stdout, encoding="utf-8")
     (evidence_dir / "stderr.txt").write_text(stderr, encoding="utf-8")
     (evidence_dir / "exit-status").write_text(f"{exit_code}\n", encoding="utf-8")
-    matched = []
-    for entry in logs:
-        host, disposition = log_host_and_disposition(entry)
-        if host == case.expected_host and disposition == case.expected_disposition:
-            matched.append(entry)
-    response_ok = bool(stdout.strip()) and (case.name == "github" or "取得" in stdout or "接続" in stdout or "拒否" in stdout)
-    passed = exit_code == 0 and response_ok and bool(matched)
     result = {
         "case": case.name,
         "prompt": case.prompt,
         "exit_code": exit_code,
         "expected_host": case.expected_host,
         "expected_disposition": case.expected_disposition,
-        "matched_log_entries": matched,
-        "passed": passed,
+        "response": stdout,
     }
-    (evidence_dir / "result.json").write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    return result
+    return update_case_result(case, evidence_dir, result, logs)
+
+
+def collect_live_logs(project: str, gateway: str, location: str, since: str) -> list[dict[str, Any]]:
+    """Collect gateway and IAP logs after the agent calls have completed."""
+    try:
+        from scripts.gateway import iap_logging_query, logging_query, run
+    except ModuleNotFoundError:  # direct `python scripts/validate.py` execution
+        from gateway import iap_logging_query, logging_query, run
+
+    entries: list[dict[str, Any]] = []
+    for command in (
+        logging_query(project, gateway, since, location),
+        iap_logging_query(project, since),
+    ):
+        payload = json.loads(run(command))
+        if isinstance(payload, list):
+            entries.extend(entry for entry in payload if isinstance(entry, dict))
+    return entries
 
 
 def main() -> None:
@@ -115,13 +159,20 @@ def main() -> None:
     parser.add_argument("--evidence-root", type=Path, default=Path(os.environ.get("EVIDENCE_ROOT", "evidence")))
     parser.add_argument("--policy", type=Path, default=Path("terraform/egress-policy.yaml"))
     parser.add_argument("--logs", type=Path, help="JSON array of exported gateway decision logs")
+    parser.add_argument("--collect-after", action="store_true", help="呼び出し完了後に Gateway/IAP ログを収集する")
+    parser.add_argument("--project", help="--collect-after 用の Google Cloud project")
+    parser.add_argument("--gateway", help="--collect-after 用の Agent Gateway 名")
+    parser.add_argument("--since", help="ログ収集開始時刻（RFC3339、未指定時はランナー開始時刻）")
     args = parser.parse_args()
     if not args.agent_resource:
         parser.error("--agent-resource または AGENT_RESOURCE が必要です。")
-    timestamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
+    started_at = datetime.now(UTC)
+    timestamp = started_at.strftime("%Y%m%dT%H%M%SZ")
     root = args.evidence_root / timestamp
     policy_text = args.policy.read_text(encoding="utf-8")
     policy = {"text": policy_text}
+    if args.collect_after and (not args.project or not args.gateway):
+        parser.error("--collect-after には --project と --gateway が必要です。")
     logs = json.loads(args.logs.read_text(encoding="utf-8")) if args.logs else []
 
     def invoke(case: Case) -> tuple[int, str, str]:
@@ -133,7 +184,15 @@ def main() -> None:
         )
         return result.returncode, result.stdout, result.stderr
 
-    results = [run_case(case, root / case.name, invoke, policy, logs) for case in CASES]
+    if args.collect_after:
+        results = [run_case(case, root / case.name, invoke, policy, []) for case in CASES]
+        logs = collect_live_logs(args.project, args.gateway, args.location, args.since or started_at.isoformat())
+        results = [
+            update_case_result(case, root / case.name, result, logs)
+            for case, result in zip(CASES, results, strict=True)
+        ]
+    else:
+        results = [run_case(case, root / case.name, invoke, policy, logs) for case in CASES]
     (root / "policy.yaml").write_text(policy_text, encoding="utf-8")
     (root / "gateway-logs.json").write_text(json.dumps(logs, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     summary = {
