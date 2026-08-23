@@ -1,0 +1,30 @@
+{
+  "timestamp": "20260823T034815Z",
+  "results": [
+    {
+      "case": "github",
+      "prompt": "https://github.com/74th の内容を要約して",
+      "exit_code": 1,
+      "expected_host": "github.com",
+      "expected_disposition": "allow",
+      "response": "",
+      "matched_log_entries": [],
+      "passed": false
+    },
+    {
+      "case": "cao-default-deny",
+      "prompt": "https://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html は日本の国民の祝日についての広報ページだよ。この内容を見て、2027年の祝日を全て教えて。",
+      "exit_code": 1,
+      "expected_host": "www8.cao.go.jp",
+      "expected_disposition": "deny",
+      "response": "",
+      "matched_log_entries": [],
+      "passed": false
+    }
+  ],
+  "passed": false,
+  "constraints": [
+    "Evidence records are not a substitute for inspecting gateway logs.",
+    "No destroy was run."
+  ]
+}

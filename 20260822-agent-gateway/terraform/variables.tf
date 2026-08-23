@@ -28,6 +28,12 @@ variable "gateway_name" {
   default     = "agw-20260822-egress"
 }
 
+variable "runtime_image_uri" {
+  description = "Container image URI for the Agent Runtime."
+  type        = string
+  default     = "us-central1-docker.pkg.dev/nnyn-dev/agent-gateway-20260822/claude-agent-gateway:20260822-r17"
+}
+
 variable "labels" {
   description = "Labels used to scope cleanup to this validation."
   type        = map(string)

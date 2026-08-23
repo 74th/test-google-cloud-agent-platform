@@ -54,13 +54,13 @@ cd ..
 
 ## BYOC エージェントの build と deploy
 
-`terraform apply` の後、`scripts/deploy.sh` が Docker 認証を設定し、専用イメージを build/push し、custom container の Agent Runtime を作成して、Terraform の Agent Gateway resource を `agentToAnywhereConfig` に関連付けます。イメージには `CLAUDE_CODE_USE_VERTEX=1`、`nnyn-dev` の Vertex project、推論リージョン `global`、`claude-haiku-4-5@20251001` を設定します。
+`scripts/deploy.sh` は Docker 認証を設定して専用イメージを build/push し、その URI を `runtime_image_uri` として Terraform に渡します。Agent Runtime の作成・更新、`AGENT_IDENTITY`、Agent Gateway の `agentToAnywhereConfig`、Claude の環境変数は Terraform が管理します。既存 Runtime を import 済みの state で実行するため、同じスクリプトを再実行しても別 Runtime は作成しません。
 
 このスクリプトは Gateway の root CA を取得して、実際に push する image build に渡します。証明書なしで単独実行する `docker build` はローカルだけの捨て build であり、再現可能な deploy 手順には含めません。
 
 ```bash
 ./scripts/deploy.sh
-export AGENT_RESOURCE=projects/PROJECT_NUMBER/locations/us-central1/reasoningEngines/ENGINE_ID
+export AGENT_RESOURCE="$(terraform -chdir=terraform output -raw runtime_name)"
 ```
 
 Runtime の契約は、`query` 用の `POST /api/reasoning_engine`、`stream_query` 用の `POST /api/stream_reasoning_engine`、および `GET /health` です。SDK に公開する tool は `WebFetch` だけです。URL が指定された場合は回答前に必ず取得し、取得に失敗した場合はその事実を明示して、記憶から内容を補完してはいけません。
@@ -69,29 +69,18 @@ Runtime の契約は、`query` 用の `POST /api/reasoning_engine`、`stream_que
 
 Agent Gateway 自体にはホストごとの deny list はありません。上記の [terraform/egress-policy.yaml](terraform/egress-policy.yaml) はレビュー用の契約であり、実際の endpoint 登録を行うファイルではありません。ユーザーが指定する Web allow は `github.com` のみです。Agent Platform に必要な Google 管理サービス（`agentregistry.googleapis.com`、`aiplatform.googleapis.com`、`logging.googleapis.com`）は別枠で記録し、任意の Web 宛先として扱いません。
 
-まず既存の Registry を確認します。すでに一覧にある endpoint は再作成しないでください。
+Registry service と Agent Runtime endpoint は Terraform の `google_agent_registry_service` で管理しています。現在の state へ既存 endpoint を import 済みなので、通常の構築では手動登録コマンドを実行しません。確認する場合は次を使います。
 
 ```bash
 gcloud agent-registry endpoints list --project=nnyn-dev --location=us-central1
 ```
 
-必要な managed endpoint が存在しない場合だけ、helper に定義した固定 URL と resource 名で登録します。helper が受け付ける Google 管理 endpoint 名は次の 3 つだけです。
+GitHub endpoint の `roles/iap.egressor` binding も Terraform の [terraform/iam.tf](terraform/iam.tf) で管理しています。`google_agent_registry_endpoint` data source が GitHub service の作成後に endpoint を検索し、API が発行した `endpoint_id` を binding へ渡します。そのため、endpoint ID を Terraform 設定へ固定していません。member も Runtime の `effectiveIdentity` から生成されるため、`ENGINE_ID` や principal を手で組み立てる必要はありません。既存 binding を別の state へ移す場合だけ、IAM binding を Terraform import します。
 
 ```bash
-uv run python scripts/gateway.py register-managed --name agentregistry
-uv run python scripts/gateway.py register-managed --name aiplatform
-uv run python scripts/gateway.py register-managed --name logging
-```
-
-GitHub endpoint が存在しない場合に登録し、一覧で確認した endpoint ID と、deploy 済み Agent Runtime の identity principal を使って IAP egressor binding を設定します。identity principal は `deploy.sh` が Runtime を作成した後でなければ確定しません。
-
-```bash
-uv run python scripts/gateway.py register-github
-gcloud agent-registry endpoints list --project=nnyn-dev --location=us-central1
-uv run python scripts/gateway.py allow-github \
-  --project=nnyn-dev --location=us-central1 \
-  --endpoint=ENDPOINT_ID \
-  --principal='principal://agents.global.org-PROJECT_NUMBER.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER/locations/us-central1/reasoningEngines/ENGINE_ID'
+terraform -chdir=terraform import \
+  google_iap_agent_registry_endpoint_iam_member.github \
+  'projects/PROJECT_ID/locations/REGION/iap_web/agentRegistry/endpoints/ENDPOINT_ID roles/iap.egressor principal://agents.global.proj-PROJECT_NUMBER.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER/locations/REGION/reasoningEngines/ENGINE_ID'
 ```
 
 未承認の検証対象（`www8.cao.go.jp`）は登録しません。その宛先については、個別 deny policy ではなく、既定拒否を示す Gateway/IAP の判定ログを証跡にします。
@@ -118,7 +107,7 @@ Runner は UTC の timestamp directory に、正確な入力、応答、stderr�
 
 ## 証跡とレポート
 
-完了済みのライブ検証は[日付付きレポート](evidence/20260822-report.md)で確認できます。保存した Gateway policy 契約、2 つの正確な prompt、応答、終了状態、判定に使った Gateway/IAP のログ項目、合否、外部サイトの可用性などの制約を記載しています。access token、ADC の内容、API key などの秘密情報は保存しないでください。
+完了済みのライブ検証は[日付付きレポート](evidence/20260822-report.md)で確認できます。保存した Gateway policy 契約、2 つの正確な prompt、応答、終了状態、判定に使った Gateway/IAP のログ項目、合否、外部サイトの可用性などの制約を記載しています。access token、ADC の内容、API key などの秘密情報は保存しないでください。Terraform 管理へ移行した後の確認では、まず `terraform plan` が `No changes` になることも確認してください。
 
 ## クリーンアップ（人間による確認が必要）
 

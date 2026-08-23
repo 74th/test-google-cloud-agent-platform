@@ -1,0 +1,10 @@
+{
+  "case": "github",
+  "prompt": "https://github.com/74th の内容を要約して",
+  "exit_code": 1,
+  "expected_host": "github.com",
+  "expected_disposition": "allow",
+  "response": "",
+  "matched_log_entries": [],
+  "passed": false
+}

@@ -23,3 +23,13 @@ output "agent_registry_path" {
   description = "Regional registry consumed by Agent Gateway."
   value       = local.registry_path
 }
+
+output "runtime_name" {
+  description = "Full Agent Runtime resource name."
+  value       = google_vertex_ai_reasoning_engine.runtime.id
+}
+
+output "runtime_effective_identity" {
+  description = "Agent Identity effective principal for the Runtime."
+  value       = google_vertex_ai_reasoning_engine.runtime.spec[0].effective_identity
+}
