@@ -1,17 +1,17 @@
-# 20260822 Agent Gateway egress validation
+# 20260822 Agent Gateway 外向き通信ポリシー検証
 
-This repository is a reproducible, test-only BYOC validation for Claude Agent SDK behind Google Cloud Agent Gateway. It creates resources only in `nnyn-dev/us-central1`; Claude Vertex AI inference is configured for `nnyn-dev/global`. Resource names and labels contain `20260822` and are independent of `20260801-agent-hosting`.
+このリポジトリは、Google Cloud Agent Gateway の配下で Claude Agent SDK を使う BYOC エージェントを検証する、再現可能なテスト用構成です。リソースは `nnyn-dev/us-central1` にのみ作成し、Claude の Vertex AI 推論先は `nnyn-dev/global` に固定します。リソース名とラベルには `20260822` を含め、`20260801-agent-hosting` とは独立しています。
 
-The security boundary is Agent Gateway in Agent-to-Anywhere mode. The gateway uses Agent Registry and IAP egress authorization: unregistered destinations are default-deny, while the registered `https://github.com` endpoint is explicitly authorized. The policy intentionally has no per-host deny rule.
+セキュリティ境界は Agent-to-Anywhere モードの Agent Gateway です。Gateway は Agent Registry と IAP の egress 認可を使い、登録されていない宛先を既定で拒否し、登録した `https://github.com` endpoint のみを明示的に許可します。個別ホスト向けの deny ルールは作成しません。
 
-## Prerequisites
+## 前提条件
 
-- Google Cloud project `nnyn-dev`, billing enabled, and permissions to enable APIs, create IAM bindings, create Agent Gateway resources, and deploy Agent Runtime.
-- `gcloud` 581.0.0 or newer with the Agent Gateway and Agent Registry command groups; authenticated ADC and an active gcloud account.
-- Terraform 1.8 or newer, the Google provider 7.20 or newer, Docker, and `uv`.
-- Claude Haiku 4.5 enabled in Vertex AI Model Garden. No Anthropic API key or Secret Manager secret is used.
+- 課金が有効な Google Cloud プロジェクト `nnyn-dev`。API 有効化、IAM binding、Agent Gateway 作成、Agent Runtime デプロイの権限が必要です。
+- Agent Gateway と Agent Registry のコマンドグループを含む `gcloud` 581.0.0 以降。ADC と gcloud アカウントの認証も必要です。
+- Terraform 1.8 以降、Google provider 7.20 以降、Docker、`uv`。
+- Vertex AI Model Garden で Claude Haiku 4.5 を有効化済みであること。Anthropic API key と Secret Manager secret は使用しません。
 
-Authenticate before any cloud operation:
+クラウド操作の前に認証します。
 
 ```bash
 gcloud auth login
@@ -20,7 +20,7 @@ gcloud config set project nnyn-dev
 uv sync --extra test --extra deploy
 ```
 
-The relevant settings are available in [.env.example](.env.example):
+関連する設定値は [.env.example](.env.example) にも記載しています。
 
 ```bash
 export PROJECT_ID=nnyn-dev
@@ -30,9 +30,9 @@ export VERTEX_REGION=global
 export AGENT_GATEWAY_NAME=agw-20260822-egress
 ```
 
-## Build the infrastructure
+## 基盤の構築
 
-The official Agent Gateway Terraform resource is currently exposed by the pinned nightly provider because the stable provider does not yet contain the resource schema used by this validation. The provider choice and version are recorded in [terraform/versions.tf](terraform/versions.tf). The official reference module is [terraform-google-agent-gateway](https://github.com/GoogleCloudPlatform/terraform-google-agent-gateway).
+Agent Gateway の公式 Terraform resource は、今回の検証で使う schema が安定版 provider にまだ含まれていないため、固定した nightly provider で提供されています。provider の選択とバージョンは [terraform/versions.tf](terraform/versions.tf) に記録しています。公式の参考モジュールは [terraform-google-agent-gateway](https://github.com/GoogleCloudPlatform/terraform-google-agent-gateway) です。
 
 ```bash
 cd terraform
@@ -44,32 +44,38 @@ terraform apply tfplan
 cd ..
 ```
 
-`terraform apply` creates API enablements, a dedicated Artifact Registry, the runtime service account, narrow IAM bindings, and the Google-managed Agent Gateway. It does not create or modify resources from `20260801-agent-hosting`.
+`terraform apply` は API、専用 Artifact Registry、Runtime service account、必要最小限の IAM binding、Google 管理の Agent Gateway を作成します。`20260801-agent-hosting` のリソースは作成・変更しません。
 
-## Build and deploy the BYOC agent
+### egress-policy.yaml の位置づけ
 
-After `terraform apply`, `scripts/deploy.sh` configures Docker authentication, builds and pushes the dedicated image, creates the custom container Agent Runtime, and patches its `agentToAnywhereConfig` to the Terraform Agent Gateway resource. The image sets `CLAUDE_CODE_USE_VERTEX=1`, the `nnyn-dev` Vertex project, `global` inference region, and `claude-haiku-4-5@20251001`.
+[terraform/egress-policy.yaml](terraform/egress-policy.yaml) は Terraform に読み込まれる構築設定ではありません。現在の Agent Gateway Terraform resource にこの YAML を直接投入する schema がないため、`terraform plan` や `terraform apply` はこのファイルを参照しません。
 
-The script retrieves the Gateway root CA and passes it to the real image build. A bare `docker build` without that certificate is only a local, non-deploying build and is not part of the reproducible deployment procedure.
+このファイルは、期待する外向き通信ポリシー（既定拒否、`github.com` のみの Web allow、内閣府 endpoint の未列挙）を記録したレビュー用の契約ファイルです。`tests/test_terraform.py` の静的検査と、検証ランナーの `--policy`（既定値はこのファイル）による証跡保存で使用します。実際の Gateway の制御は、下記の Agent Gateway の managed 設定、Agent Registry endpoint 登録、IAP の IAM 認可で行います。
+
+## BYOC エージェントの build と deploy
+
+`terraform apply` の後、`scripts/deploy.sh` が Docker 認証を設定し、専用イメージを build/push し、custom container の Agent Runtime を作成して、Terraform の Agent Gateway resource を `agentToAnywhereConfig` に関連付けます。イメージには `CLAUDE_CODE_USE_VERTEX=1`、`nnyn-dev` の Vertex project、推論リージョン `global`、`claude-haiku-4-5@20251001` を設定します。
+
+このスクリプトは Gateway の root CA を取得して、実際に push する image build に渡します。証明書なしで単独実行する `docker build` はローカルだけの捨て build であり、再現可能な deploy 手順には含めません。
 
 ```bash
 ./scripts/deploy.sh
 export AGENT_RESOURCE=projects/PROJECT_NUMBER/locations/us-central1/reasoningEngines/ENGINE_ID
 ```
 
-The runtime contract is `POST /api/reasoning_engine` for `query`, `POST /api/stream_reasoning_engine` for `stream_query`, and `GET /health`. The SDK has only the `WebFetch` tool. It must fetch a requested URL before answering and must explicitly report a fetch failure without filling in content from memory.
+Runtime の契約は、`query` 用の `POST /api/reasoning_engine`、`stream_query` 用の `POST /api/stream_reasoning_engine`、および `GET /health` です。SDK に公開する tool は `WebFetch` だけです。URL が指定された場合は回答前に必ず取得し、取得に失敗した場合はその事実を明示して、記憶から内容を補完してはいけません。
 
-## Register endpoints and authorize GitHub
+## endpoint の登録と GitHub の認可
 
-Agent Gateway itself has no host-by-host deny list. [terraform/egress-policy.yaml](terraform/egress-policy.yaml) is the reviewable contract: `default_action: DENY`, with only `github.com` in the user-controlled Web allow list. The Google-managed services needed by Agent Platform (`agentregistry.googleapis.com`, `aiplatform.googleapis.com`, and `logging.googleapis.com`) are documented separately and are not arbitrary Web destinations.
+Agent Gateway 自体にはホストごとの deny list はありません。上記の [terraform/egress-policy.yaml](terraform/egress-policy.yaml) はレビュー用の契約であり、実際の endpoint 登録を行うファイルではありません。ユーザーが指定する Web allow は `github.com` のみです。Agent Platform に必要な Google 管理サービス（`agentregistry.googleapis.com`、`aiplatform.googleapis.com`、`logging.googleapis.com`）は別枠で記録し、任意の Web 宛先として扱いません。
 
-First inspect the existing registry. Do not recreate an endpoint that is already listed:
+まず既存の Registry を確認します。すでに一覧にある endpoint は再作成しないでください。
 
 ```bash
 gcloud agent-registry endpoints list --project=nnyn-dev --location=us-central1
 ```
 
-If a required managed endpoint is absent, register it with the fixed URL and resource name encoded by the helper. The helper accepts only the three documented Google-managed names:
+必要な managed endpoint が存在しない場合だけ、helper に定義した固定 URL と resource 名で登録します。helper が受け付ける Google 管理 endpoint 名は次の 3 つだけです。
 
 ```bash
 uv run python scripts/gateway.py register-managed --name agentregistry
@@ -77,7 +83,7 @@ uv run python scripts/gateway.py register-managed --name aiplatform
 uv run python scripts/gateway.py register-managed --name logging
 ```
 
-Register GitHub if it is absent, then use the endpoint ID returned by the list command and the deployed Agent Runtime identity principal when applying the IAP egressor binding. The identity principal is available only after `deploy.sh` creates the Runtime:
+GitHub endpoint が存在しない場合に登録し、一覧で確認した endpoint ID と、deploy 済み Agent Runtime の identity principal を使って IAP egressor binding を設定します。identity principal は `deploy.sh` が Runtime を作成した後でなければ確定しません。
 
 ```bash
 uv run python scripts/gateway.py register-github
@@ -88,11 +94,11 @@ uv run python scripts/gateway.py allow-github \
   --principal='principal://agents.global.org-PROJECT_NUMBER.system.id.goog/resources/aiplatform/projects/PROJECT_NUMBER/locations/us-central1/reasoningEngines/ENGINE_ID'
 ```
 
-Do not register the unapproved test host. The intended evidence is a gateway decision log for that host with default-deny, not an individual deny policy.
+未承認の検証対象（`www8.cao.go.jp`）は登録しません。その宛先については、個別 deny policy ではなく、既定拒否を示す Gateway/IAP の判定ログを証跡にします。
 
-## Run the live validation
+## ライブ検証
 
-Export the gateway configuration before the calls. The validation runner invokes both prompts first and then collects Gateway and IAP logs, so the evidence is tied to the calls it evaluates. Agent Gateway logs use monitored resource `networkservices.googleapis.com/Gateway`.
+Gateway の設定 export は呼び出し前に行います。検証ランナーは 2 つの prompt を実行した後に Gateway と IAP のログを収集するため、判定対象の呼び出しに紐づくログを使えます。Agent Gateway のログは monitored resource `networkservices.googleapis.com/Gateway` に記録されます。
 
 ```bash
 mkdir -p evidence/live
@@ -108,24 +114,24 @@ uv run python scripts/validate.py \
   --since "$VALIDATION_SINCE"
 ```
 
-The runner creates a UTC timestamped directory containing each exact input, response, stderr, exit status, matched allow/deny log entries, the policy copy, the collected logs, and `summary.json`. The GitHub case requires a response referring to both GitHub and `74th`, plus an `allow` record for `github.com`. The 2027 holiday case requires a fetch-failure response without a holiday list, plus a `deny` record for `www8.cao.go.jp`. A response alone never proves network access.
+Runner は UTC の timestamp directory に、正確な入力、応答、stderr、終了状態、allow/deny に一致したログ、policy のコピー、収集ログ、`summary.json` を保存します。GitHub ケースは、`GitHub` と `74th` の両方に言及する応答と、`github.com` の `allow` 記録が揃った場合だけ合格します。2027 年祝日ケースは、取得失敗を示して祝日一覧を含まない応答と、`www8.cao.go.jp` の `deny` 記録が揃った場合だけ合格します。応答だけでは通信成功の証明になりません。
 
-## Evidence and report
+## 証跡とレポート
 
-For the completed live run, see [the dated validation report](evidence/20260822-report.md). It includes the saved gateway policy, both exact prompts, responses, exit states, Gateway/IAP log fields used for the decision, pass/fail results, and limitations such as external site availability. Do not include access tokens, ADC contents, API keys, or other secrets.
+完了済みのライブ検証は[日付付きレポート](evidence/20260822-report.md)で確認できます。保存した Gateway policy 契約、2 つの正確な prompt、応答、終了状態、判定に使った Gateway/IAP のログ項目、合否、外部サイトの可用性などの制約を記載しています。access token、ADC の内容、API key などの秘密情報は保存しないでください。
 
-## Cleanup — human confirmation required
+## クリーンアップ（人間による確認が必要）
 
-This run intentionally does not destroy resources automatically. After a human has checked the evidence:
+この検証は自動的にリソースを削除しません。人間が証跡を確認してから、次の手順を実行します。
 
-1. Delete only the deployed Agent Runtime using its complete resource name:
+1. 完全な resource name を指定して、デプロイした Agent Runtime だけを削除します。
 
    ```bash
    uv run python scripts/delete_agent.py --project=nnyn-dev --location=us-central1 --agent-resource="$AGENT_RESOURCE"
    ```
 
-2. Confirm no `20260822-agent-gateway` resources remain in Agent Registry and no gateway calls are in flight.
-3. From this repository's `terraform/` directory, review the plan and then run `terraform destroy` to remove only this state. Never run destroy from `20260801-agent-hosting` or another workspace.
-4. Re-list the Artifact Registry, service account, and Agent Gateway using the `20260822` name and labels.
+2. Agent Registry に `20260822-agent-gateway` のリソースが残っていないこと、Gateway 呼び出しが実行中でないことを確認します。
+3. このリポジトリの `terraform/` directory で plan を確認してから `terraform destroy` を実行し、この state だけを削除します。`20260801-agent-hosting` や別 workspace から destroy してはいけません。
+4. `20260822` の名前と label を使って Artifact Registry、service account、Agent Gateway を再確認します。
 
-If deployment fails, inspect `terraform show`, the Agent Gateway export, Agent Registry endpoint state, the runtime deployment spec, and the Gateway log. Common causes are a disabled Model Garden model, missing `roles/aiplatform.user`, missing Artifact Registry reader binding, a mismatched region, an unregistered endpoint, or an untrusted BYOC gateway root certificate.
+deploy に失敗した場合は、`terraform show`、Agent Gateway export、Agent Registry endpoint の状態、Runtime の deploy spec、Gateway log を確認します。よくある原因は Model Garden model の無効化、`roles/aiplatform.user` の不足、Artifact Registry reader binding の不足、リージョン不一致、endpoint 未登録、BYOC Gateway root certificate の未信頼です。
