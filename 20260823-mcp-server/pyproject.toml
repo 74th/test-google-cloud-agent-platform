@@ -1,0 +1,33 @@
+[project]
+name = "mcp-server-20260823-agent-runtime"
+version = "0.1.0"
+description = "Governed Agent Runtime client for the 20260823 MCP validation"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "claude-agent-sdk==0.1.9",
+    "fastapi==0.115.14",
+    "google-auth==2.47.0",
+    "google-cloud-aiplatform==1.144.0",
+    "httpx==0.28.1",
+    "uvicorn[standard]==0.35.0",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest==8.4.1",
+    "pytest-asyncio==1.1.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["agent_test"]
+asyncio_mode = "auto"
+
+[tool.uv]
+package = true
+
+[tool.setuptools.packages.find]
+include = ["agent_service*"]
+
+[build-system]
+requires = ["setuptools==80.9.0"]
+build-backend = "setuptools.build_meta"

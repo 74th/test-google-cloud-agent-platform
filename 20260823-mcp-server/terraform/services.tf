@@ -1,15 +1,30 @@
 locals {
   required_services = toset([
     "agentregistry.googleapis.com",
+    "aiplatform.googleapis.com",
     "artifactregistry.googleapis.com",
     "compute.googleapis.com",
     "container.googleapis.com",
     "iam.googleapis.com",
     "iamcredentials.googleapis.com",
+    "iap.googleapis.com",
     "logging.googleapis.com",
     "monitoring.googleapis.com",
+    "networksecurity.googleapis.com",
+    "networkservices.googleapis.com",
     "run.googleapis.com",
   ])
+}
+
+resource "google_artifact_registry_repository" "agent_runtime" {
+  project       = var.project_id
+  location      = var.region
+  repository_id = "${var.name_prefix}-agent"
+  description   = "20260823-mcp-server Agent Runtime image repository"
+  format        = "DOCKER"
+  labels        = local.common_labels
+
+  depends_on = [google_project_service.required]
 }
 
 resource "google_project_service" "required" {

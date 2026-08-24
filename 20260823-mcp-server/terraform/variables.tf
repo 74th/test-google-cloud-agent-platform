@@ -62,3 +62,90 @@ variable "service_cidr" {
   type        = string
   default     = "10.242.0.0/20"
 }
+
+variable "agent_runtime_image" {
+  description = "Immutable Agent Runtime image reference, including a sha256 digest."
+  type        = string
+  default     = "us-central1-docker.pkg.dev/nnyn-dev/mcp-20260823-mcp-server-agent/agent-runtime@sha256:0000000000000000000000000000000000000000000000000000000000000000"
+
+  validation {
+    condition     = can(regex("@sha256:[0-9a-f]{64}$", var.agent_runtime_image))
+    error_message = "agent_runtime_image must end in an immutable @sha256:<64 hex digits> digest."
+  }
+}
+
+variable "agent_runtime_name" {
+  description = "Dedicated Agent Runtime display/resource name."
+  type        = string
+  default     = "mcp-20260823-runtime"
+}
+
+variable "agent_gateway_id" {
+  description = "Existing Agent Gateway resource reused by this experiment."
+  type        = string
+  default     = "projects/nnyn-dev/locations/us-central1/agentGateways/agw-20260822-egress"
+
+  validation {
+    condition     = can(regex("^projects/[^/]+/locations/[^/]+/agentGateways/[^/]+$", var.agent_gateway_id))
+    error_message = "agent_gateway_id must be a fully qualified Agent Gateway resource name."
+  }
+}
+
+variable "agent_gateway_name" {
+  description = "Dedicated Agent Gateway resource name."
+  type        = string
+  default     = "mcp-20260823-egress"
+}
+
+variable "cloud_run_registry_service_id" {
+  description = "Stable Registry Service ID for the Cloud Run MCP endpoint."
+  type        = string
+  default     = "mcp-20260823-cloud-run"
+}
+
+variable "gke_registry_service_id" {
+  description = "Stable Registry Service ID for the GKE MCP endpoint."
+  type        = string
+  default     = "mcp-20260823-gke"
+}
+
+variable "cloud_run_auth_audience" {
+  description = "Exact Cloud Run ID-token audience; defaults to the created service URI."
+  type        = string
+  default     = ""
+}
+
+variable "gke_mcp_hostname" {
+  description = "Operator-authorized DNS hostname for the authenticated GKE HTTPS front door. Required for enable_gke."
+  type        = string
+  default     = ""
+
+  validation {
+    condition     = var.gke_mcp_hostname == "" || can(regex("^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?\\.[a-z]{2,}$", var.gke_mcp_hostname))
+    error_message = "gke_mcp_hostname must be a DNS hostname, or empty only while enable_gke=false."
+  }
+}
+
+variable "gke_auth_audience" {
+  description = "Exact authentication audience configured for the GKE front door."
+  type        = string
+  default     = ""
+}
+
+variable "use_mcp_caller_service_account" {
+  description = "Use a dedicated keyless caller SA when direct Agent Identity token minting is unavailable."
+  type        = bool
+  default     = true
+}
+
+variable "vertex_project_id" {
+  description = "Project used by the Vertex Claude integration."
+  type        = string
+  default     = "nnyn-dev"
+}
+
+variable "vertex_region" {
+  description = "Vertex Claude model region."
+  type        = string
+  default     = "global"
+}

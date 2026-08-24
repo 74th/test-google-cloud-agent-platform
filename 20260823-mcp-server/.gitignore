@@ -6,3 +6,6 @@ crash.log
 .env
 evidence/raw/
 evidence/generated/
+*.egg-info/
+__pycache__/
+.venv/

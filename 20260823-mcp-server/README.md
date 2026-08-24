@@ -1,5 +1,32 @@
 # Agent Registry MCP Server 検証結果
 
+## 20260823 governed Agent Runtime change status
+
+この変更では、Cloud Run と GKE の MCP endpoint を Agent Runtime 上の
+Claude Agent SDK から Registry 管理下で利用し、Registry discovery、Agent
+Gateway egress、endpoint authorization、MCP Tool execution を分離して検証
+します。runtime image は `claude-agent-sdk==0.1.9` を固定し、URL は prompt
+や環境変数から受け付けず、固定した Registry Service ID から毎 invocation
+解決します。credential は短期 audience-bound ID token とし、token/key/API
+key はログや evidence に保存しません。
+
+local SDK contract、Cloud Run/GKE backend、Registry metadata validation、既存
+`agw-20260822-egress` を使う Agent Runtime、Registry IAM、Cloud Run endpoint
+egress binding、およびAgent Gateway経由のCloud Run MCP E2Eまで完了しています。
+Google Cloud の project/direction 単位の Gateway 排他制約に合わせ、専用
+`mcp-20260823-egress` は削除し、既存 Gateway は Terraform で管理せず参照だけ
+しています。Runtime の effective identity は
+`826966334750326784` です。
+
+GKE external pathはDNS managed zoneとtrusted certificateが未準備です。
+`gke_mcp_hostname` と `gke_auth_audience` を必須 prerequisite とし、匿名公開や
+plain HTTP へフォールバックしません。詳細は
+[`evidence/backend-validation-20260824.md`](evidence/backend-validation-20260824.md)、
+[`evidence/access-control-capability-20260823.md`](evidence/access-control-capability-20260823.md)、
+[`evidence/gke-prerequisite-20260823.md`](evidence/gke-prerequisite-20260823.md)、
+[`evidence/agent-runtime-gateway-reuse-20260824.md`](evidence/agent-runtime-gateway-reuse-20260824.md)、
+[`evidence/agent-runtime-gateway-mcp-20260824.md`](evidence/agent-runtime-gateway-mcp-20260824.md) を参照してください。
+
 Google Cloud Agent Registry から MCP Server を発見し、Cloud Run と GKE Standard の両方で実行できることを検証した記録です。
 
 検証日: 2026-08-23  
@@ -8,13 +35,13 @@ Google Cloud Agent Registry から MCP Server を発見し、Cloud Run と GKE S
 
 ## 結論
 
-今回の stateless MCP Server には Cloud Run が適しています。IAM による認証、Agent Registry からの発見、MCP の実行を確認でき、最小インスタンス数を `0` に設定できます。
+今回の stateless MCP Server には Cloud Run が適しています。IAMによる認証、Agent Registryからの発見、Agent Gateway経由のMCP実行を確認でき、最小インスタンス数を `0` に設定できます。Agent Runtimeについては、既存 `agw-20260822-egress` への接続、TLS inspection CA、control-plane endpoint、Runtime identity、Registry/IAM bindingを構築し、Claude Agent SDKからCloud Run Toolを実行できました。
 
-GKE Standard でも検証は成功しましたが、専用 VPC、サブネット、Pod/Service secondary range、クラスタ、ノードプール、Kubernetes workload が必要です。クラスタ内到達性や Kubernetes のネットワークポリシー、既存の共有サービスが必要な場合に選択するのが妥当です。
+GKE Standard でも cluster-local の検証は成功しましたが、専用 VPC、サブネット、Pod/Service secondary range、クラスタ、ノードプール、Kubernetes workload が必要です。Agent Runtime 向けの外部 HTTPS 入口は、承認済み DNS、trusted certificate、IAP audience が未準備のため未構築です。
 
 ## 今回検証した連携方式
 
-Agent Registry は MCP request を中継する proxy ではなく、MCP Server と Tool のメタデータを検索する discovery plane として使用しました。Registry で実行先 URL を発見した後、client がその URL に直接接続します。
+Agent RegistryはMCP requestを中継するproxyではなく、MCP ServerとToolのメタデータを管理・発見するcontrol planeです。従来のruntime-only検証では、Registryで実行先URLを発見した後、clientがそのURLへ直接接続しました。
 
 ```text
 MCP Serverをデプロイ
@@ -28,9 +55,34 @@ Agent RegistryでServer／Toolを検索
 initialize → tools/list → tools/call
 ```
 
+今回の Agent Runtime 経路は次の構成です。RuntimeはURLを入力から受け取らず、固定Service ID `mcp-20260823-cloud-run` をAgent Registry REST APIから解決します。Registry discovery、IAM Credentialsによるcaller SA token mint、Vertex Claude呼び出し、既存Gateway経由のCloud Run MCP通信、Cloud Run server-side executionを同一Correlation IDで確認しました。
+
+```text
+Agent Runtime query
+        ↓
+Agent Registry REST discovery
+        ↓ (Agent Gateway経由)
+existing Agent Gateway → Cloud Run MCP endpoint
+        ↓
+metadata validation → IAM Credentials endpoint → audience token
+        ↓
+Claude Agent SDK → MCP initialize / tools / validate_echo
+```
+
 Cloud Run と GKE のどちらも、Agent Registry への登録は [`scripts/registry.sh`](scripts/registry.sh) から `gcloud agent-registry services create/update` を実行しました。MCP Server の表示名、説明、interface URL、`JSONRPC` protocol binding、Tool spec はこの登録処理で渡しています。
 
-Cloud Runの発見後実行はローカルoperatorが専用invoker identityのID tokenを取得して行い、GKEの発見後実行は同一クラスタ内のNode.js検証Podが行いました。どちらもAgent RuntimeまたはClaude Agent SDKからの実行ではありません。
+従来の backend 回帰では、Cloud Run は operator の専用 invoker identity、GKE は同一クラスタ内の Node.js 検証 Pod から実行しました。今回の最終検証では、Runtime imageへGatewayのTLS inspection CAを追加し、Registry／Vertex／IAM Credentials endpointのegress bindingを構成したことで、Agent Runtime上のClaude Agent SDKから既存Gateway経由でCloud Run MCP Toolを実行できました。初期のTLS errorおよび403は構築途中のFAILであり、最終結果ではありません。詳細は [`evidence/agent-runtime-gateway-mcp-20260824.md`](evidence/agent-runtime-gateway-mcp-20260824.md) を参照してください。
+
+### Cloud Runに必要な追加認証
+
+Cloud RunはAgent Gatewayを通過するだけでは呼び出せません。今回のCloud Run経路では、次の認証・認可を別々に構成しました。
+
+1. Agent Runtimeのeffective identityに、RegistryのCloud Run MCP Server resource単位で `roles/iap.egressor` を付与する。これはAgent GatewayがMCP endpointへのegressを許可するための権限です。
+2. Cloud Run Serviceには、専用caller Service Accountだけに `roles/run.invoker` を付与する。`allUsers` は付与しません。
+3. Runtimeのeffective identityには、caller Service Accountに対する `roles/iam.serviceAccountOpenIdTokenCreator` を付与する。RuntimeはService Account keyを使わず、keyless impersonationでcaller Service AccountとしてID tokenを発行します。
+4. 発行するID tokenのaudienceをCloud Run Service URIと完全一致させ、MCP requestのAuthorization headerに付与する。Cloud Run側がこのtokenとInvoker権限を検証してからMCP処理を開始します。
+
+したがって、Cloud Runについては専用のLoad Balancerを準備しなくても、Cloud Runが提供するHTTPS endpointをAgent Gatewayから利用できます。必要なのは、Gatewayのegress認可とCloud Run側のIAM認証の両方です。Gatewayの許可はCloud Runの `roles/run.invoker` を代替しません。
 
 GKEのDeployment Manifestには、MCP Server／ToolをAgent Registryへ登録するためのメタデータやannotationは記述していません。Manifest内のannotationはWorkload Identity用だけです。したがって、今回確認したのは「GKE上のMCP Serverを手動でAgent Registryに登録して利用する方式」であり、Manifestを監視するcontrollerなどによる自動登録方式ではありません。
 
@@ -54,17 +106,23 @@ GKEのDeployment Manifestには、MCP Server／ToolをAgent Registryへ登録す
 | ローカル MCP protocol | PASS | `initialize`、`tools/list`、正常な `tools/call`、不正入力を確認 |
 | Tool spec 整合性 | PASS | `npm run check:tool-spec` とコンテナ経由のチェックに成功 |
 | Docker build / smoke test | PASS | 非 root コンテナで起動・MCP smoke test に成功 |
-| Terraform Cloud Run phase | PASS | `15 to add, 0 to change, 0 to destroy`。既存資源への変更なし |
-| Cloud Run 認証済み実行 | PASS | `initialize`、`tools/list`、`validate_echo` が HTTP 200 |
-| Cloud Run 未認証実行 | PASS | MCP 応答前に HTTP 403 で拒否 |
+| Terraform backend apply | PASS | Cloud Run、専用 GKE Standard、VPC、Registry Service を experiment prefix で構築 |
+| Agent Gateway 構成 | PASS | 重複 `mcp-20260823-egress`、専用 IAP policy/extension を削除し、既存 `agw-20260822-egress` を参照 |
+| Agent Runtime 作成 | PASS | `mcp-20260823-runtime`、`AGENT_IDENTITY`、immutable image digest を適用 |
+| Runtime IAM | PASS | Registry viewer、control-plane/MCP endpoint egress、repository-scoped Artifact Registry reader、caller SA token creator を適用 |
+| Cloud Run Registry egress binding | PASS | Runtime effective identity に MCP-server-scoped `roles/iap.egressor` を付与 |
+| Cloud Run 認証済み baseline | PASS | 2026-08-23 の専用 invoker 検証で `initialize`、`tools/list`、`validate_echo` が HTTP 200 |
+| Cloud Run 未認証実行 | PASS | 2026-08-24 の再検証で MCP 応答前に HTTP 403 で拒否 |
 | Cloud Run scaling | PASS | `min=0`、`max=3`。idle 時の instance count `0` を観測 |
-| Cloud Run Agent Registry | PASS | ローカルoperatorが登録・検索・発見URLへのIAM認証付き直接実行に成功 |
+| Agent Runtime Registry discovery | PASS | Gateway経由のRegistry REST discovery HTTP 200。TLS inspection CAとcontrol-plane endpoint bindingを適用 |
+| Agent Runtime Claude / Cloud Run E2E | PASS | Correlation ID `mcp-83eba0222c5740c280af9054`、Gateway/IAP allow、Cloud Run `mcp_tool_execution`、`validate_echo` 成功 |
 | GKE Standard 構築 | PASS | 専用 VPC、secondary range、`e2-small` 1ノードで Ready |
-| GKE MCP 実行 | PASS | Deployment rollout、validation Job、Pod 内 smoke test に成功 |
-| GKE Agent Registry | PASS | cluster-local URLを発見し、同一クラスタ内のNode.js検証Podから実行に成功 |
+| GKE cluster-local MCP 実行 | PASS | Deployment rollout、validation Job、Pod 内 smoke test に成功 |
+| GKE Agent Runtime 向け HTTPS | SKIP | 承認済み DNS、trusted certificate、IAP audience が未準備 |
+| GKE Agent Runtime / Claude E2E | SKIP | HTTPS front door 未構築のため実施していない |
 | Cloud Run cold / warm latency | SKIP | operator の ID token mint 権限が一時的に拒否され、測定を実施せず |
 
-Cloud Run の IAM には専用 invoker Service Account のみを付与し、`allUsers` は付与していません。GKE 検証では既存の Autopilot クラスタを変更していません。
+Cloud Run の IAM には専用 invoker/caller Service Account のみを付与し、`allUsers` は付与していません。既存 Gateway は Terraform で管理せず、Runtime の関連付け先として参照しています。GKE 検証では既存の Autopilot クラスタを変更していません。
 
 今後追加する検証も、対象、構成、実施手順、実測結果、証跡、未確認事項、cleanup状態をこのREADMEへ追記します。設定から推測した結果はPASSにせず、実行できなかった項目は理由を添えてSKIPまたは未確認として残します。
 
@@ -106,6 +164,24 @@ ClusterIP Service :80
 MCP Server Pod :8080
 ```
 
+### GKEのClusterIPとAgent Runtimeからの到達性
+
+今回のGKE `ClusterIP` は、GKEクラスタ内部のPodからのみ到達できるbackendです。Managed Agent RuntimeからGKEのClusterIPへ到達する経路は確認できていないため、`ClusterIP` のままではAgent Runtime → Agent Gateway → GKE MCP Serverの実通信は成立しません。今回のGKE PASSは、あくまで同一クラスタ内のNode.js検証Podからの接続です。
+
+`ClusterIP` を単純に `LoadBalancer` Serviceへ変更すればネットワーク入口は作れますが、TLS、認証、audience、Gatewayのegress許可を別途構成しない限り、Agent Runtime向けの安全な接続経路を証明したことにはなりません。今回想定する構成は、`ClusterIP` Serviceをbackendとして保持し、GKE GatewayまたはIngressで認証付きHTTPSの外部front doorを作る方式です。
+
+```text
+Agent Runtime
+      ↓ HTTPS / Agent Gateway / egress authorization
+GKE HTTPS front door (trusted TLS + IAP or equivalent authorization)
+      ↓
+ClusterIP Service
+      ↓
+MCP Server Pod
+```
+
+このfront doorには、承認済みDNS名、trusted TLS certificate、認証audience、caller identityの認可が必要です。Internal Load Balancerについては、Managed Agent Runtimeからprivate addressへ到達する経路を確認できていないため、今回の構成では採用していません。外部HTTPS Load Balancerを使う場合も、匿名公開ではなく、front doorで認証してからClusterIPへ転送する必要があります。
+
 ### 確認できたこと／未確認のこと
 
 | 範囲 | 状態 | 内容 |
@@ -115,9 +191,9 @@ MCP Server Pod :8080
 | MCP protocol | 確認済み | `initialize`、`tools/list`、正常／異常Tool call |
 | Agent Registry手動登録 | 確認済み | `gcloud`によるcreate/update、Tool spec、interface登録 |
 | Registry発見後の実行 | 確認済み | 検索結果のURLを使ったin-cluster実行 |
-| Agent RuntimeからCloud Runへの通信 | 未確認 | Cloud Runはローカルoperatorから呼び出しておりAgent Runtimeは使用していない |
-| Agent RuntimeからGKEへの通信 | 未確認 | GKE外のAgent Runtimeからcluster-local URLへ接続していない |
-| Claude Agent SDKとの連携 | 未確認 | Claude Agent SDKは起動しておらず、検証PodはNode.js smoke client |
+| Agent RuntimeからCloud Runへの通信 | PASS | 既存Agent Gateway経由でRegistry discovery、token mint、Cloud Run `/mcp`、IAP allow、server-side Tool実行を確認 |
+| Agent RuntimeからGKEへの通信 | 未実施 | GKE外のAgent Runtime向け HTTPS front doorが未構築 |
+| Claude Agent SDKとの連携 | Cloud RunのみPASS | Cloud RunではClaude Tool選択とCloud Run server-side executionを確認。GKEは未実施 |
 | ManifestベースのMCPメタデータ登録 | 未確認 | MCP固有annotation、CRD、controllerによる登録は使用していない |
 | GKE endpointの外部公開 | 未確認 | Ingress、Gateway、Load Balancer、TLSは構築していない |
 | 本番可用性 | 未確認 | regional cluster、複数replica、PDB、autoscaling、障害試験は対象外 |
@@ -144,7 +220,7 @@ Cloud Run と GKE の構築、immutable image digest の指定、Agent Registry 
 
 ## 次の検証
 
-Agent Registryによる接続先管理、Agent Gatewayによるdefault-denyの外向き認可、Cloud Run／GKE endpoint側の認可、およびAgent Runtime上のClaude Agent SDKによるTool実行は、OpenSpec change [`validate-agent-runtime-mcp-access-control`](openspec/changes/validate-agent-runtime-mcp-access-control/proposal.md) で計画しています。この項目はProposal作成済み・実装前であり、現時点のPASSには含めません。
+次はCloud Runについて、未登録／未binding endpointのGateway default-deny、wrong audience、unauthenticated requestを相関付きで追加検証します。GKEは承認済みhostname、DNS、trusted certificate、IAP audienceが揃うまで外部公開しません。Agent Runtime E2Eは、今回Cloud Runで確認したようにSDK Tool eventとserver-side execution evidenceを揃えて判定します。
 
 ## 次回、同じ手動登録方式で構築するもの
 
@@ -175,7 +251,8 @@ Agent Registryによる接続先管理、Agent Gatewayによるdefault-denyの�
 - Workload Identityとworkload用Google/Kubernetes Service Account
 - immutable imageを指定したDeployment
 - `/healthz` を使うreadiness probeとnon-root security context
-- 実行元から到達可能なService。今回と同じ方式なら `ClusterIP`
+- クラスタ内検証用の `ClusterIP` Service
+- Agent Runtime用には、ClusterIPをbackendとする認証付きHTTPS Gateway／Ingress／Load Balancer
 - Registry検索前にもruntime単体を確認できるvalidation Job
 - Registryで発見したURLを使って再検証する一時PodまたはJob
 - namespace、workload、Registry entry、Terraform resourceを安全に削除する手順
@@ -183,37 +260,35 @@ Agent Registryによる接続先管理、Agent Gatewayによるdefault-denyの�
 ## 同じ方式で気にするべきこと
 
 - Agent Registryへの登録成功は、endpointへの到達成功を意味しません。検索とMCP実行を別々に検証します。
-- Registryに登録するURLは、実際のconsumerから到達できる必要があります。今回のGKE URLはcluster-localなので、クラスタ外のclientからは利用できません。
+- Registryに登録するURLは、実際のconsumerから到達できる必要があります。今回のGKE URLはcluster-localなので、クラスタ外のAgent Runtimeからは利用できません。
 - 今回のGKE PASSは同一クラスタ内のNode.js clientからの結果です。Agent RuntimeやClaude Agent SDKから到達できることの証跡としては扱いません。
 - Deployment、Service、Registryのinterface URL、Tool specは独立した設定です。Service名、namespace、port、`/mcp` pathのずれを検出する必要があります。
 - Tool定義のsourceがruntimeとRegistryで分かれるとdriftします。`tools/list` と `toolspec.json` の自動比較を継続します。
 - Registryへの反映には短いprojection delayがありました。登録直後の検索はretryを前提にします。
 - Cloud RunはIAM認証を通過してからMCP protocolが処理されます。ID tokenのaudience、tokenを生成する主体、`roles/run.invoker` を切り分けます。
 - GKEではnodeのArtifact Registry読取権限と、workloadがGoogle APIを使う場合のWorkload Identity権限を混同しないようにします。
-- cluster-local endpointを外部consumerへ提供する場合は、Ingress／Gateway、TLS、認証、NetworkPolicy、DNSを別途設計・検証します。
+- cluster-local endpointを外部consumerへ提供する場合は、ClusterIPをbackendとしてIngress／Gateway、TLS、認証、NetworkPolicy、DNSを別途設計・検証します。単なるService type変更だけでは、認証付きAgent Runtime経路の要件を満たしません。
 - mutable tagではなく同一image digestをCloud Run、Deployment、validation Jobで共有し、比較対象の実装を固定します。
 - Terraform planと削除planを確認し、検証用prefix／labelを持つ新規資源だけを対象にします。共有APIや既存クラスタを巻き込まないようにします。
 - 証跡にはID token、credential、Service Account keyなどを保存しません。
 
-## 環境の削除
+## 現在の環境と削除方針
 
-検証後、次の検証用資源は削除済みです。
+2026-08-24 時点で、検証資源は evidence review 前のため保持しています。今回、明示的に削除したのは重複していた次の Gateway 関連 resource です。
 
-- Cloud Run Service
-- Artifact Registry repository
-- GKE Standard cluster / node pool
-- 専用 VPC / subnet / secondary ranges
-- 検証用 Service Account と IAM binding
-- Agent Registry の検証用 Service
-- Kubernetes namespace と workload
+- `mcp-20260823-egress`
+- `mcp-20260823-mcp-server-iap-policy`
+- `mcp-20260823-mcp-server-iap-authz`
 
-既存の Autopilot クラスタ、default VPC、既存 Artifact Registry repository、他の Agent Registry Service は削除対象にしていません。安全な削除手順は [`docs/teardown.md`](docs/teardown.md) を参照してください。Google Cloud API の有効化状態は、意図的に維持しています。
+現在保持している主な experiment resource は Cloud Run、Artifact Registry repository、GKE Standard cluster/node pool、専用 VPC、Service Account/IAM、Agent Registry Service、Agent Runtime、Kubernetes namespace/workload です。既存 `agw-20260822-egress` はこの Terraform state の管理対象外です。
+
+既存の Autopilot クラスタ、default VPC、既存 Artifact Registry repository、他の Agent Registry Service、既存 Gateway は削除対象にしていません。安全な削除手順は [`docs/teardown.md`](docs/teardown.md) を参照してください。Google Cloud API の有効化状態は、意図的に維持しています。
 
 ## 制約と本番化前の確認事項
 
 - GKE の比較は single-zone、`e2-small` 1ノードです。本番 HA や upgrade の検証ではありません。
 - Kubernetes ManifestにMCPメタデータを記述する宣言的登録／自動検出方式は未検証です。
-- Agent Runtime上のClaude Agent SDKからGKE MCP Serverへ接続する経路は未検証です。
+- Agent Runtime上のClaude Agent SDKからCloud Run MCP Serverへ接続する経路は、既存Agent GatewayのTLS inspection、control-plane egress、MCP endpoint authorizationを含めて確認済みです。GKE MCP Serverへの経路はHTTPS front door未構築です。
 - Cloud Run の cold / warm latency は未測定です。安定した ID token mint 権限で再測定してください。
 - 本番では regional GKE、SLO、rollout/rollback、容量、認証・ネットワーク設計を追加で決める必要があります。
 - Agent Registry の接続元が必要とするネットワーク到達性と認証方式を、本番利用者に合わせて再確認してください。

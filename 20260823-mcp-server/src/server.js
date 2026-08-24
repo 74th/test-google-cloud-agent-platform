@@ -3,7 +3,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import { executeValidationTool, TOOL_DESCRIPTION, TOOL_NAME, toolInputSchema } from "./tool-definition.js";
 
-export function createMcpServer() {
+export function createMcpServer({ correlationId, hostingTarget } = {}) {
   const server = new McpServer({ name: "mcp-server-20260823-mcp-server", version: "0.1.0" });
   server.registerTool(
     TOOL_NAME,
@@ -11,10 +11,13 @@ export function createMcpServer() {
       description: TOOL_DESCRIPTION,
       inputSchema: toolInputSchema,
     },
-    async ({ message }) => ({
-      content: [{ type: "text", text: JSON.stringify(executeValidationTool({ message })) }],
-      structuredContent: executeValidationTool({ message }),
-    }),
+    async ({ message }) => {
+      const result = executeValidationTool({ message, correlationId, hostingTarget });
+      if (correlationId) {
+        console.log(JSON.stringify({ event: "mcp_tool_execution", experiment: "20260823-mcp-server", correlationId, hostingTarget }));
+      }
+      return { content: [{ type: "text", text: JSON.stringify(result) }], structuredContent: result };
+    },
   );
   return server;
 }
@@ -43,7 +46,12 @@ export async function createHttpServer() {
       // Stateless mode deliberately creates a fresh protocol transport for
       // every request. No session or request correctness depends on process
       // local state, which allows the same image to scale horizontally.
-      const mcpServer = createMcpServer();
+      const correlationId = request.headers["x-mcp-correlation-id"];
+      const hostingTarget = request.headers["x-mcp-hosting-target"];
+      const mcpServer = createMcpServer({
+        correlationId: typeof correlationId === "string" && /^[a-z0-9][a-z0-9-]{7,63}$/.test(correlationId) ? correlationId : undefined,
+        hostingTarget: hostingTarget === "cloud-run" || hostingTarget === "gke" ? hostingTarget : undefined,
+      });
       const transport = new StreamableHTTPServerTransport({
         sessionIdGenerator: undefined,
         enableJsonResponse: true,

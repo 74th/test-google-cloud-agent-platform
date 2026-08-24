@@ -29,10 +29,13 @@ export const toolSpec = {
 
 export const toolListSpec = { tools: [toolSpec] };
 
-export function executeValidationTool({ message }) {
-  return {
+export function executeValidationTool({ message, correlationId, hostingTarget } = {}) {
+  const result = {
     experiment: "20260823-mcp-server",
     message,
     ok: true,
   };
+  if (correlationId) result.correlationId = correlationId;
+  if (hostingTarget) result.hostingTarget = hostingTarget;
+  return result;
 }

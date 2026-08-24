@@ -45,6 +45,37 @@ kubectl -n 20260823-mcp-server wait --for=condition=complete job/mcp-20260823-va
 
 The GKE endpoint is intentionally cluster-local. Run the registry-discovered URL check from a Pod, not from a cluster-external client.
 
+## Governed Agent Runtime phase
+
+Build and push both images by digest before applying the Runtime phase:
+
+```sh
+docker build --tag us-central1-docker.pkg.dev/nnyn-dev/mcp-20260823-mcp-server/mcp-server:20260823-r1 .
+docker push us-central1-docker.pkg.dev/nnyn-dev/mcp-20260823-mcp-server/mcp-server:20260823-r1
+docker build --file agent_runtime/Dockerfile --tag us-central1-docker.pkg.dev/nnyn-dev/mcp-20260823-mcp-server-agent/agent-runtime:20260823-r1 .
+docker push us-central1-docker.pkg.dev/nnyn-dev/mcp-20260823-mcp-server-agent/agent-runtime:20260823-r1
+```
+
+Resolve both `sha256` digests and pass them as `container_image` and
+`agent_runtime_image`. Review the create-only plan before applying. The Runtime
+uses `identity_type=AGENT_IDENTITY`, the existing
+`projects/nnyn-dev/locations/us-central1/agentGateways/agw-20260822-egress`
+gateway, Registry viewer permission, and endpoint/MCP-server scoped
+`roles/iap.egressor`. The fallback caller SA is keyless and receives only
+target invocation roles; no SA key or Anthropic API key is supported.
+
+The invocation input is `{ "target": "cloud-run"|"gke", "message": "..." }`.
+URLs are rejected. Each invocation resolves the fixed Registry Service ID,
+validates HTTPS/host/JSONRPC/Tool schema, mints the exact audience token, and
+configures Claude's remote HTTP MCP server with a fresh authorization header.
+The result is not PASS unless an SDK Tool event and a server-side correlation
+log both exist.
+
+The Runtime phase reuses the prior Gateway because Google permits only one
+active Agent Gateway per project and direction. This Terraform state does not
+manage or delete that existing Gateway. The GKE HTTPS phase is separately blocked until
+`gke_mcp_hostname`, DNS control, trusted TLS, and IAP audience are reviewed.
+
 ## Evidence order
 
 Keep sanitized command output in an operator-controlled evidence store. Repository evidence summaries are in `evidence/`; the final matrix is [validation-report.md](validation-report.md). Never paste bearer tokens or credential files into evidence.

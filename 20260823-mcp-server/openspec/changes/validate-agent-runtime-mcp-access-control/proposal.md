@@ -34,4 +34,4 @@
 - Cloud Run IAM、Agent Runtime effective identity、専用Agent Gateway、Agent Registry endpoint IAM、IAP認可、およびGKEのHTTPS公開・認証関連resourceをTerraformまたは検証済みの補助commandで管理する。
 - GKEはAgent Runtimeから到達可能にするため、Gateway／Ingress、Load Balancer、TLS、DNS、認証機構の追加コストと攻撃面が発生する。
 - `scripts/registry.sh`、Tool spec整合性検査、Kubernetes manifest、runbook、README、validation report、sanitized evidenceを更新する。
-- 既存Autopilot cluster、既存Agent Gateway／Agent Runtime、および他のRegistry entryは再利用・変更せず、検証用に識別可能なresourceだけを作成・削除する。
+- 既存Autopilot cluster、既存Agent Runtime、および他のRegistry entryは再利用・変更しない。Googleのプロジェクト単位Gateway排他制約により、既存`agw-20260822-egress`はTerraformで管理せず参照だけ行い、検証用の重複Gatewayは作成しない。

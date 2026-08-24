@@ -108,7 +108,6 @@ Artifact Registryの権限をプロジェクト単位の権限に付与する必
 serviceAccount:service-${data.google_project.current.number}@gcp-sa-aiplatform-re.iam.gserviceaccount.com
 ```
 
-
 ## Agent Gatewayによる外向き通信の許可
 
 エージェントが利用するリソースはAgent Registryに登録されるが、外部アクセス先も同様に登録される。
@@ -127,7 +126,16 @@ Agent GatewayリソースをAgent Runtimeにセットすると、ルーティン
   - Gatewayに適用するように設定が必要
   - IAPなので本来はユーザの権限を使って認可ができるやつだと思われるが、まだユーザの認可の機能が設定できそうなところが見えない
 
+### 設定の構成
+
 ![alt text](img/gateway.drawio.png)
+
+### 実際の通信
+
+![alt text](img/gateway-comm.drawio.png)
+
+L7プロキシとして動作する。
+クライアント側でSSL証明書のhashレベルの検証をしていたらアウトになるが、多分大丈夫。
 
 ### コンソールで確認できるところ
 
@@ -156,6 +164,10 @@ GCPのこれにGatewayが依存している
   - Gatewayの機能はこれに依存している
 - Terraform google_network_security_authz_policy
   - Gatewayに認可拡張機能をアタッチする
+
+### Agent Gatewayの実体
+
+
 
 ## セッション管理機能 SessionStore
 

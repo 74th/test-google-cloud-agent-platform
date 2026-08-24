@@ -2,7 +2,7 @@
 
 See [proposal.md](proposal.md) for motivation. The archived validation established that the same stateless MCP image works on IAM-protected Cloud Run and on a GKE `ClusterIP`, and that manually registered Agent Registry entries can be searched. Cloud Run was invoked by a local operator; GKE was invoked by an in-cluster Node.js client. Neither path used Agent Runtime or Claude Agent SDK.
 
-An adjacent completed experiment demonstrates a custom-container Agent Runtime using `identity_type=AGENT_IDENTITY`, a managed Agent Gateway with `AGENT_TO_ANYWHERE`, Agent Registry endpoints, an IAP authorization extension, and endpoint-scoped `roles/iap.egressor` bindings for the runtime effective identity. This change may reuse that implementation pattern but must create independently named resources and state. Agent Registry remains a discovery and governed-egress control plane, not an MCP execution proxy.
+An adjacent completed experiment demonstrates a custom-container Agent Runtime using `identity_type=AGENT_IDENTITY`, a managed Agent Gateway with `AGENT_TO_ANYWHERE`, Agent Registry endpoints, an IAP authorization extension, and endpoint-scoped `roles/iap.egressor` bindings for the runtime effective identity. Google permits only one active Agent Gateway per project and direction, so this change reuses the existing `agw-20260822-egress` by reference, does not manage its resource or policy, and keeps its own Terraform state for all experiment-owned resources. Agent Registry remains a discovery and governed-egress control plane, not an MCP execution proxy.
 
 The managed Agent Runtime has no proven route to a GKE `ClusterIP`. A GKE E2E test therefore needs an Agent Runtime-reachable HTTPS front door. It must not fall back to an unauthenticated public endpoint. A DNS name and trusted TLS certificate are prerequisites for that path.
 
@@ -11,7 +11,7 @@ The managed Agent Runtime has no proven route to a GKE `ClusterIP`. A GKE E2E te
 **Goals:**
 
 - Make Agent Registry Service IDs, rather than embedded URLs, the logical MCP connection configuration consumed by Agent Runtime.
-- Enforce an outbound default-deny boundary with a dedicated Agent Gateway, Registry endpoints, and endpoint-scoped IAP egress authorization.
+- Enforce an outbound default-deny boundary with the approved existing Agent Gateway, Registry endpoints, and endpoint-scoped IAP egress authorization.
 - Enforce inbound authorization independently at Cloud Run and the GKE HTTPS front door.
 - Exercise the remote MCP Tools through Claude Agent SDK inside Agent Runtime and prove which backend executed each call.
 - Capture positive and negative evidence at discovery, Gateway, endpoint authorization, MCP, and Claude Tool-selection layers.
@@ -19,7 +19,7 @@ The managed Agent Runtime has no proven route to a GKE `ClusterIP`. A GKE E2E te
 **Non-Goals:**
 
 - Treat Agent Registry or Agent Gateway as an MCP request proxy that replaces endpoint authentication.
-- Reuse or modify the existing `20260822-agent-gateway` runtime, gateway, Registry entries, or state.
+- Reuse or modify the existing `20260822-agent-gateway` runtime, Registry entries, or Terraform state. The existing Gateway is an explicit external dependency and is referenced but not managed by this change.
 - Provide production GKE HA, a general-purpose multi-tenant MCP authorization service, or arbitrary user-supplied MCP URLs.
 - Store long-lived bearer tokens, Service Account keys, OAuth client secrets, or Anthropic API keys in source or evidence.
 - Claim private Agent Runtime-to-GKE connectivity; the selected GKE path is authenticated public HTTPS.
@@ -90,11 +90,11 @@ Negative cases must demonstrate where processing stopped. In particular, an Agen
 1. Verify current Agent Registry, Agent Gateway, IAP, Agent Runtime identity, Claude Agent SDK remote MCP, GKE HTTPS/IAP, DNS, and Terraform provider capabilities; freeze concrete command/resource surfaces in evidence.
 2. Add local contract tests for Registry resolution, metadata allowlisting, token refresh, Claude Tool configuration, failure staging, and evidence sanitization.
 3. Recreate the existing Cloud Run and GKE MCP backends with immutable image digest and complete their previous runtime-only regression tests.
-4. Create the dedicated Agent Runtime, Agent Gateway, required Google control-plane Registry endpoints, runtime identity bindings, and MCP Registry entries. Review a create-only plan before apply.
+4. Reuse the approved existing Agent Gateway, create the dedicated Agent Runtime, required Google control-plane Registry endpoints, runtime identity bindings, and MCP Registry entries. Review a create-only plan before apply.
 5. Bind only the Cloud Run endpoint in Gateway and endpoint IAM; run allowed, missing-token, wrong-audience, unauthorized-identity, and unregistered-destination tests.
 6. Provision the GKE HTTPS/IAP front door using the supplied hostname and certificate, bind its Registry endpoint and endpoint authorization, then repeat the positive and negative tests.
 7. Invoke Agent Runtime with separate Cloud Run and GKE objectives; require Claude Tool-selection evidence and correlated Gateway, endpoint, and MCP logs for each PASS.
 8. Exercise Registry update and removal without rebuilding the runtime image, verify re-resolution and stale fallback rejection, then restore desired state.
 9. Update README, runbook, validation matrix, measured comparison, and sanitized evidence. Review teardown targets before deleting only change-owned resources.
 
-Rollback proceeds in reverse order: remove Agent Runtime endpoint permissions, delete the runtime, remove Gateway endpoint bindings and Registry entries, delete GKE HTTPS resources and workloads, then destroy the isolated Terraform resources. APIs remain enabled and existing Agent Platform/GKE resources remain untouched.
+Rollback proceeds in reverse order: remove Agent Runtime endpoint permissions, delete the runtime, remove Registry entries, delete GKE HTTPS resources and workloads, then destroy the isolated Terraform resources. The reused existing Gateway and its policy remain outside this state and are not deleted by this change. APIs remain enabled and existing Agent Platform/GKE resources remain untouched.

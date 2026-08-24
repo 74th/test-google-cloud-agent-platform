@@ -23,4 +23,25 @@ describe("Terraform guardrails", () => {
     expect(fs.readFileSync("k8s/mcp.yaml.tmpl", "utf8")).toContain("type: ClusterIP");
     expect(fs.readFileSync("k8s/mcp.yaml.tmpl", "utf8")).toContain("__IMAGE_DIGEST__");
   });
+
+  it("declares isolated governed Agent Runtime resources", () => {
+    expect(terraform["agent_runtime.tf"]).toContain('identity_type   = "AGENT_IDENTITY"');
+    expect(terraform["agent_runtime.tf"]).toContain("agent_to_anywhere_config");
+    expect(terraform["variables.tf"]).toContain("agent_gateway_id");
+    expect(terraform["locals.tf"]).toContain("agent_gateway_id");
+    expect(terraform["iam.tf"]).toContain("google_artifact_registry_repository_iam_member");
+    expect(terraform["registry.tf"]).toContain("google_iap_agent_registry_mcp_server_iam_member");
+    expect(terraform["iam.tf"]).toContain("roles/agentregistry.viewer");
+    expect(terraform["iam.tf"]).toContain("serviceAccountOpenIdTokenCreator");
+    expect(terraform["agent_runtime.tf"]).toContain("@sha256:");
+    expect(Object.values(terraform).join("\n")).not.toContain("allUsers");
+    expect(Object.values(terraform).join("\n")).not.toContain("ANTHROPIC_API_KEY");
+  });
+
+  it("fails closed for the GKE front-door prerequisites", () => {
+    expect(terraform["variables.tf"]).toContain("gke_mcp_hostname");
+    expect(terraform["registry.tf"]).toContain("GKE Registry registration requires");
+    expect(fs.readFileSync("k8s/mcp.yaml.tmpl", "utf8")).toContain("type: ClusterIP");
+    expect(fs.readFileSync("k8s/mcp.yaml.tmpl", "utf8")).not.toContain("type: LoadBalancer");
+  });
 });

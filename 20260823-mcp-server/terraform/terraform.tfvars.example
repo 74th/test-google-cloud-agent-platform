@@ -6,9 +6,18 @@ experiment_label = "20260823-mcp-server"
 
 # Replace with the digest printed by `gcloud artifacts docker images describe`.
 container_image = "us-central1-docker.pkg.dev/nnyn-dev/mcp-20260823-mcp-server/mcp-server@sha256:0000000000000000000000000000000000000000000000000000000000000000"
+agent_runtime_image = "us-central1-docker.pkg.dev/nnyn-dev/mcp-20260823-mcp-server-agent/agent-runtime@sha256:0000000000000000000000000000000000000000000000000000000000000000"
+
+# Reuse the active project-level Agent Gateway; this experiment does not create
+# a second AGENT_TO_ANYWHERE gateway.
+agent_gateway_id = "projects/nnyn-dev/locations/us-central1/agentGateways/agw-20260822-egress"
 
 # Cloud Run is the first phase. Set true only after reviewing the second plan.
 enable_gke   = false
 node_cidr    = "10.240.0.0/20"
 pod_cidr     = "10.241.0.0/16"
 service_cidr = "10.242.0.0/20"
+
+# Required before enable_gke=true. Do not use an anonymous or HTTP fallback.
+gke_mcp_hostname = ""
+gke_auth_audience = ""
