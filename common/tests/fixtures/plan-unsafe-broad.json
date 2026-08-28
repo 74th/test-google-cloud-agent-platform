@@ -1,0 +1,9 @@
+{
+  "resource_changes": [
+    {
+      "address": "google_network_security_authz_policy.example",
+      "type": "google_network_security_authz_policy",
+      "change": {"actions": ["create"], "after": {"project": "nnyn-dev", "hosts": ["*"]}}
+    }
+  ]
+}

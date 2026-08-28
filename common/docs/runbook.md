@@ -33,6 +33,19 @@ RUN_TERRAFORM_PLAN=1 ./scripts/validate.sh
 terraform -chdir=terraform show -json /tmp/common-agent-gateway.tfplan | jq '.resource_changes[] | {address, actions: .change.actions}'
 ```
 
+The scope guard is mandatory for every saved plan:
+
+```bash
+terraform -chdir=terraform show -json /tmp/common-agent-gateway.tfplan > /tmp/common-agent-gateway.tfplan.json
+python3 scripts/check_scope.py /tmp/common-agent-gateway.tfplan.json
+```
+
+It rejects consumer resources, protected Gateway/VPC/subnet/Network
+Attachment deletion or replacement, wrong project or region, broad identity
+values, and public or credential-like values. The fixture tests in
+`tests/test_terraform.sh` must continue to show both accepted and rejected
+cases.
+
 Expected planned infrastructure is four main resources plus API-enablement state:
 
 - `google_compute_network.agent_gateway`
@@ -40,23 +53,82 @@ Expected planned infrastructure is four main resources plus API-enablement state
 - `google_compute_network_attachment.agent_gateway`
 - `google_network_services_agent_gateway.shared`
 
-## Existing experiment cleanup
+## Read-only access diagnosis
 
-Always use explicit directories and saved plans. Never run a broad command from the repository root.
+Before proposing an allow tuple, capture the Gateway export/schema, common and
+consumer state lists, private DNS relation, Registry metadata, Runtime
+association, and selected Gateway log fields. Use the bounded helper for one
+probe; it generates a UUID, keeps credentials in memory only, and emits only
+sanitized fields:
 
 ```bash
-terraform -chdir=../20260822-agent-gateway/terraform workspace show
-terraform -chdir=../20260822-agent-gateway/terraform state list
-terraform -chdir=../20260822-agent-gateway/terraform plan -destroy -input=false -out=/tmp/common-migration-20260822-destroy.tfplan
-
-terraform -chdir=../20260823-mcp-server/terraform workspace show
-terraform -chdir=../20260823-mcp-server/terraform state list
-terraform -chdir=../20260823-mcp-server/terraform plan -destroy -input=false -out=/tmp/common-migration-20260823-destroy.tfplan
+python3 scripts/gateway_probe.py \
+  --runtime-project=776113568960 \
+  --runtime-location=us-central1 \
+  --runtime-id=2332905838663958528 \
+  --registry-service=mcp-20260823-gke \
+  --target=gke
 ```
 
-Apply only the reviewed binary plan. Delete consumer runtimes before the Gateway owner state. After each apply, confirm `terraform state list` and live resources.
+The Runtime response, Gateway request, Registry lookup, and endpoint result
+must be joined by the same correlation ID. If the Runtime does not return the
+ID, record the bounded time/resource/method join as provisional and do not
+classify an internal destination by its IP alone. A `default_denied` result
+must identify the actual enforcing resource and rule before any policy change
+is proposed. An unavailable supported policy relation is a blocker.
 
-The 2026-08-28 migration found two older `20260822-agent-gateway` Runtime consumers outside both Terraform states. Gateway deletion must remain blocked until those external resources are separately authorized and deleted or detached.
+## Plan and approval gate
+
+For any supported, exact, observed policy tuple, perform the following in the
+common root:
+
+1. Read back Gateway ID, etag, access direction, protocol, Registry scope,
+   Network Attachment, VPC/subnet relation, and all existing consumers.
+2. Run formatting, provider initialization, validation, static tests, and a
+   refresh-only plan. Explain drift before producing a normal saved plan.
+3. Review the saved plan with the tuple's logical name, exact host, port,
+   protocol, principal/resource scope, enforcement owner, existing-consumer
+   impact, and tuple-only rollback.
+4. Run the scope guard and confirm there is no protected replacement/deletion,
+   unrelated IAM/API change, public frontend, or broadening beyond observed
+   requests.
+5. Present the saved plan and pre-change read-back to the resource owner. No
+   apply is permitted until explicit human approval is recorded.
+
+If the provider cannot represent the proven enforcement owner, do not perform
+an out-of-band mutation. Record the API version, resource fields, etag
+precondition, drift behavior, and rollback as a separate approval request.
+
+## Post-change validation and rollback
+
+After an approved apply, capture the Gateway ID/etag/direction/protocol,
+Registry scope, Network Attachment, VPC/subnet, and existing-rule read-back.
+Run one approved positive probe and adjacent unauthorized identity, host, port,
+and protocol probes. The Gateway log must identify the expected allow rule for
+the positive request and a deny rule for each out-of-scope request.
+
+Retry Registry discovery one observed destination at a time. Discovery success
+does not prove private routing, endpoint authorization, or MCP execution. For
+the GKE path, independently verify private DNS, the internal HTTPS frontend,
+TLS hostname/trust, backend health, endpoint authorization, ClusterIP, and Pod
+execution using one correlation ID. In-cluster smoke is only a backend
+baseline. Do not use certificate verification bypass, anonymous access, public
+frontends, or unencrypted transport.
+
+Rollback removes only the newly approved exact tuple through the same reviewed
+common state, with an etag/read-back check and deny regression. It never removes
+or transfers ownership of the Gateway, VPC, subnet, Network Attachment, or
+consumer resources.
+
+## Existing experiment cleanup boundary
+
+Cleanup of an existing experiment is outside this runbook and requires separate
+human approval after an owner inventory. This runbook does not provide a
+destructive command or authorize cleanup of consumer runtimes, the Gateway, or
+the common network. The 2026-08-28 migration found two older
+`20260822-agent-gateway` Runtime consumers outside both Terraform states; the
+shared Gateway owner must keep cleanup blocked until those external resources
+are separately authorized and deleted or detached.
 
 ## Common deployment
 
@@ -87,6 +159,8 @@ gcloud compute networks subnets describe common-agent-gateway-subnet --project=n
 
 Pass only if the Gateway's `networkConfig.egress.networkAttachment` equals the common Network Attachment URI and that attachment resolves to the common subnet/VPC.
 
-## Rollback and cleanup
+## Rollback
 
-Prefer correcting the common configuration and applying from the same state. Before destroying common, inventory every Runtime consumer and review a saved destroy plan. Never destroy common while any Runtime references its Gateway.
+Prefer correcting the common configuration and applying from the same state.
+Rollback is limited to reviewed, newly-added exact policy tuples. It must not
+remove the Gateway, VPC, subnet, Network Attachment, or consumer resources.

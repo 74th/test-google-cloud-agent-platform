@@ -1,0 +1,9 @@
+{
+  "resource_changes": [
+    {
+      "address": "google_container_cluster.mcp",
+      "type": "google_container_cluster",
+      "change": {"actions": ["create"], "after": {"project": "nnyn-dev", "location": "us-central1"}}
+    }
+  ]
+}

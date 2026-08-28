@@ -1,0 +1,12 @@
+{
+  "resource_changes": [
+    {
+      "address": "google_network_services_agent_gateway.shared",
+      "type": "google_network_services_agent_gateway",
+      "change": {
+        "actions": ["delete"],
+        "before": {"project": "nnyn-dev", "location": "us-central1", "name": "common-egress"}
+      }
+    }
+  ]
+}

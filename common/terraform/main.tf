@@ -6,6 +6,7 @@ resource "google_project_service" "required" {
   for_each = toset([
     "agentregistry.googleapis.com",
     "compute.googleapis.com",
+    "networksecurity.googleapis.com",
     "networkservices.googleapis.com",
     "serviceusage.googleapis.com",
   ])
@@ -73,4 +74,46 @@ resource "google_network_services_agent_gateway" "shared" {
     google_project_service.required["agentregistry.googleapis.com"],
     google_project_service.required["networkservices.googleapis.com"],
   ]
+}
+
+# IAP evaluates the Agent Registry roles/iap.egressor bindings.  Keep this
+# initial attachment in DRY_RUN: it enriches Gateway logs but does not alter
+# the existing default-deny decision until its observed behavior is reviewed.
+resource "google_network_services_authz_extension" "iap" {
+  provider = google-nightly
+
+  project   = var.project_id
+  location  = var.region
+  name      = "common-egress-iap-authz"
+  service   = "iap.googleapis.com"
+  fail_open = true
+  timeout   = "1s"
+  metadata = {
+    iamEnforcementMode = "DRY_RUN"
+    iapPolicyVersion   = "V1"
+  }
+
+  depends_on = [google_project_service.required["networkservices.googleapis.com"]]
+}
+
+resource "google_network_security_authz_policy" "iap" {
+  provider = google-nightly
+
+  project        = var.project_id
+  location       = var.region
+  name           = "common-egress-iap-policy"
+  policy_profile = "REQUEST_AUTHZ"
+  action         = "CUSTOM"
+
+  target {
+    resources = [google_network_services_agent_gateway.shared.id]
+  }
+
+  custom_provider {
+    authz_extension {
+      resources = [google_network_services_authz_extension.iap.id]
+    }
+  }
+
+  depends_on = [google_project_service.required["networksecurity.googleapis.com"]]
 }
