@@ -79,7 +79,7 @@ terraform -chdir=terraform output -json
 ## Live verification
 
 ```bash
-gcloud network-services agent-gateways describe common-agent-gateway-egress --project=nnyn-dev --location=us-central1 --format=json
+gcloud network-services agent-gateways describe common-egress --project=nnyn-dev --location=us-central1 --format=json
 gcloud compute network-attachments describe common-agent-gateway-attachment --project=nnyn-dev --region=us-central1 --format=json
 gcloud compute networks describe common-agent-gateway-vpc --project=nnyn-dev --format=json
 gcloud compute networks subnets describe common-agent-gateway-subnet --project=nnyn-dev --region=us-central1 --format=json

@@ -9,7 +9,7 @@ container_image = "us-central1-docker.pkg.dev/nnyn-dev/mcp-20260823-mcp-server/m
 agent_runtime_image = "us-central1-docker.pkg.dev/nnyn-dev/mcp-20260823-mcp-server-agent/agent-runtime@sha256:0000000000000000000000000000000000000000000000000000000000000000"
 
 # Supply the approved fully-qualified Agent Gateway ID from common output.
-# agent_gateway_id = "projects/nnyn-dev/locations/us-central1/agentGateways/<shared-name>"
+agent_gateway_id = "projects/nnyn-dev/locations/us-central1/agentGateways/common-egress"
 
 # Cloud Run is the first phase. Set true only after reviewing the second plan.
 enable_gke   = false

@@ -76,9 +76,9 @@ configures Claude's remote HTTP MCP server with a fresh authorization header.
 The result is not PASS unless an SDK Tool event and a server-side correlation
 log both exist.
 
-The Runtime phase reuses the prior Gateway because Google permits only one
-active Agent Gateway per project and direction. This Terraform state does not
-manage or delete that existing Gateway. The GKE HTTPS phase is separately blocked until
+The Runtime phase uses the shared `common-egress` Gateway because Google permits
+only one active Agent Gateway per project and direction. This Terraform state
+does not manage or delete that Gateway. The GKE HTTPS phase is separately blocked until
 `gke_mcp_hostname`, DNS control, trusted TLS, and IAP audience are reviewed.
 
 ## Evidence order

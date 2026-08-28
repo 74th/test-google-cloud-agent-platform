@@ -52,7 +52,7 @@ variable "network_attachment_name" {
 variable "agent_gateway_name" {
   description = "Name of the shared Agent-to-Anywhere Agent Gateway."
   type        = string
-  default     = "common-agent-gateway-egress"
+  default     = "common-egress"
 }
 
 variable "labels" {
