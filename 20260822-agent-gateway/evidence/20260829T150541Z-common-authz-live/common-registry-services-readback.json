@@ -1,0 +1,102 @@
+[
+  {
+    "createTime": "2026-08-28T14:03:56.492082173Z",
+    "displayName": "mcp-20260823-mcp-server Vertex AI global control plane",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://aiplatform.googleapis.com"
+      }
+    ],
+    "name": "projects/nnyn-dev/locations/us-central1/services/mcp-20260823-mcp-server-aiplatform-global",
+    "registryResource": "projects/776113568960/locations/us-central1/endpoints/agentregistry-00000000-0000-0000-1fbd-4114ff5fd98b",
+    "updateTime": "2026-08-28T14:03:58.837841076Z"
+  },
+  {
+    "createTime": "2026-08-28T09:09:53.124927990Z",
+    "displayName": "20260828 shared Gateway GitHub allow endpoint",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://github.com"
+      }
+    ],
+    "name": "projects/nnyn-dev/locations/us-central1/services/agent-gateway-20260828-github",
+    "registryResource": "projects/776113568960/locations/us-central1/endpoints/agentregistry-00000000-0000-0000-e9eb-cf024f3e1dc6",
+    "updateTime": "2026-08-28T09:09:53.322057431Z"
+  },
+  {
+    "createTime": "2026-08-28T06:45:30.120440957Z",
+    "displayName": "20260828 BYOC query-job GCS",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://storage.googleapis.com"
+      },
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://storage.mtls.googleapis.com"
+      }
+    ],
+    "name": "projects/nnyn-dev/locations/us-central1/services/byoc-query-job-storage-20260828",
+    "registryResource": "projects/776113568960/locations/us-central1/endpoints/agentregistry-00000000-0000-0000-9014-cd0985868cb1",
+    "updateTime": "2026-08-28T06:45:30.339207642Z"
+  },
+  {
+    "createTime": "2026-08-28T14:03:56.453235023Z",
+    "displayName": "mcp-20260823-mcp-server Vertex AI regional control plane",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://us-central1-aiplatform.googleapis.com"
+      }
+    ],
+    "name": "projects/nnyn-dev/locations/us-central1/services/mcp-20260823-mcp-server-aiplatform",
+    "registryResource": "projects/776113568960/locations/us-central1/endpoints/agentregistry-00000000-0000-0000-5923-3fd4628bd467",
+    "updateTime": "2026-08-28T14:03:56.816011466Z"
+  },
+  {
+    "createTime": "2026-08-28T14:03:56.482497061Z",
+    "displayName": "mcp-20260823-mcp-server IAM Credentials control plane",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://iamcredentials.googleapis.com"
+      }
+    ],
+    "name": "projects/nnyn-dev/locations/us-central1/services/mcp-20260823-mcp-server-iamcredentials",
+    "registryResource": "projects/776113568960/locations/us-central1/endpoints/agentregistry-00000000-0000-0000-1602-d6edf69a11cf",
+    "updateTime": "2026-08-28T14:03:57.840219161Z"
+  },
+  {
+    "createTime": "2026-08-28T14:03:56.504479501Z",
+    "displayName": "mcp-20260823-mcp-server Agent Registry control plane",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://agentregistry.googleapis.com"
+      }
+    ],
+    "name": "projects/nnyn-dev/locations/us-central1/services/mcp-20260823-mcp-server-agentregistry",
+    "registryResource": "projects/776113568960/locations/us-central1/endpoints/agentregistry-00000000-0000-0000-9418-8bd3ddc346ab",
+    "updateTime": "2026-08-28T14:03:59.210043492Z"
+  }
+]

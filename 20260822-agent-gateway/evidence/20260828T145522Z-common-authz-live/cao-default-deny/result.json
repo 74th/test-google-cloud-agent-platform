@@ -1,0 +1,37 @@
+{
+  "case": "cao-default-deny",
+  "prompt": "https://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html は日本の国民の祝日についての広報ページだよ。この内容を見て、2027年の祝日を全て教えて。",
+  "exit_code": 0,
+  "expected_host": "www8.cao.go.jp",
+  "expected_disposition": "deny",
+  "response": "申し訳ありません。指定いただいた URL「https://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html」へのアクセスが失敗しました。HTTP エラーにより、ページの内容を取得できませんでした。\n\n2027年の祝日情報につきましては、このページから取得できなかったため、事前知識や記憶で補完することはできません。申し訳ございませんが、別の方法でご確認ください。例えば、内閣府のホームページ（cao.go.jp）を直接訪問いただくか、別のアクセス方法をお試しください。\n",
+  "application_fetch_log": [
+    {
+      "insertId": "6a91a16b000db0f8450c69bd",
+      "logName": "projects/nnyn-dev/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+      "receiveTimestamp": "2026-08-28T14:55:39.989354162Z",
+      "resource": {
+        "labels": {
+          "location": "us-central1",
+          "reasoning_engine_id": "124453171392151552",
+          "resource_container": "776113568960"
+        },
+        "type": "aiplatform.googleapis.com/ReasoningEngine"
+      },
+      "textPayload": "GatewayWebFetch request host=www8.cao.go.jp",
+      "timestamp": "2026-08-28T14:55:39.897272Z"
+    }
+  ],
+  "started_at": "2026-08-28T14:55:34.965902+00:00",
+  "ended_at": "2026-08-28T14:55:42.325705+00:00",
+  "verification_id": "20260828T145522Z-common-authz-live",
+  "caller": "74th.pc@gmail.com",
+  "runtime_effective_identity": "agents.global.proj-776113568960.system.id.goog/resources/aiplatform/projects/776113568960/locations/us-central1/reasoningEngines/124453171392151552",
+  "gateway_id": "projects/nnyn-dev/locations/us-central1/agentGateways/common-egress",
+  "matched_log_entries": [],
+  "gateway_decision": null,
+  "policy_host_listed": false,
+  "correlation_complete": true,
+  "default_deny_proven": false,
+  "passed": false
+}

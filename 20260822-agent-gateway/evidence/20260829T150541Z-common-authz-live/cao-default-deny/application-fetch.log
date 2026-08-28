@@ -1,0 +1,32 @@
+[
+  {
+    "insertId": "6a91a3d50003f6cc92773fa4",
+    "logName": "projects/nnyn-dev/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-08-28T15:05:57.527088153Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "124453171392151552",
+        "resource_container": "776113568960"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "GatewayWebFetch request host=www8.cao.go.jp",
+    "timestamp": "2026-08-28T15:05:57.259788Z"
+  },
+  {
+    "insertId": "6a91a3d5000c9e167d9a0d11",
+    "logName": "projects/nnyn-dev/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-08-28T15:05:57.870417215Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "124453171392151552",
+        "resource_container": "776113568960"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "GatewayWebFetch response host=www8.cao.go.jp status=403",
+    "timestamp": "2026-08-28T15:05:57.826902Z"
+  }
+]

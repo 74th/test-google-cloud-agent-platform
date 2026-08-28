@@ -5,30 +5,57 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import subprocess
 import urllib.error
 import urllib.request
+import re
+
+
+RUNTIME_PATTERN = re.compile(r"^projects/[^/]+/locations/(?P<location>[^/]+)/reasoningEngines/[^/]+$")
 
 
 def endpoint(agent_resource: str, location: str, method: str = "query") -> str:
-    if not agent_resource.startswith("projects/"):
-        raise ValueError("--agent-resource は projects/.../reasoningEngines/... の完全名で指定してください。")
+    match = RUNTIME_PATTERN.fullmatch(agent_resource or "")
+    if not match or match.group("location") != location:
+        raise ValueError("--agent-resource は指定 location の projects/.../reasoningEngines/... 完全名で指定してください。")
     if method not in {"query", "streamQuery"}:
         raise ValueError("method は query または streamQuery で指定してください。")
     return f"https://{location}-aiplatform.googleapis.com/v1/{agent_resource}:{method}"
 
 
-def token() -> str:
-    try:
-        import google.auth
-        from google.auth.transport.requests import Request
+def adc_token() -> str:
+    import google.auth
+    from google.auth.transport.requests import Request
 
-        credentials, _ = google.auth.default(scopes=["https://www.googleapis.com/auth/cloud-platform"])
-        credentials.refresh(Request())
-        if not credentials.token:
-            raise RuntimeError("アクセストークンを取得できませんでした。")
-        return credentials.token
-    except Exception as exc:
-        raise RuntimeError("Google Cloud ADC を取得できません。認証状態を確認してください。") from exc
+    credentials, _ = google.auth.default(scopes=["https://www.googleapis.com/auth/cloud-platform"])
+    credentials.refresh(Request())
+    if not credentials.token:
+        raise RuntimeError("ADC token is empty")
+    return credentials.token
+
+
+def gcloud_token() -> str:
+    result = subprocess.run(
+        ["gcloud", "auth", "print-access-token"],
+        check=False,
+        text=True,
+        capture_output=True,
+    )
+    value = result.stdout.strip()
+    if result.returncode != 0 or not value:
+        raise RuntimeError("gcloud token is unavailable")
+    return value
+
+
+def token() -> str:
+    """Use ADC first, then the active gcloud credential without persisting it."""
+    try:
+        return adc_token()
+    except Exception:
+        try:
+            return gcloud_token()
+        except Exception as exc:
+            raise RuntimeError("Google Cloud ADC または gcloud 認証を取得できません。認証状態を確認してください。") from exc
 
 
 def invoke(agent_resource: str, location: str, prompt: str) -> str:

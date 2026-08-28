@@ -1,0 +1,92 @@
+[
+  {
+    "insertId": "6a91a160000f19ea9b8d8e4f",
+    "logName": "projects/nnyn-dev/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-08-28T14:55:29.001030228Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "124453171392151552",
+        "resource_container": "776113568960"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "GatewayWebFetch request host=github.com",
+    "timestamp": "2026-08-28T14:55:28.989674Z"
+  },
+  {
+    "insertId": "6a91a1610009d645ceb0a3c7",
+    "logName": "projects/nnyn-dev/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-08-28T14:55:29.667698523Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "124453171392151552",
+        "resource_container": "776113568960"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "GatewayWebFetch response host=github.com final_host=github.com status=200 bytes=120000",
+    "timestamp": "2026-08-28T14:55:29.644677Z"
+  },
+  {
+    "insertId": "6a91a166000c80444c84edfe",
+    "logName": "projects/nnyn-dev/logs/aiplatform.googleapis.com%2Freasoning_engine_stdout",
+    "receiveTimestamp": "2026-08-28T14:55:34.823141953Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "124453171392151552",
+        "resource_container": "776113568960"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "INFO:     64.233.172.229:0 - \"POST /api/reasoning_engine HTTP/1.1\" 200 OK",
+    "timestamp": "2026-08-28T14:55:34.819268Z"
+  },
+  {
+    "insertId": "6a91a16b000db0f8450c69bd",
+    "logName": "projects/nnyn-dev/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-08-28T14:55:39.989354162Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "124453171392151552",
+        "resource_container": "776113568960"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "GatewayWebFetch request host=www8.cao.go.jp",
+    "timestamp": "2026-08-28T14:55:39.897272Z"
+  },
+  {
+    "insertId": "6a91a16c0006645b69fbc0b5",
+    "logName": "projects/nnyn-dev/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-08-28T14:55:40.653910104Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "124453171392151552",
+        "resource_container": "776113568960"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "GatewayWebFetch response host=www8.cao.go.jp status=403",
+    "timestamp": "2026-08-28T14:55:40.418907Z"
+  },
+  {
+    "insertId": "6a91a16e0002fcb34e40cf92",
+    "logName": "projects/nnyn-dev/logs/aiplatform.googleapis.com%2Freasoning_engine_stdout",
+    "receiveTimestamp": "2026-08-28T14:55:42.487594973Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "124453171392151552",
+        "resource_container": "776113568960"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "INFO:     64.233.172.99:0 - \"POST /api/reasoning_engine HTTP/1.1\" 200 OK",
+    "timestamp": "2026-08-28T14:55:42.195763Z"
+  }
+]

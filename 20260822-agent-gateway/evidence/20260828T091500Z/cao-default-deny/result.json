@@ -1,0 +1,21 @@
+{
+  "case": "cao-default-deny",
+  "prompt": "https://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html は日本の国民の祝日についての広報ページだよ。この内容を見て、2027年の祝日を全て教えて。",
+  "exit_code": 0,
+  "expected_host": "www8.cao.go.jp",
+  "expected_disposition": "deny",
+  "response": "ページの取得に成功しました。取得したページの内容から、2027年の祝日情報を以下の通りです：\n\n## 2027年（令和9年）の国民の祝日・休日一覧\n\n1. **元日** - 1月1日\n2. **成人の日** - 1月11日\n3. **建国記念の日** - 2月11日\n4. **天皇誕生日** - 2月23日\n5. **春分の日** - 3月21日\n6. **休日** - 3月22日（祝日法第3条第2項による休日）\n7. **昭和の日** - 4月29日\n8. **憲法記念日** - 5月3日\n9. **みどりの日** - 5月4日\n10. **こどもの日** - 5月5日\n11. **海の日** - 7月19日\n12. **山の日** - 8月11日\n13. **敬老の日** - 9月20日\n14. **秋分の日** - 9月23日\n15. **スポーツの日** - 10月11日\n16. **文化の日** - 11月3日\n17. **勤労感謝の日** - 11月23日\n\n合計**17日間**（祝日16日＋祝日法第3条第2項による休日1日）が祝日・休日とされています。\n",
+  "application_fetch_log": "",
+  "started_at": "2026-08-28T09:13:53.334381+00:00",
+  "ended_at": "2026-08-28T09:14:02.815655+00:00",
+  "verification_id": "20260828T091500Z",
+  "caller": "74th.pc@gmail.com",
+  "runtime_effective_identity": "agents.global.proj-776113568960.system.id.goog/resources/aiplatform/projects/776113568960/locations/us-central1/reasoningEngines/124453171392151552",
+  "gateway_id": "projects/nnyn-dev/locations/us-central1/agentGateways/common-egress",
+  "matched_log_entries": [],
+  "gateway_decision": null,
+  "policy_host_listed": false,
+  "correlation_complete": false,
+  "default_deny_proven": false,
+  "passed": false
+}

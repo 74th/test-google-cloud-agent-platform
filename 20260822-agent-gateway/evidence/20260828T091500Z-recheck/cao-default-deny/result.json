@@ -1,0 +1,82 @@
+{
+  "case": "cao-default-deny",
+  "prompt": "https://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html は日本の国民の祝日についての広報ページだよ。この内容を見て、2027年の祝日を全て教えて。",
+  "exit_code": 0,
+  "expected_host": "www8.cao.go.jp",
+  "expected_disposition": "deny",
+  "response": "ページの取得に成功しました。取得したページの情報に基づいて、2027年の祝日をお答えします。\n\n## 2027年（令和9年）の祝日・休日\n\n1. **元日** - 1月1日\n2. **成人の日** - 1月11日\n3. **建国記念の日** - 2月11日\n4. **天皇誕生日** - 2月23日\n5. **春分の日** - 3月21日\n6. **休日** - 3月22日（祝日法第3条第2項による休日）\n7. **昭和の日** - 4月29日\n8. **憲法記念日** - 5月3日\n9. **みどりの日** - 5月4日\n10. **こどもの日** - 5月5日\n11. **海の日** - 7月19日\n12. **山の日** - 8月11日\n13. **敬老の日** - 9月20日\n14. **秋分の日** - 9月23日\n15. **スポーツの日** - 10月11日\n16. **文化の日** - 11月3日\n17. **勤労感謝の日** - 11月23日\n\n合計で17日（16の国民の祝日に加えて、祝日法第3条第2項による春分の日の翌日3月22日が休日）となります。\n",
+  "application_fetch_log": [
+    {
+      "insertId": "6a9151550008be6324fbb881",
+      "logName": "projects/nnyn-dev/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+      "receiveTimestamp": "2026-08-28T09:13:57.665642074Z",
+      "resource": {
+        "labels": {
+          "location": "us-central1",
+          "reasoning_engine_id": "124453171392151552",
+          "resource_container": "776113568960"
+        },
+        "type": "aiplatform.googleapis.com/ReasoningEngine"
+      },
+      "textPayload": "GatewayWebFetch request host=www8.cao.go.jp",
+      "timestamp": "2026-08-28T09:13:57.573027Z"
+    },
+    {
+      "insertId": "6a915157000818bd896b216f",
+      "logName": "projects/nnyn-dev/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+      "receiveTimestamp": "2026-08-28T09:13:59.664579573Z",
+      "resource": {
+        "labels": {
+          "location": "us-central1",
+          "reasoning_engine_id": "124453171392151552",
+          "resource_container": "776113568960"
+        },
+        "type": "aiplatform.googleapis.com/ReasoningEngine"
+      },
+      "textPayload": "GatewayWebFetch response host=www8.cao.go.jp final_host=www8.cao.go.jp status=200 bytes=20682",
+      "timestamp": "2026-08-28T09:13:59.530621Z"
+    },
+    {
+      "insertId": "6a9151fa000e44ab1cbeaac4",
+      "logName": "projects/nnyn-dev/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+      "receiveTimestamp": "2026-08-28T09:16:43.148547225Z",
+      "resource": {
+        "labels": {
+          "location": "us-central1",
+          "reasoning_engine_id": "124453171392151552",
+          "resource_container": "776113568960"
+        },
+        "type": "aiplatform.googleapis.com/ReasoningEngine"
+      },
+      "textPayload": "GatewayWebFetch request host=www8.cao.go.jp",
+      "timestamp": "2026-08-28T09:16:42.935083Z"
+    },
+    {
+      "insertId": "6a9151fb0006829e6632b261",
+      "logName": "projects/nnyn-dev/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+      "receiveTimestamp": "2026-08-28T09:16:43.483996255Z",
+      "resource": {
+        "labels": {
+          "location": "us-central1",
+          "reasoning_engine_id": "124453171392151552",
+          "resource_container": "776113568960"
+        },
+        "type": "aiplatform.googleapis.com/ReasoningEngine"
+      },
+      "textPayload": "GatewayWebFetch response host=www8.cao.go.jp final_host=www8.cao.go.jp status=200 bytes=20682",
+      "timestamp": "2026-08-28T09:16:43.426654Z"
+    }
+  ],
+  "started_at": "2026-08-28T09:16:38.795741+00:00",
+  "ended_at": "2026-08-28T09:16:46.585852+00:00",
+  "verification_id": "20260828T091500Z-recheck",
+  "caller": "74th.pc@gmail.com",
+  "runtime_effective_identity": "agents.global.proj-776113568960.system.id.goog/resources/aiplatform/projects/776113568960/locations/us-central1/reasoningEngines/124453171392151552",
+  "gateway_id": "projects/nnyn-dev/locations/us-central1/agentGateways/common-egress",
+  "matched_log_entries": [],
+  "gateway_decision": null,
+  "policy_host_listed": false,
+  "correlation_complete": true,
+  "default_deny_proven": false,
+  "passed": false
+}

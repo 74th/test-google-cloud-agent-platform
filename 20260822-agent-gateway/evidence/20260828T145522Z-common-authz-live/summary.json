@@ -1,0 +1,103 @@
+{
+  "timestamp": "20260828T145522Z-common-authz-live",
+  "gateway_id": "projects/nnyn-dev/locations/us-central1/agentGateways/common-egress",
+  "caller": "74th.pc@gmail.com",
+  "runtime_effective_identity": "agents.global.proj-776113568960.system.id.goog/resources/aiplatform/projects/776113568960/locations/us-central1/reasoningEngines/124453171392151552",
+  "results": [
+    {
+      "case": "github",
+      "prompt": "https://github.com/74th の内容を要約して",
+      "exit_code": 0,
+      "expected_host": "github.com",
+      "expected_disposition": "allow",
+      "response": "ページの取得に成功しました。取得されたHTMLには、GitHubのプロフィール構造に関する基本的な情報が含まれていますが、ページの本体部分が切られているため、完全な内容は表示されていません。取得したメタデータから以下の情報が確認できます。\n\n## 74th（森本 篤志）のGitHubプロフィール要約\n\n**取得できた情報：**\n\n- **ユーザー名：** 74th\n- **説明：** twitter: @74th\n- **リポジトリ数：** 239個\n- **ユーザーID：** 1060011\n- **プロフィール画像URL：** https://avatars.githubusercontent.com/u/1060011?v=4\n\n取得されたHTMLはページのヘッダーとナビゲーション部分に限定されており、プロフィール詳細（自己紹介、フォロワー数、主な関心分野、ピン留めされたリポジトリなど）は完全には取得されていません。\n\n**注記：** より詳細な情報（プロフィール説明文、フォロワー/フォロー数、主要リポジトリ情報）を確認するには、JavaScript実行が必要になる可能性があります。\n",
+      "application_fetch_log": [
+        {
+          "insertId": "6a91a160000f19ea9b8d8e4f",
+          "logName": "projects/nnyn-dev/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+          "receiveTimestamp": "2026-08-28T14:55:29.001030228Z",
+          "resource": {
+            "labels": {
+              "location": "us-central1",
+              "reasoning_engine_id": "124453171392151552",
+              "resource_container": "776113568960"
+            },
+            "type": "aiplatform.googleapis.com/ReasoningEngine"
+          },
+          "textPayload": "GatewayWebFetch request host=github.com",
+          "timestamp": "2026-08-28T14:55:28.989674Z"
+        },
+        {
+          "insertId": "6a91a1610009d645ceb0a3c7",
+          "logName": "projects/nnyn-dev/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+          "receiveTimestamp": "2026-08-28T14:55:29.667698523Z",
+          "resource": {
+            "labels": {
+              "location": "us-central1",
+              "reasoning_engine_id": "124453171392151552",
+              "resource_container": "776113568960"
+            },
+            "type": "aiplatform.googleapis.com/ReasoningEngine"
+          },
+          "textPayload": "GatewayWebFetch response host=github.com final_host=github.com status=200 bytes=120000",
+          "timestamp": "2026-08-28T14:55:29.644677Z"
+        }
+      ],
+      "started_at": "2026-08-28T14:55:23.864265+00:00",
+      "ended_at": "2026-08-28T14:55:34.962219+00:00",
+      "verification_id": "20260828T145522Z-common-authz-live",
+      "caller": "74th.pc@gmail.com",
+      "runtime_effective_identity": "agents.global.proj-776113568960.system.id.goog/resources/aiplatform/projects/776113568960/locations/us-central1/reasoningEngines/124453171392151552",
+      "gateway_id": "projects/nnyn-dev/locations/us-central1/agentGateways/common-egress",
+      "matched_log_entries": [],
+      "gateway_decision": null,
+      "policy_host_listed": false,
+      "correlation_complete": true,
+      "default_deny_proven": false,
+      "passed": false
+    },
+    {
+      "case": "cao-default-deny",
+      "prompt": "https://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html は日本の国民の祝日についての広報ページだよ。この内容を見て、2027年の祝日を全て教えて。",
+      "exit_code": 0,
+      "expected_host": "www8.cao.go.jp",
+      "expected_disposition": "deny",
+      "response": "申し訳ありません。指定いただいた URL「https://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html」へのアクセスが失敗しました。HTTP エラーにより、ページの内容を取得できませんでした。\n\n2027年の祝日情報につきましては、このページから取得できなかったため、事前知識や記憶で補完することはできません。申し訳ございませんが、別の方法でご確認ください。例えば、内閣府のホームページ（cao.go.jp）を直接訪問いただくか、別のアクセス方法をお試しください。\n",
+      "application_fetch_log": [
+        {
+          "insertId": "6a91a16b000db0f8450c69bd",
+          "logName": "projects/nnyn-dev/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+          "receiveTimestamp": "2026-08-28T14:55:39.989354162Z",
+          "resource": {
+            "labels": {
+              "location": "us-central1",
+              "reasoning_engine_id": "124453171392151552",
+              "resource_container": "776113568960"
+            },
+            "type": "aiplatform.googleapis.com/ReasoningEngine"
+          },
+          "textPayload": "GatewayWebFetch request host=www8.cao.go.jp",
+          "timestamp": "2026-08-28T14:55:39.897272Z"
+        }
+      ],
+      "started_at": "2026-08-28T14:55:34.965902+00:00",
+      "ended_at": "2026-08-28T14:55:42.325705+00:00",
+      "verification_id": "20260828T145522Z-common-authz-live",
+      "caller": "74th.pc@gmail.com",
+      "runtime_effective_identity": "agents.global.proj-776113568960.system.id.goog/resources/aiplatform/projects/776113568960/locations/us-central1/reasoningEngines/124453171392151552",
+      "gateway_id": "projects/nnyn-dev/locations/us-central1/agentGateways/common-egress",
+      "matched_log_entries": [],
+      "gateway_decision": null,
+      "policy_host_listed": false,
+      "correlation_complete": true,
+      "default_deny_proven": false,
+      "passed": false
+    }
+  ],
+  "passed": false,
+  "mcp_e2e": "unproven",
+  "constraints": [
+    "Response-only assertions are insufficient.",
+    "No destroy was run."
+  ]
+}

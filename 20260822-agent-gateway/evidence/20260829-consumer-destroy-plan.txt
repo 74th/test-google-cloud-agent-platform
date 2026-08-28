@@ -1,0 +1,238 @@
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  - destroy
+
+Terraform will perform the following actions:
+
+  # google_artifact_registry_repository.agent_images will be destroyed
+  - resource "google_artifact_registry_repository" "agent_images" {
+      - cleanup_policy_dry_run = false -> null
+      - create_time            = "2026-08-28T09:09:57.991187Z" -> null
+      - deletion_policy        = "DELETE" -> null
+      - description            = "20260828 consumer-owned BYOC validation images." -> null
+      - effective_labels       = {
+          - "goog-terraform-provisioned" = "true"
+          - "managed_by"                 = "terraform"
+          - "project"                    = "agent-gateway-egress-consumer"
+          - "validation"                 = "20260822-agent-gateway"
+        } -> null
+      - format                 = "DOCKER" -> null
+      - id                     = "projects/nnyn-dev/locations/us-central1/repositories/agent-gateway-20260828" -> null
+      - labels                 = {
+          - "managed_by" = "terraform"
+          - "project"    = "agent-gateway-egress-consumer"
+          - "validation" = "20260822-agent-gateway"
+        } -> null
+      - location               = "us-central1" -> null
+      - mode                   = "STANDARD_REPOSITORY" -> null
+      - name                   = "agent-gateway-20260828" -> null
+      - project                = "nnyn-dev" -> null
+      - registry_uri           = "us-central1-docker.pkg.dev/nnyn-dev/agent-gateway-20260828" -> null
+      - repository_id          = "agent-gateway-20260828" -> null
+      - terraform_labels       = {
+          - "goog-terraform-provisioned" = "true"
+          - "managed_by"                 = "terraform"
+          - "project"                    = "agent-gateway-egress-consumer"
+          - "validation"                 = "20260822-agent-gateway"
+        } -> null
+      - update_time            = "2026-08-28T09:11:13.986401Z" -> null
+        # (1 unchanged attribute hidden)
+
+      - vulnerability_scanning_config {
+          - enablement_state        = "SCANNING_DISABLED" -> null
+          - enablement_state_reason = "API containerscanning.googleapis.com is not enabled." -> null
+            # (1 unchanged attribute hidden)
+        }
+    }
+
+  # google_artifact_registry_repository_iam_member.agent_runtime_reader will be destroyed
+  - resource "google_artifact_registry_repository_iam_member" "agent_runtime_reader" {
+      - etag       = "BwZaF9FFE2o=" -> null
+      - id         = "projects/nnyn-dev/locations/us-central1/repositories/agent-gateway-20260828/roles/artifactregistry.reader/serviceAccount:service-776113568960@gcp-sa-aiplatform-re.iam.gserviceaccount.com" -> null
+      - location   = "us-central1" -> null
+      - member     = "serviceAccount:service-776113568960@gcp-sa-aiplatform-re.iam.gserviceaccount.com" -> null
+      - project    = "nnyn-dev" -> null
+      - repository = "projects/nnyn-dev/locations/us-central1/repositories/agent-gateway-20260828" -> null
+      - role       = "roles/artifactregistry.reader" -> null
+    }
+
+  # google_project_iam_member.runtime_platform_user will be destroyed
+  - resource "google_project_iam_member" "runtime_platform_user" {
+      - etag    = "BwZaGt6XJfE=" -> null
+      - id      = "nnyn-dev/roles/aiplatform.user/serviceAccount:agent-gateway-20260828-runtime@nnyn-dev.iam.gserviceaccount.com" -> null
+      - member  = "serviceAccount:agent-gateway-20260828-runtime@nnyn-dev.iam.gserviceaccount.com" -> null
+      - project = "nnyn-dev" -> null
+      - role    = "roles/aiplatform.user" -> null
+    }
+
+  # google_project_iam_member.runtime_service_usage_consumer will be destroyed
+  - resource "google_project_iam_member" "runtime_service_usage_consumer" {
+      - etag    = "BwZaGt6XJfE=" -> null
+      - id      = "nnyn-dev/roles/serviceusage.serviceUsageConsumer/serviceAccount:agent-gateway-20260828-runtime@nnyn-dev.iam.gserviceaccount.com" -> null
+      - member  = "serviceAccount:agent-gateway-20260828-runtime@nnyn-dev.iam.gserviceaccount.com" -> null
+      - project = "nnyn-dev" -> null
+      - role    = "roles/serviceusage.serviceUsageConsumer" -> null
+    }
+
+  # google_project_service.services["agentregistry.googleapis.com"] will be destroyed
+  - resource "google_project_service" "services" {
+      - deletion_policy    = "DELETE" -> null
+      - disable_on_destroy = false -> null
+      - id                 = "nnyn-dev/agentregistry.googleapis.com" -> null
+      - project            = "nnyn-dev" -> null
+      - service            = "agentregistry.googleapis.com" -> null
+    }
+
+  # google_project_service.services["aiplatform.googleapis.com"] will be destroyed
+  - resource "google_project_service" "services" {
+      - deletion_policy    = "DELETE" -> null
+      - disable_on_destroy = false -> null
+      - id                 = "nnyn-dev/aiplatform.googleapis.com" -> null
+      - project            = "nnyn-dev" -> null
+      - service            = "aiplatform.googleapis.com" -> null
+    }
+
+  # google_project_service.services["artifactregistry.googleapis.com"] will be destroyed
+  - resource "google_project_service" "services" {
+      - deletion_policy    = "DELETE" -> null
+      - disable_on_destroy = false -> null
+      - id                 = "nnyn-dev/artifactregistry.googleapis.com" -> null
+      - project            = "nnyn-dev" -> null
+      - service            = "artifactregistry.googleapis.com" -> null
+    }
+
+  # google_project_service.services["iam.googleapis.com"] will be destroyed
+  - resource "google_project_service" "services" {
+      - deletion_policy    = "DELETE" -> null
+      - disable_on_destroy = false -> null
+      - id                 = "nnyn-dev/iam.googleapis.com" -> null
+      - project            = "nnyn-dev" -> null
+      - service            = "iam.googleapis.com" -> null
+    }
+
+  # google_project_service.services["logging.googleapis.com"] will be destroyed
+  - resource "google_project_service" "services" {
+      - deletion_policy    = "DELETE" -> null
+      - disable_on_destroy = false -> null
+      - id                 = "nnyn-dev/logging.googleapis.com" -> null
+      - project            = "nnyn-dev" -> null
+      - service            = "logging.googleapis.com" -> null
+    }
+
+  # google_project_service.services["serviceusage.googleapis.com"] will be destroyed
+  - resource "google_project_service" "services" {
+      - deletion_policy    = "DELETE" -> null
+      - disable_on_destroy = false -> null
+      - id                 = "nnyn-dev/serviceusage.googleapis.com" -> null
+      - project            = "nnyn-dev" -> null
+      - service            = "serviceusage.googleapis.com" -> null
+    }
+
+  # google_service_account.runtime will be destroyed
+  - resource "google_service_account" "runtime" {
+      - account_id      = "agent-gateway-20260828-runtime" -> null
+      - deletion_policy = "DELETE" -> null
+      - description     = "Consumer-owned identity for the shared Agent Gateway validation Runtime." -> null
+      - disabled        = false -> null
+      - display_name    = "20260828 shared Gateway validation runtime" -> null
+      - email           = "agent-gateway-20260828-runtime@nnyn-dev.iam.gserviceaccount.com" -> null
+      - id              = "projects/nnyn-dev/serviceAccounts/agent-gateway-20260828-runtime@nnyn-dev.iam.gserviceaccount.com" -> null
+      - member          = "serviceAccount:agent-gateway-20260828-runtime@nnyn-dev.iam.gserviceaccount.com" -> null
+      - name            = "projects/nnyn-dev/serviceAccounts/agent-gateway-20260828-runtime@nnyn-dev.iam.gserviceaccount.com" -> null
+      - project         = "nnyn-dev" -> null
+      - unique_id       = "111130531519104147727" -> null
+    }
+
+  # google_vertex_ai_reasoning_engine.runtime will be destroyed
+  - resource "google_vertex_ai_reasoning_engine" "runtime" {
+      - create_time      = "2026-08-28T09:12:02.564785Z" -> null
+      - display_name     = "agent-gateway-20260828-claude-01" -> null
+      - effective_labels = {} -> null
+      - id               = "projects/776113568960/locations/us-central1/reasoningEngines/124453171392151552" -> null
+      - labels           = {} -> null
+      - name             = "124453171392151552" -> null
+      - project          = "776113568960" -> null
+      - region           = "us-central1" -> null
+      - terraform_labels = {} -> null
+      - update_time      = "2026-08-28T09:12:30.894434Z" -> null
+        # (1 unchanged attribute hidden)
+
+      - context_spec {
+          - memory_bank_config {
+              - disable_memory_revisions = false -> null
+            }
+        }
+
+      - spec {
+          - agent_framework    = "custom" -> null
+          - class_methods      = jsonencode(
+                [
+                  - {
+                      - api_mode   = ""
+                      - name       = "query"
+                      - parameters = {
+                          - properties = {
+                              - message = {
+                                  - type = "string"
+                                }
+                            }
+                          - required   = [
+                              - "message",
+                            ]
+                          - type       = "object"
+                        }
+                    },
+                  - {
+                      - api_mode   = "stream"
+                      - name       = "stream_query"
+                      - parameters = {
+                          - properties = {
+                              - message = {
+                                  - type = "string"
+                                }
+                            }
+                          - required   = [
+                              - "message",
+                            ]
+                          - type       = "object"
+                        }
+                    },
+                ]
+            ) -> null
+          - effective_identity = "agents.global.proj-776113568960.system.id.goog/resources/aiplatform/projects/776113568960/locations/us-central1/reasoningEngines/124453171392151552" -> null
+          - identity_type      = "AGENT_IDENTITY" -> null
+            # (1 unchanged attribute hidden)
+
+          - container_spec {
+              - image_uri = "us-central1-docker.pkg.dev/nnyn-dev/agent-gateway-20260828/claude-agent-gateway@sha256:88b7f45bed4c6656c784b96c404a658978211ead1b4bf7ffecdff73ee91fbc9a" -> null
+            }
+
+          - deployment_spec {
+              - container_concurrency = 0 -> null
+              - max_instances         = 0 -> null
+              - min_instances         = 0 -> null
+              - resource_limits       = {} -> null
+
+              - agent_gateway_config {
+                  - agent_to_anywhere_config {
+                      - agent_gateway = "projects/nnyn-dev/locations/us-central1/agentGateways/common-egress" -> null
+                    }
+                }
+
+              - env {
+                  - name  = "GOOGLE_CLOUD_AGENT_ENGINE_ENABLE_TELEMETRY" -> null
+                  - value = "true" -> null
+                }
+            }
+        }
+    }
+
+Plan: 0 to add, 0 to change, 12 to destroy.
+
+Changes to Outputs:
+  - agent_gateway_id                = "projects/nnyn-dev/locations/us-central1/agentGateways/common-egress" -> null
+  - artifact_registry_repository    = "agent-gateway-20260828" -> null
+  - artifact_registry_repository_id = "agent-gateway-20260828" -> null
+  - runtime_effective_identity      = "agents.global.proj-776113568960.system.id.goog/resources/aiplatform/projects/776113568960/locations/us-central1/reasoningEngines/124453171392151552" -> null
+  - runtime_name                    = "projects/776113568960/locations/us-central1/reasoningEngines/124453171392151552" -> null

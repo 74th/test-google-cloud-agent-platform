@@ -1,6 +1,7 @@
+# AGENT_GATEWAY_ROOT_CERTIFICATES is supplied as the BuildKit secret
+# agent_gateway_roots by scripts/build_push.sh and installed below.
 FROM python:3.12-slim
 
-ARG AGENT_GATEWAY_ROOT_CERTIFICATES=""
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt \
@@ -9,11 +10,12 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=/etc/ssl/certs/ca-certificates.crt \
     NODE_EXTRA_CA_CERTS=/etc/ssl/certs/ca-certificates.crt
 WORKDIR /app
-RUN apt-get update \
+RUN --mount=type=secret,id=agent_gateway_roots,target=/run/secrets/agent_gateway_roots,required=false \
+    apt-get update \
     && apt-get install --no-install-recommends -y ca-certificates \
     && rm -rf /var/lib/apt/lists/* \
-    && if [ -n "$AGENT_GATEWAY_ROOT_CERTIFICATES" ]; then \
-         printf '%s\n' "$AGENT_GATEWAY_ROOT_CERTIFICATES" > /usr/local/share/ca-certificates/agent-gateway.crt; \
+    && if [ -s /run/secrets/agent_gateway_roots ]; then \
+         cp /run/secrets/agent_gateway_roots /usr/local/share/ca-certificates/agent-gateway.crt; \
          update-ca-certificates; \
        fi
 COPY pyproject.toml README.md ./

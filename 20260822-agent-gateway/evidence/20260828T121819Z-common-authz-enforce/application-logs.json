@@ -1,0 +1,17 @@
+[
+  {
+    "insertId": "6a917c8f0009c0abcf75106b",
+    "logName": "projects/nnyn-dev/logs/aiplatform.googleapis.com%2Freasoning_engine_stdout",
+    "receiveTimestamp": "2026-08-28T12:18:23.645674458Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "124453171392151552",
+        "resource_container": "776113568960"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "INFO:     64.233.172.76:0 - \"POST /api/reasoning_engine HTTP/1.1\" 422 Unprocessable Entity",
+    "timestamp": "2026-08-28T12:18:23.639147Z"
+  }
+]

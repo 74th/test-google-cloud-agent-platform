@@ -1,0 +1,16 @@
+取得結果から判断いたします。
+
+## 74th (Atsushi Morimoto) のGitHubプロフィール
+
+取得したHTMLメタデータから以下の情報が確認できます：
+
+**基本情報：**
+- **ユーザー名：** 74th
+- **表示名：** Atsushi Morimoto
+- **Twitter：** @74th
+- **リポジトリ数：** 239個
+
+**説明文：**
+公式メタデータに記載されている説明は「twitter: @74th. 74th has 239 repositories available. Follow their code on GitHub.」です。
+
+残念ながら、HTMLの詳細な個人情報部分（プロフィール説明文、組織情報、位置情報など）は取得したページの静的メタデータには含まれていません。より詳細な情報は、JavaScriptで動的に読み込まれるため、このGatewayWebFetchツールでは取得されていません。

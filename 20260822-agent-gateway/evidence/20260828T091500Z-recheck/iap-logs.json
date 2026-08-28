@@ -1,0 +1,175 @@
+[
+  {
+    "insertId": "157h8edijqy",
+    "logName": "projects/nnyn-dev/logs/cloudaudit.googleapis.com%2Factivity",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "oauthInfo": {
+          "oauthClientId": "32555940559.apps.googleusercontent.com"
+        },
+        "principalEmail": "74th.pc@gmail.com",
+        "principalSubject": "user:74th.pc@gmail.com"
+      },
+      "authorizationInfo": [
+        {
+          "granted": true,
+          "permission": "iap.webServices.setIamPolicy",
+          "permissionType": "ADMIN_WRITE",
+          "resourceAttributes": {
+            "name": "projects/776113568960/locations/us-central1/iap_web/agentRegistry/endpoints/agentregistry-00000000-0000-0000-e9eb-cf024f3e1dc6",
+            "service": "iap.googleapis.com",
+            "type": "iap.googleapis.com/WebService"
+          }
+        }
+      ],
+      "methodName": "google.cloud.iap.v1.IdentityAwareProxyAdminService.SetIamPolicy",
+      "request": {
+        "@type": "type.googleapis.com/google.iam.v1.SetIamPolicyRequest",
+        "policy": {
+          "bindings": [
+            {
+              "members": [
+                "principal://agents.global.proj-776113568960.system.id.goog/resources/aiplatform/projects/776113568960/locations/us-central1/reasoningEngines/124453171392151552"
+              ],
+              "role": "roles/iap.egressor"
+            }
+          ],
+          "etag": "ACAB"
+        },
+        "resource": "projects/nnyn-dev/locations/us-central1/iap_web/agentRegistry/endpoints/agentregistry-00000000-0000-0000-e9eb-cf024f3e1dc6"
+      },
+      "requestMetadata": {
+        "callerIp": "240f:65:9428:1:c77d:3ac7:44a0:f464",
+        "callerSuppliedUserAgent": "Terraform/1.13.1 (+https://www.terraform.io) Terraform-Plugin-SDK/2.38.1 terraform-provider-google-nightly/2026.4.8-7.27.0,gzip(gfe),gzip(gfe)",
+        "destinationAttributes": {},
+        "requestAttributes": {
+          "auth": {},
+          "time": "2026-08-28T09:13:13.580566830Z"
+        }
+      },
+      "resourceName": "projects/nnyn-dev/locations/us-central1/iap_web/agentRegistry/endpoints/agentregistry-00000000-0000-0000-e9eb-cf024f3e1dc6",
+      "response": {
+        "@type": "type.googleapis.com/google.iam.v1.Policy",
+        "bindings": [
+          {
+            "members": [
+              "principal://agents.global.proj-776113568960.system.id.goog/resources/aiplatform/projects/776113568960/locations/us-central1/reasoningEngines/124453171392151552"
+            ],
+            "role": "roles/iap.egressor"
+          }
+        ],
+        "etag": "BwZaF9ywYpI="
+      },
+      "serviceName": "iap.googleapis.com",
+      "status": {}
+    },
+    "receiveTimestamp": "2026-08-28T09:13:13.635278288Z",
+    "resource": {
+      "labels": {
+        "method": "",
+        "project_id": "nnyn-dev",
+        "service": ""
+      },
+      "type": "audited_resource"
+    },
+    "severity": "NOTICE",
+    "timestamp": "2026-08-28T09:13:13.138701887Z"
+  },
+  {
+    "insertId": "1pms3dfe1seim",
+    "labels": {
+      "iap.googleapis.com/audited_resource_name": "projects/776113568960/locations/global/endpoints/unregisteredEndpoint",
+      "iap.googleapis.com/audited_resource_type": "agentregistry.googleapis.com/Endpoint"
+    },
+    "logName": "projects/nnyn-dev/logs/cloudaudit.googleapis.com%2Fdata_access",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "principalSubject": "principal://agents.global.proj-776113568960.system.id.goog/resources/aiplatform/projects/776113568960/locations/us-central1/reasoningEngines/124453171392151552"
+      },
+      "authorizationInfo": [
+        {
+          "granted": true,
+          "permission": "iap.webServiceVersions.egressViaIAP",
+          "permissionType": "ADMIN_READ",
+          "resource": "projects/nnyn-dev/locations/global/iap_web/agentRegistry/endpoints/unregisteredEndpoint",
+          "resourceAttributes": {
+            "service": "iap.googleapis.com",
+            "type": "iap.googleapis.com/WebServiceVersion"
+          }
+        }
+      ],
+      "methodName": "AuthorizeUser",
+      "request": {
+        "@type": "type.googleapis.com/cloud.security.gatekeeper.AuthorizeUserRequest",
+        "dryRun": true,
+        "httpRequest": {
+          "url": "https://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html"
+        },
+        "policy_version": "POLICY_VERSION_V1"
+      },
+      "resourceName": "unregisteredEndpoint",
+      "serviceName": "iap.googleapis.com"
+    },
+    "receiveTimestamp": "2026-08-28T09:13:58.843038947Z",
+    "resource": {
+      "labels": {
+        "method": "AuthorizeUser",
+        "project_id": "nnyn-dev",
+        "service": "iap.googleapis.com"
+      },
+      "type": "audited_resource"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-08-28T09:13:58.164144506Z"
+  },
+  {
+    "insertId": "1ke1p98e20g8o",
+    "labels": {
+      "iap.googleapis.com/audited_resource_name": "projects/776113568960/locations/global/endpoints/unregisteredEndpoint",
+      "iap.googleapis.com/audited_resource_type": "agentregistry.googleapis.com/Endpoint"
+    },
+    "logName": "projects/nnyn-dev/logs/cloudaudit.googleapis.com%2Fdata_access",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "principalSubject": "principal://agents.global.proj-776113568960.system.id.goog/resources/aiplatform/projects/776113568960/locations/us-central1/reasoningEngines/124453171392151552"
+      },
+      "authorizationInfo": [
+        {
+          "granted": true,
+          "permission": "iap.webServiceVersions.egressViaIAP",
+          "permissionType": "ADMIN_READ",
+          "resource": "projects/nnyn-dev/locations/global/iap_web/agentRegistry/endpoints/unregisteredEndpoint",
+          "resourceAttributes": {
+            "service": "iap.googleapis.com",
+            "type": "iap.googleapis.com/WebServiceVersion"
+          }
+        }
+      ],
+      "methodName": "AuthorizeUser",
+      "request": {
+        "@type": "type.googleapis.com/cloud.security.gatekeeper.AuthorizeUserRequest",
+        "dryRun": true,
+        "httpRequest": {
+          "url": "https://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html"
+        },
+        "policy_version": "POLICY_VERSION_V1"
+      },
+      "resourceName": "unregisteredEndpoint",
+      "serviceName": "iap.googleapis.com"
+    },
+    "receiveTimestamp": "2026-08-28T09:16:43.422515043Z",
+    "resource": {
+      "labels": {
+        "method": "AuthorizeUser",
+        "project_id": "nnyn-dev",
+        "service": "iap.googleapis.com"
+      },
+      "type": "audited_resource"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-08-28T09:16:43.236949355Z"
+  }
+]

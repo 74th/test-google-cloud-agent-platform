@@ -1,0 +1,17 @@
+[
+  {
+    "insertId": "6a91a26e000bbb956a703b8a",
+    "logName": "projects/nnyn-dev/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-08-28T14:59:59.025354613Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "124453171392151552",
+        "resource_container": "776113568960"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "GatewayWebFetch response host=www8.cao.go.jp status=403",
+    "timestamp": "2026-08-28T14:59:58.768917Z"
+  }
+]

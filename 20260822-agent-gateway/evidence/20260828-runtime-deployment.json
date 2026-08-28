@@ -1,0 +1,10 @@
+{
+  "resource_name": "projects/776113568960/locations/us-central1/reasoningEngines/124453171392151552",
+  "image_digest": "sha256:88b7f45bed4c6656c784b96c404a658978211ead1b4bf7ffecdff73ee91fbc9a",
+  "gateway_id": "projects/nnyn-dev/locations/us-central1/agentGateways/common-egress",
+  "identity": {
+    "type": "AGENT_IDENTITY",
+    "effective": "agents.global.proj-776113568960.system.id.goog/resources/aiplatform/projects/776113568960/locations/us-central1/reasoningEngines/124453171392151552"
+  },
+  "deployed_at": "2026-08-28T09:12:34.335015+00:00"
+}

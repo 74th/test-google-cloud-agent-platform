@@ -1,0 +1,21 @@
+{
+  "case": "github",
+  "prompt": "https://github.com/74th の内容を要約して",
+  "exit_code": 1,
+  "expected_host": "github.com",
+  "expected_disposition": "allow",
+  "response": "",
+  "application_fetch_log": [],
+  "started_at": "2026-08-28T12:18:20.494810+00:00",
+  "ended_at": "2026-08-28T12:18:23.757551+00:00",
+  "verification_id": "20260828T121819Z-common-authz-enforce",
+  "caller": "74th.pc@gmail.com",
+  "runtime_effective_identity": "agents.global.proj-776113568960.system.id.goog/resources/aiplatform/projects/776113568960/locations/us-central1/reasoningEngines/124453171392151552",
+  "gateway_id": "projects/nnyn-dev/locations/us-central1/agentGateways/common-egress",
+  "matched_log_entries": [],
+  "gateway_decision": null,
+  "policy_host_listed": false,
+  "correlation_complete": false,
+  "default_deny_proven": false,
+  "passed": false
+}

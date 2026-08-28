@@ -1,0 +1,7 @@
+project_id       = "nnyn-dev"
+location         = "us-central1"
+vertex_project_id = "nnyn-dev"
+vertex_region    = "global"
+agent_gateway_id = "projects/nnyn-dev/locations/us-central1/agentGateways/common-egress"
+runtime_image_uri = "us-central1-docker.pkg.dev/nnyn-dev/agent-gateway-20260828/claude-agent-gateway@sha256:0000000000000000000000000000000000000000000000000000000000000000"
+display_name      = "agent-gateway-20260828-claude"

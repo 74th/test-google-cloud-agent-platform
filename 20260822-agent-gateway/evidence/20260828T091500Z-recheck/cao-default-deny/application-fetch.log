@@ -1,0 +1,62 @@
+[
+  {
+    "insertId": "6a9151550008be6324fbb881",
+    "logName": "projects/nnyn-dev/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-08-28T09:13:57.665642074Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "124453171392151552",
+        "resource_container": "776113568960"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "GatewayWebFetch request host=www8.cao.go.jp",
+    "timestamp": "2026-08-28T09:13:57.573027Z"
+  },
+  {
+    "insertId": "6a915157000818bd896b216f",
+    "logName": "projects/nnyn-dev/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-08-28T09:13:59.664579573Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "124453171392151552",
+        "resource_container": "776113568960"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "GatewayWebFetch response host=www8.cao.go.jp final_host=www8.cao.go.jp status=200 bytes=20682",
+    "timestamp": "2026-08-28T09:13:59.530621Z"
+  },
+  {
+    "insertId": "6a9151fa000e44ab1cbeaac4",
+    "logName": "projects/nnyn-dev/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-08-28T09:16:43.148547225Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "124453171392151552",
+        "resource_container": "776113568960"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "GatewayWebFetch request host=www8.cao.go.jp",
+    "timestamp": "2026-08-28T09:16:42.935083Z"
+  },
+  {
+    "insertId": "6a9151fb0006829e6632b261",
+    "logName": "projects/nnyn-dev/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-08-28T09:16:43.483996255Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "124453171392151552",
+        "resource_container": "776113568960"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "GatewayWebFetch response host=www8.cao.go.jp final_host=www8.cao.go.jp status=200 bytes=20682",
+    "timestamp": "2026-08-28T09:16:43.426654Z"
+  }
+]

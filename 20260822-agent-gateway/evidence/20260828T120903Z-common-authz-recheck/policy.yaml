@@ -1,0 +1,23 @@
+# Agent Gateway's egress enforcement is registry/IAP based.  This file is the
+# reviewable policy contract consumed by scripts/gateway.py and tests; it is
+# deliberately not an individual deny list.
+mode: AGENT_TO_ANYWHERE
+default_action: DENY
+allowed_endpoints:
+  - host: github.com
+    scheme: https
+    port: 443
+    reason: validation target
+google_managed_services:
+  - host: agentregistry.googleapis.com
+    scheme: https
+    port: 443
+    reason: Agent Platform registry control plane
+  - host: aiplatform.googleapis.com
+    scheme: https
+    port: 443
+    reason: Vertex AI model inference
+  - host: logging.googleapis.com
+    scheme: https
+    port: 443
+    reason: Cloud Logging evidence collection

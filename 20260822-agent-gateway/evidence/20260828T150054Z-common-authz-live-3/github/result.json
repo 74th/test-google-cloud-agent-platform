@@ -1,0 +1,117 @@
+{
+  "case": "github",
+  "prompt": "https://github.com/74th の内容を要約して",
+  "exit_code": 0,
+  "expected_host": "github.com",
+  "expected_disposition": "allow",
+  "response": "取得できたページのHTMLを解析します。メタデータから以下の情報が確認できます。\n\n**https://github.com/74th の要約**\n\n取得できたメタデータから以下の情報が確認できます：\n\n- **ユーザー名**: 74th\n- **Twitter**: @74th\n- **リポジトリ数**: 239個のリポジトリが利用可能\n\nページが動的コンテンツであるため、詳細なプロフィール情報（自己紹介文、フォロワー数、フォロー数など）は、取得されたHTMLのメタデータのみからは取得できませんでした。より詳しい情報をご希望の場合は、GitHub APIを直接利用するか、ブラウザで直接ページにアクセスしてください。\n",
+  "application_fetch_log": [
+    {
+      "insertId": "6a91a2ac0005b115c425b486",
+      "logName": "projects/nnyn-dev/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+      "receiveTimestamp": "2026-08-28T15:01:00.380970936Z",
+      "resource": {
+        "labels": {
+          "location": "us-central1",
+          "reasoning_engine_id": "124453171392151552",
+          "resource_container": "776113568960"
+        },
+        "type": "aiplatform.googleapis.com/ReasoningEngine"
+      },
+      "textPayload": "GatewayWebFetch request host=github.com",
+      "timestamp": "2026-08-28T15:01:00.373013Z"
+    },
+    {
+      "insertId": "6a91a2ad0000b8d161bf17a1",
+      "logName": "projects/nnyn-dev/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+      "receiveTimestamp": "2026-08-28T15:01:01.381085157Z",
+      "resource": {
+        "labels": {
+          "location": "us-central1",
+          "reasoning_engine_id": "124453171392151552",
+          "resource_container": "776113568960"
+        },
+        "type": "aiplatform.googleapis.com/ReasoningEngine"
+      },
+      "textPayload": "GatewayWebFetch response host=github.com final_host=github.com status=200 bytes=120000",
+      "timestamp": "2026-08-28T15:01:01.047313Z"
+    }
+  ],
+  "started_at": "2026-08-28T15:00:55.995010+00:00",
+  "ended_at": "2026-08-28T15:01:05.075093+00:00",
+  "verification_id": "20260828T150054Z-common-authz-live-3",
+  "caller": "74th.pc@gmail.com",
+  "runtime_effective_identity": "agents.global.proj-776113568960.system.id.goog/resources/aiplatform/projects/776113568960/locations/us-central1/reasoningEngines/124453171392151552",
+  "gateway_id": "projects/nnyn-dev/locations/us-central1/agentGateways/common-egress",
+  "matched_log_entries": [
+    {
+      "httpRequest": {
+        "latency": "0.643664s",
+        "protocol": "HTTP/1.1",
+        "remoteIp": "7.0.2.2:1026",
+        "requestMethod": "GET",
+        "requestSize": "135",
+        "requestUrl": "https://github.com/74th",
+        "responseSize": "136186",
+        "serverIp": "140.82.113.4:443",
+        "status": 200,
+        "userAgent": "20260822-agent-gateway-webfetch/1.0"
+      },
+      "insertId": "1mljfu1f1c5gh6",
+      "jsonPayload": {
+        "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+        "agentGatewayInfo": {
+          "agentRegistryResource": "projects/776113568960/locations/us-central1/endpoints/agentregistry-00000000-0000-0000-e9eb-cf024f3e1dc6"
+        },
+        "authzPolicyInfo": {
+          "policies": [
+            {
+              "name": "projects/778161432651/locations/us-central1/authzPolicies/common-egress-iap-policy",
+              "result": "ALLOWED"
+            }
+          ],
+          "result": "ALLOWED"
+        },
+        "enforcedGatewaySecurityPolicy": {
+          "hostname": "github.com",
+          "matchedRules": [
+            {
+              "action": "ALLOWED",
+              "name": "default_denied"
+            }
+          ],
+          "requestWasTlsIntercepted": true,
+          "serverNameIndication": "github.com"
+        },
+        "mtls": {
+          "clientCertChainVerified": "false",
+          "clientCertError": "client_cert_validation_not_performed",
+          "clientCertPresent": "true",
+          "clientCertSha256Fingerprint": "AeteG7MliZy/HsooN+emL1SdR3NM/3jVpzSAOgn4Pxg",
+          "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+          "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+        },
+        "tlsSniHostname": "github.com"
+      },
+      "logName": "projects/nnyn-dev/logs/networkservices.googleapis.com%2Fgateway_requests",
+      "receiveTimestamp": "2026-08-28T15:01:05.808884161Z",
+      "resource": {
+        "labels": {
+          "gateway_name": "common-egress",
+          "gateway_type": "SECURE_WEB_GATEWAY",
+          "location": "us-central1",
+          "network_name": "projects/u94bf826cb5cafdb7p-tp/global/networks/uk1-25feb-2-vpc4",
+          "resource_container": "776113568960"
+        },
+        "type": "networkservices.googleapis.com/Gateway"
+      },
+      "severity": "INFO",
+      "timestamp": "2026-08-28T15:01:00.404235Z"
+    }
+  ],
+  "gateway_decision": "allow",
+  "policy_host_listed": false,
+  "correlation_complete": true,
+  "default_deny_proven": false,
+  "passed": false
+}

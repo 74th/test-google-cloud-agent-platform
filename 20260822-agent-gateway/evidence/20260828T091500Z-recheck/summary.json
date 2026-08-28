@@ -1,0 +1,243 @@
+{
+  "timestamp": "20260828T091500Z-recheck",
+  "gateway_id": "projects/nnyn-dev/locations/us-central1/agentGateways/common-egress",
+  "caller": "74th.pc@gmail.com",
+  "runtime_effective_identity": "agents.global.proj-776113568960.system.id.goog/resources/aiplatform/projects/776113568960/locations/us-central1/reasoningEngines/124453171392151552",
+  "results": [
+    {
+      "case": "github",
+      "prompt": "https://github.com/74th の内容を要約して",
+      "exit_code": 0,
+      "expected_host": "github.com",
+      "expected_disposition": "allow",
+      "response": "取得が成功しました。取得したHTMLをもとに、https://github.com/74th の内容を要約します。\n\n## 要約\n\n**74th（森本篤志）のGitHubプロフィール**\n\n- **ユーザー名**: 74th（Twitter: @74th）\n- **リポジトリ数**: 239個のリポジトリを公開している\n- **プロフィール**: GitHubに登録されているパブリックなアカウント\n- **ページ種別**: プロフィール/概要（Overview）ページ\n\nページのHTMLは、ログイン前のユーザープロフィール表示ページの標準的な構成を示しており、具体的なリポジトリの内容や詳細な情報は、このHTML内には完全に含まれていません。より詳細な情報（リポジトリの説明、プロジェクト内容、コントリビューション履歴など）を確認するには、プロフィール下部の「Repositories」セクションを参照する必要があります。\n",
+      "application_fetch_log": [
+        {
+          "insertId": "6a91514a000a310f95caddcf",
+          "logName": "projects/nnyn-dev/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+          "receiveTimestamp": "2026-08-28T09:13:46.676392228Z",
+          "resource": {
+            "labels": {
+              "location": "us-central1",
+              "reasoning_engine_id": "124453171392151552",
+              "resource_container": "776113568960"
+            },
+            "type": "aiplatform.googleapis.com/ReasoningEngine"
+          },
+          "textPayload": "GatewayWebFetch request host=github.com",
+          "timestamp": "2026-08-28T09:13:46.667919Z"
+        },
+        {
+          "insertId": "6a91514b00087d1fb93f0e1c",
+          "logName": "projects/nnyn-dev/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+          "receiveTimestamp": "2026-08-28T09:13:47.673432112Z",
+          "resource": {
+            "labels": {
+              "location": "us-central1",
+              "reasoning_engine_id": "124453171392151552",
+              "resource_container": "776113568960"
+            },
+            "type": "aiplatform.googleapis.com/ReasoningEngine"
+          },
+          "textPayload": "GatewayWebFetch response host=github.com final_host=github.com status=200 bytes=120000",
+          "timestamp": "2026-08-28T09:13:47.556319Z"
+        },
+        {
+          "insertId": "6a9151f000024ec554ab22c0",
+          "logName": "projects/nnyn-dev/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+          "receiveTimestamp": "2026-08-28T09:16:32.164511635Z",
+          "resource": {
+            "labels": {
+              "location": "us-central1",
+              "reasoning_engine_id": "124453171392151552",
+              "resource_container": "776113568960"
+            },
+            "type": "aiplatform.googleapis.com/ReasoningEngine"
+          },
+          "textPayload": "GatewayWebFetch request host=github.com",
+          "timestamp": "2026-08-28T09:16:32.151237Z"
+        },
+        {
+          "insertId": "6a9151f10002b554b29cb606",
+          "logName": "projects/nnyn-dev/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+          "receiveTimestamp": "2026-08-28T09:16:33.493351798Z",
+          "resource": {
+            "labels": {
+              "location": "us-central1",
+              "reasoning_engine_id": "124453171392151552",
+              "resource_container": "776113568960"
+            },
+            "type": "aiplatform.googleapis.com/ReasoningEngine"
+          },
+          "textPayload": "GatewayWebFetch response host=github.com final_host=github.com status=200 bytes=120000",
+          "timestamp": "2026-08-28T09:16:33.177492Z"
+        }
+      ],
+      "started_at": "2026-08-28T09:16:27.117453+00:00",
+      "ended_at": "2026-08-28T09:16:38.792452+00:00",
+      "verification_id": "20260828T091500Z-recheck",
+      "caller": "74th.pc@gmail.com",
+      "runtime_effective_identity": "agents.global.proj-776113568960.system.id.goog/resources/aiplatform/projects/776113568960/locations/us-central1/reasoningEngines/124453171392151552",
+      "gateway_id": "projects/nnyn-dev/locations/us-central1/agentGateways/common-egress",
+      "matched_log_entries": [
+        {
+          "httpRequest": {
+            "latency": "0.764607s",
+            "protocol": "HTTP/1.1",
+            "remoteIp": "7.0.2.2:1026",
+            "requestMethod": "GET",
+            "requestSize": "135",
+            "requestUrl": "https://github.com/74th",
+            "responseSize": "136185",
+            "serverIp": "140.82.112.3:443",
+            "status": 200,
+            "userAgent": "20260822-agent-gateway-webfetch/1.0"
+          },
+          "insertId": "c8uwnwehdgg5",
+          "jsonPayload": {
+            "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+            "agentGatewayInfo": {
+              "agentRegistryResource": "projects/776113568960/locations/us-central1/endpoints/agentregistry-00000000-0000-0000-e9eb-cf024f3e1dc6"
+            },
+            "authzPolicyInfo": {
+              "policies": [
+                {
+                  "name": "projects/778161432651/locations/us-central1/authzPolicies/common-egress-iap-policy",
+                  "result": "ALLOWED"
+                }
+              ],
+              "result": "ALLOWED"
+            },
+            "enforcedGatewaySecurityPolicy": {
+              "hostname": "github.com",
+              "matchedRules": [
+                {
+                  "action": "ALLOWED",
+                  "name": "default_denied"
+                }
+              ],
+              "requestWasTlsIntercepted": true,
+              "serverNameIndication": "github.com"
+            },
+            "mtls": {
+              "clientCertChainVerified": "false",
+              "clientCertError": "client_cert_validation_not_performed",
+              "clientCertPresent": "true",
+              "clientCertSha256Fingerprint": "AeteG7MliZy/HsooN+emL1SdR3NM/3jVpzSAOgn4Pxg",
+              "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+              "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+            },
+            "tlsSniHostname": "github.com"
+          },
+          "logName": "projects/nnyn-dev/logs/networkservices.googleapis.com%2Fgateway_requests",
+          "receiveTimestamp": "2026-08-28T09:16:34.172522395Z",
+          "resource": {
+            "labels": {
+              "gateway_name": "common-egress",
+              "gateway_type": "SECURE_WEB_GATEWAY",
+              "location": "us-central1",
+              "network_name": "projects/u94bf826cb5cafdb7p-tp/global/networks/uk1-25feb-2-vpc4",
+              "resource_container": "776113568960"
+            },
+            "type": "networkservices.googleapis.com/Gateway"
+          },
+          "severity": "INFO",
+          "timestamp": "2026-08-28T09:16:32.413638Z"
+        }
+      ],
+      "gateway_decision": "allow",
+      "policy_host_listed": false,
+      "correlation_complete": true,
+      "default_deny_proven": false,
+      "passed": true
+    },
+    {
+      "case": "cao-default-deny",
+      "prompt": "https://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html は日本の国民の祝日についての広報ページだよ。この内容を見て、2027年の祝日を全て教えて。",
+      "exit_code": 0,
+      "expected_host": "www8.cao.go.jp",
+      "expected_disposition": "deny",
+      "response": "ページの取得に成功しました。取得したページの情報に基づいて、2027年の祝日をお答えします。\n\n## 2027年（令和9年）の祝日・休日\n\n1. **元日** - 1月1日\n2. **成人の日** - 1月11日\n3. **建国記念の日** - 2月11日\n4. **天皇誕生日** - 2月23日\n5. **春分の日** - 3月21日\n6. **休日** - 3月22日（祝日法第3条第2項による休日）\n7. **昭和の日** - 4月29日\n8. **憲法記念日** - 5月3日\n9. **みどりの日** - 5月4日\n10. **こどもの日** - 5月5日\n11. **海の日** - 7月19日\n12. **山の日** - 8月11日\n13. **敬老の日** - 9月20日\n14. **秋分の日** - 9月23日\n15. **スポーツの日** - 10月11日\n16. **文化の日** - 11月3日\n17. **勤労感謝の日** - 11月23日\n\n合計で17日（16の国民の祝日に加えて、祝日法第3条第2項による春分の日の翌日3月22日が休日）となります。\n",
+      "application_fetch_log": [
+        {
+          "insertId": "6a9151550008be6324fbb881",
+          "logName": "projects/nnyn-dev/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+          "receiveTimestamp": "2026-08-28T09:13:57.665642074Z",
+          "resource": {
+            "labels": {
+              "location": "us-central1",
+              "reasoning_engine_id": "124453171392151552",
+              "resource_container": "776113568960"
+            },
+            "type": "aiplatform.googleapis.com/ReasoningEngine"
+          },
+          "textPayload": "GatewayWebFetch request host=www8.cao.go.jp",
+          "timestamp": "2026-08-28T09:13:57.573027Z"
+        },
+        {
+          "insertId": "6a915157000818bd896b216f",
+          "logName": "projects/nnyn-dev/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+          "receiveTimestamp": "2026-08-28T09:13:59.664579573Z",
+          "resource": {
+            "labels": {
+              "location": "us-central1",
+              "reasoning_engine_id": "124453171392151552",
+              "resource_container": "776113568960"
+            },
+            "type": "aiplatform.googleapis.com/ReasoningEngine"
+          },
+          "textPayload": "GatewayWebFetch response host=www8.cao.go.jp final_host=www8.cao.go.jp status=200 bytes=20682",
+          "timestamp": "2026-08-28T09:13:59.530621Z"
+        },
+        {
+          "insertId": "6a9151fa000e44ab1cbeaac4",
+          "logName": "projects/nnyn-dev/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+          "receiveTimestamp": "2026-08-28T09:16:43.148547225Z",
+          "resource": {
+            "labels": {
+              "location": "us-central1",
+              "reasoning_engine_id": "124453171392151552",
+              "resource_container": "776113568960"
+            },
+            "type": "aiplatform.googleapis.com/ReasoningEngine"
+          },
+          "textPayload": "GatewayWebFetch request host=www8.cao.go.jp",
+          "timestamp": "2026-08-28T09:16:42.935083Z"
+        },
+        {
+          "insertId": "6a9151fb0006829e6632b261",
+          "logName": "projects/nnyn-dev/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+          "receiveTimestamp": "2026-08-28T09:16:43.483996255Z",
+          "resource": {
+            "labels": {
+              "location": "us-central1",
+              "reasoning_engine_id": "124453171392151552",
+              "resource_container": "776113568960"
+            },
+            "type": "aiplatform.googleapis.com/ReasoningEngine"
+          },
+          "textPayload": "GatewayWebFetch response host=www8.cao.go.jp final_host=www8.cao.go.jp status=200 bytes=20682",
+          "timestamp": "2026-08-28T09:16:43.426654Z"
+        }
+      ],
+      "started_at": "2026-08-28T09:16:38.795741+00:00",
+      "ended_at": "2026-08-28T09:16:46.585852+00:00",
+      "verification_id": "20260828T091500Z-recheck",
+      "caller": "74th.pc@gmail.com",
+      "runtime_effective_identity": "agents.global.proj-776113568960.system.id.goog/resources/aiplatform/projects/776113568960/locations/us-central1/reasoningEngines/124453171392151552",
+      "gateway_id": "projects/nnyn-dev/locations/us-central1/agentGateways/common-egress",
+      "matched_log_entries": [],
+      "gateway_decision": null,
+      "policy_host_listed": false,
+      "correlation_complete": true,
+      "default_deny_proven": false,
+      "passed": false
+    }
+  ],
+  "passed": false,
+  "mcp_e2e": "unproven",
+  "constraints": [
+    "Response-only assertions are insufficient.",
+    "No destroy was run."
+  ]
+}

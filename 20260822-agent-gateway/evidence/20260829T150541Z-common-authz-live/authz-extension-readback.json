@@ -1,0 +1,14 @@
+{
+  "name": "projects/nnyn-dev/locations/us-central1/authzExtensions/common-egress-iap-authz",
+  "createTime": "2026-08-28T08:26:50.910073817Z",
+  "updateTime": "2026-08-28T12:16:55.695339719Z",
+  "labels": {
+    "goog-terraform-provisioned": "true"
+  },
+  "service": "iap.googleapis.com",
+  "timeout": "1s",
+  "metadata": {
+    "iamEnforcementMode": "ENFORCE",
+    "iapPolicyVersion": "V1"
+  }
+}

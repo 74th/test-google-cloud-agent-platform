@@ -1,0 +1,50 @@
+[
+  {
+    "insertId": "17amgpwe19v9o",
+    "labels": {
+      "iap.googleapis.com/audited_resource_name": "projects/776113568960/locations/global/endpoints/unregisteredEndpoint",
+      "iap.googleapis.com/audited_resource_type": "agentregistry.googleapis.com/Endpoint"
+    },
+    "logName": "projects/nnyn-dev/logs/cloudaudit.googleapis.com%2Fdata_access",
+    "protoPayload": {
+      "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+      "authenticationInfo": {
+        "principalSubject": "principal://agents.global.proj-776113568960.system.id.goog/resources/aiplatform/projects/776113568960/locations/us-central1/reasoningEngines/124453171392151552"
+      },
+      "authorizationInfo": [
+        {
+          "granted": true,
+          "permission": "iap.webServiceVersions.egressViaIAP",
+          "permissionType": "ADMIN_READ",
+          "resource": "projects/nnyn-dev/locations/global/iap_web/agentRegistry/endpoints/unregisteredEndpoint",
+          "resourceAttributes": {
+            "service": "iap.googleapis.com",
+            "type": "iap.googleapis.com/WebServiceVersion"
+          }
+        }
+      ],
+      "methodName": "AuthorizeUser",
+      "request": {
+        "@type": "type.googleapis.com/cloud.security.gatekeeper.AuthorizeUserRequest",
+        "dryRun": true,
+        "httpRequest": {
+          "url": "https://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html"
+        },
+        "policy_version": "POLICY_VERSION_V1"
+      },
+      "resourceName": "unregisteredEndpoint",
+      "serviceName": "iap.googleapis.com"
+    },
+    "receiveTimestamp": "2026-08-28T12:10:49.640808832Z",
+    "resource": {
+      "labels": {
+        "method": "AuthorizeUser",
+        "project_id": "nnyn-dev",
+        "service": "iap.googleapis.com"
+      },
+      "type": "audited_resource"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-08-28T12:10:48.919240312Z"
+  }
+]

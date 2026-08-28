@@ -1,0 +1,32 @@
+[
+  {
+    "insertId": "6a917abd00083cb1b634a2ad",
+    "logName": "projects/nnyn-dev/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-08-28T12:10:37.559904623Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "124453171392151552",
+        "resource_container": "776113568960"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "GatewayWebFetch request host=github.com",
+    "timestamp": "2026-08-28T12:10:37.539825Z"
+  },
+  {
+    "insertId": "6a917abe0003a49432c9781f",
+    "logName": "projects/nnyn-dev/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-08-28T12:10:38.553431640Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "124453171392151552",
+        "resource_container": "776113568960"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "GatewayWebFetch response host=github.com final_host=github.com status=200 bytes=120000",
+    "timestamp": "2026-08-28T12:10:38.238740Z"
+  }
+]

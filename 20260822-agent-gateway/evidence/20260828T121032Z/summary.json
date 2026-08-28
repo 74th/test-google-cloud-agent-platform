@@ -1,0 +1,183 @@
+{
+  "timestamp": "20260828T121032Z",
+  "gateway_id": "projects/nnyn-dev/locations/us-central1/agentGateways/common-egress",
+  "caller": "74th.pc@gmail.com",
+  "runtime_effective_identity": "agents.global.proj-776113568960.system.id.goog/resources/aiplatform/projects/776113568960/locations/us-central1/reasoningEngines/124453171392151552",
+  "results": [
+    {
+      "case": "github",
+      "prompt": "https://github.com/74th の内容を要約して",
+      "exit_code": 0,
+      "expected_host": "github.com",
+      "expected_disposition": "allow",
+      "response": "URLが正常に取得できました。得られたHTMLには、GitHubのプロフィールページのメタデータ情報が含まれています。取得できた内容に基づいて、簡潔に要約します。\n\n## https://github.com/74th の内容要約\n\n**ユーザー名**: 74th（本名：Atsushi Morimoto）\n\n**概要**:\n- ユーザーの Twitter ハンドルは @74th\n- このアカウントは **239個のリポジトリ** を保有しています\n- GitHub プロフィール画面から、開発者が自分のコード作品を公開・共有しているプラットフォーム上のアカウントです\n\n**利用できる情報**:\n- ページは開かれており、ログインなしでアクセス可能な公開プロフィール\n\n取得されたHTMLはページヘッダーと導入部分のため、より詳細な情報（リポジトリの一覧、最近の活動、スキルセットなど）については、ページの下部コンテンツが必要になります。\n",
+      "application_fetch_log": [
+        {
+          "insertId": "6a917abd00083cb1b634a2ad",
+          "logName": "projects/nnyn-dev/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+          "receiveTimestamp": "2026-08-28T12:10:37.559904623Z",
+          "resource": {
+            "labels": {
+              "location": "us-central1",
+              "reasoning_engine_id": "124453171392151552",
+              "resource_container": "776113568960"
+            },
+            "type": "aiplatform.googleapis.com/ReasoningEngine"
+          },
+          "textPayload": "GatewayWebFetch request host=github.com",
+          "timestamp": "2026-08-28T12:10:37.539825Z"
+        },
+        {
+          "insertId": "6a917abe0003a49432c9781f",
+          "logName": "projects/nnyn-dev/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+          "receiveTimestamp": "2026-08-28T12:10:38.553431640Z",
+          "resource": {
+            "labels": {
+              "location": "us-central1",
+              "reasoning_engine_id": "124453171392151552",
+              "resource_container": "776113568960"
+            },
+            "type": "aiplatform.googleapis.com/ReasoningEngine"
+          },
+          "textPayload": "GatewayWebFetch response host=github.com final_host=github.com status=200 bytes=120000",
+          "timestamp": "2026-08-28T12:10:38.238740Z"
+        }
+      ],
+      "started_at": "2026-08-28T12:10:32.421836+00:00",
+      "ended_at": "2026-08-28T12:10:43.301941+00:00",
+      "verification_id": "20260828T121032Z",
+      "caller": "74th.pc@gmail.com",
+      "runtime_effective_identity": "agents.global.proj-776113568960.system.id.goog/resources/aiplatform/projects/776113568960/locations/us-central1/reasoningEngines/124453171392151552",
+      "gateway_id": "projects/nnyn-dev/locations/us-central1/agentGateways/common-egress",
+      "matched_log_entries": [
+        {
+          "httpRequest": {
+            "latency": "0.663104s",
+            "protocol": "HTTP/1.1",
+            "remoteIp": "7.0.2.2:1026",
+            "requestMethod": "GET",
+            "requestSize": "135",
+            "requestUrl": "https://github.com/74th",
+            "responseSize": "136185",
+            "serverIp": "140.82.113.3:443",
+            "status": 200,
+            "userAgent": "20260822-agent-gateway-webfetch/1.0"
+          },
+          "insertId": "1o7m221e6d9kb",
+          "jsonPayload": {
+            "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+            "agentGatewayInfo": {
+              "agentRegistryResource": "projects/776113568960/locations/us-central1/endpoints/agentregistry-00000000-0000-0000-e9eb-cf024f3e1dc6"
+            },
+            "authzPolicyInfo": {
+              "policies": [
+                {
+                  "name": "projects/778161432651/locations/us-central1/authzPolicies/common-egress-iap-policy",
+                  "result": "ALLOWED"
+                }
+              ],
+              "result": "ALLOWED"
+            },
+            "enforcedGatewaySecurityPolicy": {
+              "hostname": "github.com",
+              "matchedRules": [
+                {
+                  "action": "ALLOWED",
+                  "name": "default_denied"
+                }
+              ],
+              "requestWasTlsIntercepted": true,
+              "serverNameIndication": "github.com"
+            },
+            "mtls": {
+              "clientCertChainVerified": "false",
+              "clientCertError": "client_cert_validation_not_performed",
+              "clientCertPresent": "true",
+              "clientCertSha256Fingerprint": "AeteG7MliZy/HsooN+emL1SdR3NM/3jVpzSAOgn4Pxg",
+              "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+              "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+            },
+            "tlsSniHostname": "github.com"
+          },
+          "logName": "projects/nnyn-dev/logs/networkservices.googleapis.com%2Fgateway_requests",
+          "receiveTimestamp": "2026-08-28T12:10:45.409994907Z",
+          "resource": {
+            "labels": {
+              "gateway_name": "common-egress",
+              "gateway_type": "SECURE_WEB_GATEWAY",
+              "location": "us-central1",
+              "network_name": "projects/u94bf826cb5cafdb7p-tp/global/networks/uk1-25feb-2-vpc4",
+              "resource_container": "776113568960"
+            },
+            "type": "networkservices.googleapis.com/Gateway"
+          },
+          "severity": "INFO",
+          "timestamp": "2026-08-28T12:10:37.576411Z"
+        }
+      ],
+      "gateway_decision": "allow",
+      "policy_host_listed": false,
+      "correlation_complete": true,
+      "default_deny_proven": false,
+      "passed": true
+    },
+    {
+      "case": "cao-default-deny",
+      "prompt": "https://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html は日本の国民の祝日についての広報ページだよ。この内容を見て、2027年の祝日を全て教えて。",
+      "exit_code": 0,
+      "expected_host": "www8.cao.go.jp",
+      "expected_disposition": "deny",
+      "response": "ページの取得に成功しました。2027年（令和9年）の祝日は以下の通りです：\n\n**2027年（令和9年）の国民の祝日・休日一覧：**\n\n1. **元日** - 1月1日\n2. **成人の日** - 1月11日\n3. **建国記念の日** - 2月11日\n4. **天皇誕生日** - 2月23日\n5. **春分の日** - 3月21日\n6. **休日** - 3月22日（祝日法第3条第2項による振替休日）\n7. **昭和の日** - 4月29日\n8. **憲法記念日** - 5月3日\n9. **みどりの日** - 5月4日\n10. **こどもの日** - 5月5日\n11. **海の日** - 7月19日\n12. **山の日** - 8月11日\n13. **敬老の日** - 9月20日\n14. **秋分の日** - 9月23日\n15. **スポーツの日** - 10月11日\n16. **文化の日** - 11月3日\n17. **勤労感謝の日** - 11月23日\n\n全17日が2027年の祝日・休日となります。\n",
+      "application_fetch_log": [
+        {
+          "insertId": "6a917ac8000291e9b93aff73",
+          "logName": "projects/nnyn-dev/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+          "receiveTimestamp": "2026-08-28T12:10:48.205370320Z",
+          "resource": {
+            "labels": {
+              "location": "us-central1",
+              "reasoning_engine_id": "124453171392151552",
+              "resource_container": "776113568960"
+            },
+            "type": "aiplatform.googleapis.com/ReasoningEngine"
+          },
+          "textPayload": "GatewayWebFetch request host=www8.cao.go.jp",
+          "timestamp": "2026-08-28T12:10:48.168425Z"
+        },
+        {
+          "insertId": "6a917aca00026295a54a0be8",
+          "logName": "projects/nnyn-dev/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+          "receiveTimestamp": "2026-08-28T12:10:50.201930402Z",
+          "resource": {
+            "labels": {
+              "location": "us-central1",
+              "reasoning_engine_id": "124453171392151552",
+              "resource_container": "776113568960"
+            },
+            "type": "aiplatform.googleapis.com/ReasoningEngine"
+          },
+          "textPayload": "GatewayWebFetch response host=www8.cao.go.jp final_host=www8.cao.go.jp status=200 bytes=20682",
+          "timestamp": "2026-08-28T12:10:50.156309Z"
+        }
+      ],
+      "started_at": "2026-08-28T12:10:43.305178+00:00",
+      "ended_at": "2026-08-28T12:10:52.898373+00:00",
+      "verification_id": "20260828T121032Z",
+      "caller": "74th.pc@gmail.com",
+      "runtime_effective_identity": "agents.global.proj-776113568960.system.id.goog/resources/aiplatform/projects/776113568960/locations/us-central1/reasoningEngines/124453171392151552",
+      "gateway_id": "projects/nnyn-dev/locations/us-central1/agentGateways/common-egress",
+      "matched_log_entries": [],
+      "gateway_decision": null,
+      "policy_host_listed": false,
+      "correlation_complete": true,
+      "default_deny_proven": false,
+      "passed": false
+    }
+  ],
+  "passed": false,
+  "mcp_e2e": "unproven",
+  "constraints": [
+    "Response-only assertions are insufficient.",
+    "No destroy was run."
+  ]
+}

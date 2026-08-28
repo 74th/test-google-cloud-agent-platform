@@ -1,0 +1,49 @@
+{
+  "captured_date": "2026-08-28",
+  "project": "nnyn-dev",
+  "location": "us-central1",
+  "common_output": {
+    "agent_gateway_id": "projects/nnyn-dev/locations/us-central1/agentGateways/common-egress",
+    "agent_gateway_etag": "dJ8MLgd6POm1aIr09nFj08MG6sYT3_r_kQdbTE7p57E",
+    "agent_gateway_governed_access_path": "AGENT_TO_ANYWHERE",
+    "agent_gateway_protocols": ["MCP"],
+    "agent_gateway_registries": ["//agentregistry.googleapis.com/projects/nnyn-dev/locations/us-central1"],
+    "agent_gateway_network_attachment": "https://www.googleapis.com/compute/v1/projects/nnyn-dev/regions/us-central1/networkAttachments/common-agent-gateway-attachment",
+    "iap_authz_extension_id": "projects/nnyn-dev/locations/us-central1/authzExtensions/common-egress-iap-authz",
+    "iap_authz_policy_id": "projects/nnyn-dev/locations/us-central1/authzPolicies/common-egress-iap-policy"
+  },
+  "live_gateway": {
+    "name": "projects/nnyn-dev/locations/us-central1/agentGateways/common-egress",
+    "google_managed_governed_access_path": "AGENT_TO_ANYWHERE",
+    "protocols": ["MCP"],
+    "registries": ["//agentregistry.googleapis.com/projects/nnyn-dev/locations/us-central1"],
+    "network_attachment": "https://www.googleapis.com/compute/v1/projects/nnyn-dev/regions/us-central1/networkAttachments/common-agent-gateway-attachment"
+  },
+  "live_authz": {
+    "extension": {
+      "name": "projects/nnyn-dev/locations/us-central1/authzExtensions/common-egress-iap-authz",
+      "service": "iap.googleapis.com",
+      "timeout": "1s",
+      "fail_open": true,
+      "iam_enforcement_mode": "DRY_RUN",
+      "iap_policy_version": "V1"
+    },
+    "policy": {
+      "name": "projects/nnyn-dev/locations/us-central1/authzPolicies/common-egress-iap-policy",
+      "policy_profile": "REQUEST_AUTHZ",
+      "action": "CUSTOM",
+      "target_gateway": "projects/nnyn-dev/locations/us-central1/agentGateways/common-egress",
+      "extension": "projects/776113568960/locations/us-central1/authzExtensions/common-egress-iap-authz"
+    }
+  },
+  "runtime_associations": [
+    {"name": "projects/776113568960/locations/us-central1/reasoningEngines/2332905838663958528", "display_name": "mcp-20260823-runtime", "gateway": "projects/nnyn-dev/locations/us-central1/agentGateways/common-egress"},
+    {"name": "projects/776113568960/locations/us-central1/reasoningEngines/6473860142914863104", "display_name": "byoc-query-verification-common-egress-diagnostic-01", "gateway": "projects/nnyn-dev/locations/us-central1/agentGateways/common-egress"},
+    {"name": "projects/776113568960/locations/us-central1/reasoningEngines/6890548661562900480", "display_name": "byoc-query-verification-common-egress-20260828-01", "gateway": "projects/nnyn-dev/locations/us-central1/agentGateways/common-egress"}
+  ],
+  "inventory_notes": [
+    "Vertex AI REST reasoningEngines.list returned HTTP 200.",
+    "The installed gcloud surface has no reasoning-engines command; REST was used for Runtime inventory.",
+    "No Gateway was created or modified by this inventory. Existing Runtime associations are shared-consumer impact to preserve."
+  ]
+}

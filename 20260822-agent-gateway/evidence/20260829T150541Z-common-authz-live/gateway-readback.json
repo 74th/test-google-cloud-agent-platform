@@ -1,0 +1,32 @@
+{
+  "agentGatewayCard": {
+    "mtlsEndpoint": "projects/u94bf826cb5cafdb7p-tp/regions/us-central1/serviceAttachments/unitkind1-swp-mtls-psc-sa",
+    "serviceExtensionsServiceAccount": "service-778161432651@gcp-sa-dep.iam.gserviceaccount.com",
+    "rootCertificateCount": 1
+  },
+  "createTime": "2026-08-28T03:01:05.433872156Z",
+  "description": "Shared VPC-connected Agent-to-Anywhere gateway for isolated experiments.",
+  "etag": "dJ8MLgd6POm1aIr09nFj08MG6sYT3_r_kQdbTE7p57E",
+  "googleManaged": {
+    "governedAccessPath": "AGENT_TO_ANYWHERE"
+  },
+  "labels": {
+    "environment": "experiment",
+    "goog-terraform-provisioned": "true",
+    "managed_by": "terraform",
+    "owner": "common"
+  },
+  "name": "projects/nnyn-dev/locations/us-central1/agentGateways/common-egress",
+  "networkConfig": {
+    "egress": {
+      "networkAttachment": "https://www.googleapis.com/compute/v1/projects/nnyn-dev/regions/us-central1/networkAttachments/common-agent-gateway-attachment"
+    }
+  },
+  "protocols": [
+    "MCP"
+  ],
+  "registries": [
+    "//agentregistry.googleapis.com/projects/nnyn-dev/locations/us-central1"
+  ],
+  "updateTime": "2026-08-28T03:03:13.066014701Z"
+}

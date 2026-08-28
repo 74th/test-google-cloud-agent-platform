@@ -1,4 +1,4 @@
-"""Run the two live prompts and save independently reviewable evidence."""
+"""Run allow/deny validation and save correlated, non-secret evidence."""
 
 from __future__ import annotations
 
@@ -40,11 +40,17 @@ def log_host_and_disposition(entry: dict[str, Any]) -> tuple[str | None, str | N
     direct_host = entry.get("host")
     direct_disposition = entry.get("disposition")
     if isinstance(direct_host, str) and isinstance(direct_disposition, str):
-        return direct_host, direct_disposition.lower()
+        return direct_host.split(":", 1)[0], direct_disposition.lower()
 
     payload = entry.get("jsonPayload") or {}
     security = payload.get("enforcedGatewaySecurityPolicy") or {}
     host = security.get("hostname")
+    authz = payload.get("authzPolicyInfo") or {}
+    authz_result = authz.get("result")
+    if isinstance(host, str) and isinstance(authz_result, str):
+        disposition = {"allowed": "allow", "denied": "deny"}.get(authz_result.lower())
+        if disposition:
+            return host.split(":", 1)[0], disposition
     rules = security.get("matchedRules") or []
     action = next(
         (rule.get("action") for rule in rules if isinstance(rule, dict) and rule.get("action")),
@@ -65,6 +71,8 @@ def log_host_and_disposition(entry: dict[str, Any]) -> tuple[str | None, str | N
 
 
 def invoke_command(agent_resource: str, location: str, prompt: str) -> list[str]:
+    if not agent_resource.startswith("projects/"):
+        raise ValueError("agent_resource must be a full Reasoning Engine resource name")
     return [
         sys.executable,
         "scripts/invoke_agent.py",
@@ -77,7 +85,7 @@ def invoke_command(agent_resource: str, location: str, prompt: str) -> list[str]
 
 
 def response_matches(case: Case, stdout: str) -> bool:
-    """Check the response contract without treating any non-empty text as success."""
+    """Check page-derived response semantics, not merely a non-empty response."""
     response = stdout.strip()
     if not response:
         return False
@@ -86,6 +94,7 @@ def response_matches(case: Case, stdout: str) -> bool:
         return (
             "github" in lowered
             and "74th" in lowered
+            and bool(re.search(r"[ぁ-んァ-ン一-龯]", response))
             and not any(marker in lowered for marker in ("取得できません", "取得に失敗", "アクセスできません"))
         )
     failure_markers = ("取得できません", "取得できず", "取得に失敗", "アクセスできません", "接続できません", "拒否")
@@ -94,8 +103,24 @@ def response_matches(case: Case, stdout: str) -> bool:
     )
 
 
+def policy_allows_host(policy: dict[str, Any], host: str) -> bool:
+    text = str(policy.get("text", ""))
+    return re.search(rf"(?m)^\s*host:\s*{re.escape(host)}\s*$", text) is not None
+
+
+def correlation_complete(result: dict[str, Any]) -> bool:
+    required = ("verification_id", "caller", "runtime_effective_identity", "gateway_id", "started_at", "ended_at")
+    return all(isinstance(result.get(field), str) and result[field] for field in required) and bool(
+        result.get("application_fetch_log")
+    )
+
+
 def update_case_result(
-    case: Case, evidence_dir: Path, result: dict[str, Any], logs: list[dict[str, Any]]
+    case: Case,
+    evidence_dir: Path,
+    result: dict[str, Any],
+    logs: list[dict[str, Any]],
+    policy: dict[str, Any],
 ) -> dict[str, Any]:
     matched = []
     for entry in logs:
@@ -103,10 +128,27 @@ def update_case_result(
         if host == case.expected_host and disposition == case.expected_disposition:
             matched.append(entry)
     result["matched_log_entries"] = matched
+    result["gateway_decision"] = case.expected_disposition if matched else None
+    result["policy_host_listed"] = policy_allows_host(policy, case.expected_host)
+    result["correlation_complete"] = correlation_complete(result)
+    if case.name == "cao-default-deny":
+        result["default_deny_proven"] = (
+            not result["policy_host_listed"]
+            and result["gateway_decision"] == "deny"
+            and result.get("expected_disposition") == "deny"
+        )
+    else:
+        result["default_deny_proven"] = False
     result["passed"] = (
-        result["exit_code"] == 0 and response_matches(case, result["response"]) and bool(matched)
+        result["exit_code"] == 0
+        and response_matches(case, result["response"])
+        and bool(matched)
+        and result["correlation_complete"]
+        and (case.name != "cao-default-deny" or result["default_deny_proven"])
     )
-    (evidence_dir / "result.json").write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    (evidence_dir / "result.json").write_text(
+        json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
     return result
 
 
@@ -116,12 +158,16 @@ def run_case(
     invoke: Callable[[Case], tuple[int, str, str]],
     policy: dict[str, Any],
     logs: list[dict[str, Any]],
+    context: dict[str, str] | None = None,
 ) -> dict[str, Any]:
     evidence_dir.mkdir(parents=True, exist_ok=True)
+    started_at = datetime.now(UTC).isoformat()
     exit_code, stdout, stderr = invoke(case)
+    ended_at = datetime.now(UTC).isoformat()
     (evidence_dir / "input.txt").write_text(case.prompt + "\n", encoding="utf-8")
     (evidence_dir / "response.txt").write_text(stdout, encoding="utf-8")
     (evidence_dir / "stderr.txt").write_text(stderr, encoding="utf-8")
+    (evidence_dir / "application-fetch.log").write_text(stderr, encoding="utf-8")
     (evidence_dir / "exit-status").write_text(f"{exit_code}\n", encoding="utf-8")
     result = {
         "case": case.name,
@@ -130,50 +176,101 @@ def run_case(
         "expected_host": case.expected_host,
         "expected_disposition": case.expected_disposition,
         "response": stdout,
+        "application_fetch_log": stderr,
+        "started_at": started_at,
+        "ended_at": ended_at,
     }
-    return update_case_result(case, evidence_dir, result, logs)
+    if context:
+        result.update(context)
+    return update_case_result(case, evidence_dir, result, logs, policy)
 
 
 def collect_live_logs(project: str, gateway: str, location: str, since: str) -> list[dict[str, Any]]:
-    """Collect gateway and IAP logs after the agent calls have completed."""
+    """Collect Gateway and IAP logs after the calls; retain a combined fixture API."""
     try:
         from scripts.gateway import iap_logging_query, logging_query, run
-    except ModuleNotFoundError:  # direct `python scripts/validate.py` execution
+    except ModuleNotFoundError:
         from gateway import iap_logging_query, logging_query, run
-
     entries: list[dict[str, Any]] = []
-    for command in (
-        logging_query(project, gateway, since, location),
-        iap_logging_query(project, since),
-    ):
+    for command in (logging_query(project, gateway, since, location), iap_logging_query(project, since)):
         payload = json.loads(run(command))
         if isinstance(payload, list):
             entries.extend(entry for entry in payload if isinstance(entry, dict))
     return entries
 
 
+def collect_application_logs(project: str, agent_resource: str, since: str) -> list[dict[str, Any]]:
+    """Collect the Runtime's application stdout/stderr for the same window."""
+    try:
+        from scripts.gateway import run
+    except ModuleNotFoundError:
+        from gateway import run
+    match = re.fullmatch(r"projects/[^/]+/locations/[^/]+/reasoningEngines/(?P<id>[^/]+)", agent_resource)
+    if not match:
+        raise ValueError("agent_resource must be a full Reasoning Engine resource name")
+    query = (
+        'resource.type="aiplatform.googleapis.com/ReasoningEngine" '
+        f'AND resource.labels.reasoning_engine_id="{match.group("id")}" '
+        f'AND timestamp>="{since}"'
+    )
+    payload = json.loads(run(["gcloud", "logging", "read", query, f"--project={project}", "--format=json", "--order=asc"]))
+    return [entry for entry in payload if isinstance(entry, dict)] if isinstance(payload, list) else []
+
+
+def application_entries_for_case(case: Case, entries: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    return [
+        entry for entry in entries
+        if case.expected_host in str(entry.get("textPayload", ""))
+    ]
+
+
+def mcp_e2e_passed(evidence: dict[str, Any]) -> bool:
+    """MCP E2E requires every independent execution layer."""
+    required = (
+        "registry_service_id",
+        "interface_resolution",
+        "selected_tool",
+        "gateway_decision",
+        "endpoint_authorization",
+        "server_side_mcp_log",
+    )
+    return all(evidence.get(field) for field in required)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--agent-resource", default=os.environ.get("AGENT_RESOURCE"))
     parser.add_argument("--location", default=os.environ.get("LOCATION", "us-central1"))
+    parser.add_argument("--gateway-id", default=os.environ.get("AGENT_GATEWAY_ID"))
+    parser.add_argument("--caller", default=os.environ.get("CALLER_IDENTITY"))
+    parser.add_argument("--runtime-effective-identity", default=os.environ.get("RUNTIME_EFFECTIVE_IDENTITY"))
+    parser.add_argument("--verification-id", default=os.environ.get("VERIFICATION_ID"))
     parser.add_argument("--evidence-root", type=Path, default=Path(os.environ.get("EVIDENCE_ROOT", "evidence")))
     parser.add_argument("--policy", type=Path, default=Path("terraform/egress-policy.yaml"))
-    parser.add_argument("--logs", type=Path, help="JSON array of exported gateway decision logs")
-    parser.add_argument("--collect-after", action="store_true", help="呼び出し完了後に Gateway/IAP ログを収集する")
-    parser.add_argument("--project", help="--collect-after 用の Google Cloud project")
-    parser.add_argument("--gateway", help="--collect-after 用の Agent Gateway 名")
-    parser.add_argument("--since", help="ログ収集開始時刻（RFC3339、未指定時はランナー開始時刻）")
+    parser.add_argument("--logs", type=Path, help="JSON array of exported Gateway/IAP decision logs")
+    parser.add_argument("--collect-after", action="store_true")
+    parser.add_argument("--project")
+    parser.add_argument("--gateway", help="short Gateway name for Cloud Logging filter")
+    parser.add_argument("--since")
     args = parser.parse_args()
     if not args.agent_resource:
         parser.error("--agent-resource または AGENT_RESOURCE が必要です。")
+    if not all((args.gateway_id, args.caller, args.runtime_effective_identity)):
+        parser.error("--gateway-id、--caller、--runtime-effective-identity が必要です。")
     started_at = datetime.now(UTC)
-    timestamp = started_at.strftime("%Y%m%dT%H%M%SZ")
-    root = args.evidence_root / timestamp
+    verification_id = args.verification_id or started_at.strftime("%Y%m%dT%H%M%SZ")
+    root = args.evidence_root / verification_id
     policy_text = args.policy.read_text(encoding="utf-8")
     policy = {"text": policy_text}
     if args.collect_after and (not args.project or not args.gateway):
         parser.error("--collect-after には --project と --gateway が必要です。")
     logs = json.loads(args.logs.read_text(encoding="utf-8")) if args.logs else []
+    context = {
+        "verification_id": verification_id,
+        "caller": args.caller,
+        "runtime_effective_identity": args.runtime_effective_identity,
+        "gateway_id": args.gateway_id,
+    }
 
     def invoke(case: Case) -> tuple[int, str, str]:
         result = subprocess.run(
@@ -184,22 +281,32 @@ def main() -> None:
         )
         return result.returncode, result.stdout, result.stderr
 
+    results = [run_case(case, root / case.name, invoke, policy, logs, context) for case in CASES]
+    application_logs: list[dict[str, Any]] = []
     if args.collect_after:
-        results = [run_case(case, root / case.name, invoke, policy, []) for case in CASES]
         logs = collect_live_logs(args.project, args.gateway, args.location, args.since or started_at.isoformat())
-        results = [
-            update_case_result(case, root / case.name, result, logs)
-            for case, result in zip(CASES, results, strict=True)
-        ]
-    else:
-        results = [run_case(case, root / case.name, invoke, policy, logs) for case in CASES]
+        application_logs = collect_application_logs(args.project, args.agent_resource, args.since or started_at.isoformat())
+        for case, result in zip(CASES, results, strict=True):
+            app_entries = application_entries_for_case(case, application_logs)
+            result["application_fetch_log"] = app_entries
+            (root / case.name / "application-fetch.log").write_text(
+                json.dumps(app_entries, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+            )
+        results = [update_case_result(case, root / case.name, result, logs, policy) for case, result in zip(CASES, results, strict=True)]
     (root / "policy.yaml").write_text(policy_text, encoding="utf-8")
     (root / "gateway-logs.json").write_text(json.dumps(logs, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    (root / "iap-logs.json").write_text(json.dumps([entry for entry in logs if "protoPayload" in entry], ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    (root / "application-logs.json").write_text(json.dumps(application_logs, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    (root / "correlation.json").write_text(json.dumps(context, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     summary = {
-        "timestamp": timestamp,
+        "timestamp": verification_id,
+        "gateway_id": args.gateway_id,
+        "caller": args.caller,
+        "runtime_effective_identity": args.runtime_effective_identity,
         "results": results,
         "passed": all(result["passed"] for result in results),
-        "constraints": ["Evidence records are not a substitute for inspecting gateway logs.", "No destroy was run."],
+        "mcp_e2e": "unproven",
+        "constraints": ["Response-only assertions are insufficient.", "No destroy was run."],
     }
     (root / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(root)

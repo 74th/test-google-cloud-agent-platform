@@ -1,0 +1,52 @@
+{
+  "case": "github",
+  "prompt": "https://github.com/74th の内容を要約して",
+  "exit_code": 0,
+  "expected_host": "github.com",
+  "expected_disposition": "allow",
+  "response": "ページの取得に成功しました。取得内容に基づき、要約をお伝えします。\n\n## https://github.com/74th の内容要約\n\nこのページは GitHub ユーザー「74th」（Atsushi Morimoto）のプロフィールページです。\n\n**確認できた情報：**\n- **ユーザー名：** 74th\n- **Twitter ハンドル：** @74th\n- **リポジトリ数：** 239個\n- **ページの説明文：** twitter: @74th. 74th has 239 repositories available. Follow their code on GitHub.\n\nページ自体は GitHub のマーケティング用ナビゲーションやヘッダー、ログイン関連のUIコンポーネントで構成されており、この特定のユーザープロフィールの詳細な活動内容（具体的なプロジェクト、スター数、フォロワー数など）は、取得した HTML コンテンツの静的な部分には完全には含まれていません。詳細情報は JavaScript で動的にレンダリングされているようです。\n",
+  "application_fetch_log": [
+    {
+      "insertId": "6a917ae70003818cdd1bf6b5",
+      "logName": "projects/nnyn-dev/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+      "receiveTimestamp": "2026-08-28T12:11:19.239476516Z",
+      "resource": {
+        "labels": {
+          "location": "us-central1",
+          "reasoning_engine_id": "124453171392151552",
+          "resource_container": "776113568960"
+        },
+        "type": "aiplatform.googleapis.com/ReasoningEngine"
+      },
+      "textPayload": "GatewayWebFetch request host=github.com",
+      "timestamp": "2026-08-28T12:11:19.229772Z"
+    },
+    {
+      "insertId": "6a917ae7000cdc691dbda6c4",
+      "logName": "projects/nnyn-dev/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+      "receiveTimestamp": "2026-08-28T12:11:19.904161306Z",
+      "resource": {
+        "labels": {
+          "location": "us-central1",
+          "reasoning_engine_id": "124453171392151552",
+          "resource_container": "776113568960"
+        },
+        "type": "aiplatform.googleapis.com/ReasoningEngine"
+      },
+      "textPayload": "GatewayWebFetch response host=github.com final_host=github.com status=200 bytes=120000",
+      "timestamp": "2026-08-28T12:11:19.842857Z"
+    }
+  ],
+  "started_at": "2026-08-28T12:11:15.188894+00:00",
+  "ended_at": "2026-08-28T12:11:24.607846+00:00",
+  "verification_id": "20260828T121114Z-common-authz-recheck",
+  "caller": "74th.pc@gmail.com",
+  "runtime_effective_identity": "agents.global.proj-776113568960.system.id.goog/resources/aiplatform/projects/776113568960/locations/us-central1/reasoningEngines/124453171392151552",
+  "gateway_id": "projects/nnyn-dev/locations/us-central1/agentGateways/common-egress",
+  "matched_log_entries": [],
+  "gateway_decision": null,
+  "policy_host_listed": false,
+  "correlation_complete": true,
+  "default_deny_proven": false,
+  "passed": false
+}

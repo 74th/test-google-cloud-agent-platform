@@ -1,0 +1,30 @@
+{
+  "gateway_id": "projects/nnyn-dev/locations/us-central1/agentGateways/common-egress",
+  "mtls_endpoint_present": true,
+  "root_certificate_count": 1,
+  "root_certificate_sha256": [
+    "fa42e851701219a80a0b3a67292b9e62cad7909a266587c770b45eec9f2c6e95"
+  ],
+  "live_gateway_evidence": [
+    {
+      "timestamp": "2026-08-28T15:05:46.232524Z",
+      "destination": "github.com",
+      "request_url": "https://github.com/74th",
+      "status": 200,
+      "authz_policy_result": "ALLOWED",
+      "request_was_tls_intercepted": true,
+      "server_name_indication": "github.com"
+    }
+  ],
+  "application_evidence": [
+    {
+      "timestamp": "2026-08-28T15:05:46.192607Z",
+      "textPayload": "GatewayWebFetch request host=github.com"
+    },
+    {
+      "timestamp": "2026-08-28T15:05:46.875467Z",
+      "textPayload": "GatewayWebFetch response host=github.com final_host=github.com status=200 bytes=120000"
+    }
+  ],
+  "interpretation": "HTTPS application fetch succeeded while the common Gateway reported TLS interception; the container trust path is the pre-existing AGENT_GATEWAY_ROOT_CERTIFICATES build contract and no TLS verification bypass was used."
+}

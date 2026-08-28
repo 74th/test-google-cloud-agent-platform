@@ -1,0 +1,22 @@
+{
+  "action": "CUSTOM",
+  "createTime": "2026-08-28T08:27:05.561493744Z",
+  "customProvider": {
+    "authzExtension": {
+      "resources": [
+        "projects/776113568960/locations/us-central1/authzExtensions/common-egress-iap-authz"
+      ]
+    }
+  },
+  "labels": {
+    "goog-terraform-provisioned": "true"
+  },
+  "name": "projects/nnyn-dev/locations/us-central1/authzPolicies/common-egress-iap-policy",
+  "policyProfile": "REQUEST_AUTHZ",
+  "target": {
+    "resources": [
+      "projects/776113568960/locations/us-central1/agentGateways/common-egress"
+    ]
+  },
+  "updateTime": "2026-08-28T12:16:45.635111160Z"
+}
