@@ -1,0 +1,26 @@
+{
+  "resource_changes": [
+    {
+      "address": "google_compute_subnetwork.mcp[0]",
+      "change": {
+        "actions": ["create"],
+        "after": {
+          "name": "mcp-20260823-mcp-server-subnet",
+          "network": "projects/nnyn-dev/global/networks/common-agent-gateway-vpc",
+          "ip_cidr_range": "10.240.0.0/20"
+        }
+      }
+    },
+    {
+      "address": "google_container_cluster.mcp[0]",
+      "change": {
+        "actions": ["create"],
+        "after": {
+          "name": "mcp-20260823-mcp-server-gke",
+          "network": "common-agent-gateway-vpc",
+          "subnetwork": "mcp-20260823-mcp-server-subnet"
+        }
+      }
+    }
+  ]
+}

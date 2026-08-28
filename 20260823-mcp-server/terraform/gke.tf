@@ -1,9 +1,6 @@
-resource "google_compute_network" "mcp" {
-  count                   = var.enable_gke ? 1 : 0
-  name                    = "${var.name_prefix}-vpc"
-  project                 = var.project_id
-  auto_create_subnetworks = false
-  routing_mode            = "REGIONAL"
+data "google_compute_network" "agent_gateway" {
+  name    = var.gke_network_name
+  project = var.project_id
 }
 
 resource "google_compute_subnetwork" "mcp" {
@@ -11,7 +8,7 @@ resource "google_compute_subnetwork" "mcp" {
   name          = "${var.name_prefix}-subnet"
   project       = var.project_id
   region        = var.region
-  network       = google_compute_network.mcp[0].id
+  network       = data.google_compute_network.agent_gateway.id
   ip_cidr_range = var.node_cidr
 
   secondary_ip_range {
@@ -30,7 +27,7 @@ resource "google_container_cluster" "mcp" {
   name                     = "${var.name_prefix}-gke"
   project                  = var.project_id
   location                 = var.zone
-  network                  = google_compute_network.mcp[0].name
+  network                  = data.google_compute_network.agent_gateway.name
   subnetwork               = google_compute_subnetwork.mcp[0].name
   remove_default_node_pool = true
   initial_node_count       = 1

@@ -1,0 +1,7 @@
+{
+  "name": "projects/nnyn-dev/locations/us-central1/agentGateways/common-egress",
+  "googleManaged": {"governedAccessPath": "AGENT_TO_AGENT"},
+  "protocols": ["HTTP"],
+  "registries": ["//agentregistry.googleapis.com/projects/other/locations/global"],
+  "networkConfig": {"egress": {"networkAttachment": "projects/other/attachment"}}
+}

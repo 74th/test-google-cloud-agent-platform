@@ -22,7 +22,7 @@ terraform -chdir=terraform plan -destroy -input=false \
 terraform -chdir=terraform show -no-color /tmp/mcp-20260823-destroy.tfplan
 ```
 
-The reviewed target set must be limited to `mcp-20260823-mcp-server*`, `mcp-20260823-*` service accounts, the experiment API state entries with `disable_on_destroy=false`, and the manually registered services above. Do not apply a destroy plan containing `autopilot`, `default`, `agent-gateway-20260822`, or `claude-agent`. Apply the reviewed plan only after explicit operator confirmation:
+The reviewed target set must be limited to `mcp-20260823-mcp-server*`, `mcp-20260823-*` service accounts, the experiment API state entries with `disable_on_destroy=false`, and the manually registered services above. Do not apply a destroy plan containing `autopilot`, `default`, `common-egress`, or `claude-agent`. Apply the reviewed plan only after explicit operator confirmation:
 
 ```sh
 terraform -chdir=terraform apply /tmp/mcp-20260823-destroy.tfplan

@@ -1,0 +1,11 @@
+{
+  "resource_changes": [
+    {
+      "address": "google_cloud_run_v2_service.mcp",
+      "change": {
+        "actions": ["create"],
+        "after": {"name": "mcp-20260823-mcp-server-run", "project": "nnyn-dev"}
+      }
+    }
+  ]
+}

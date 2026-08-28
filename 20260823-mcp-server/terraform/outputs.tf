@@ -26,6 +26,14 @@ output "gke_workload_service_account" {
   value = try(google_service_account.gke_workload[0].email, null)
 }
 
+output "gke_internal_https_ip" {
+  value = try(google_compute_address.gke_internal_https[0].address, null)
+}
+
+output "gke_private_dns_zone" {
+  value = try(google_dns_managed_zone.gke_private[0].name, null)
+}
+
 output "agent_runtime" {
   value = google_vertex_ai_reasoning_engine.runtime.id
 }
@@ -38,6 +46,11 @@ output "agent_gateway" {
   value = local.agent_gateway_id
 }
 
+output "agent_gateway_preflight_id" {
+  description = "Exact shared Gateway ID that must pass scripts/gateway_preflight.py before deployment."
+  value       = "projects/nnyn-dev/locations/us-central1/agentGateways/common-egress"
+}
+
 output "agent_runtime_repository" {
   value = google_artifact_registry_repository.agent_runtime.name
 }
@@ -48,6 +61,22 @@ output "cloud_run_registry_service" {
 
 output "cloud_run_registry_endpoint" {
   value = data.google_agent_registry_mcp_server.cloud_run.id
+}
+
+output "agentregistry_control_plane_service" {
+  value = google_agent_registry_service.agentregistry_control_plane.id
+}
+
+output "aiplatform_regional_control_plane_service" {
+  value = google_agent_registry_service.aiplatform_regional_control_plane.id
+}
+
+output "aiplatform_global_control_plane_service" {
+  value = google_agent_registry_service.aiplatform_global_control_plane.id
+}
+
+output "iamcredentials_control_plane_service" {
+  value = google_agent_registry_service.iamcredentials_control_plane.id
 }
 
 output "gke_registry_service" {

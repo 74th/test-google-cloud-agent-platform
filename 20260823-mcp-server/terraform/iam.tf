@@ -31,6 +31,12 @@ resource "google_project_iam_member" "registry_viewer" {
   member  = "principal://${google_vertex_ai_reasoning_engine.runtime.spec[0].effective_identity}"
 }
 
+resource "google_project_iam_member" "vertex_user" {
+  project = var.project_id
+  role    = "roles/aiplatform.user"
+  member  = "principal://${google_vertex_ai_reasoning_engine.runtime.spec[0].effective_identity}"
+}
+
 resource "google_service_account_iam_member" "caller_token_creator" {
   count              = var.use_mcp_caller_service_account ? 1 : 0
   service_account_id = google_service_account.mcp_caller[0].name

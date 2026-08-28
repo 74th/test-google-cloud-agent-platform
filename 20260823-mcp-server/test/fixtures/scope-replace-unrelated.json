@@ -1,0 +1,12 @@
+{
+  "resource_changes": [
+    {
+      "address": "google_vertex_ai_reasoning_engine.unrelated",
+      "change": {
+        "actions": ["delete", "create"],
+        "before": {"display_name": "other-runtime"},
+        "after": {"display_name": "other-runtime"}
+      }
+    }
+  ]
+}

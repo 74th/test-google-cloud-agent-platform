@@ -1,0 +1,12 @@
+{
+  "resource_changes": [
+    {
+      "address": "google_compute_subnetwork.mcp",
+      "change": {
+        "actions": ["update"],
+        "before": {"name": "mcp-20260823-mcp-server-subnet", "network": "default"},
+        "after": {"name": "mcp-20260823-mcp-server-subnet", "network": "default"}
+      }
+    }
+  ]
+}

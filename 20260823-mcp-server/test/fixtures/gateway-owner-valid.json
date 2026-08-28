@@ -1,0 +1,6 @@
+{
+  "agent_gateway_id": {
+    "sensitive": false,
+    "value": "projects/nnyn-dev/locations/us-central1/agentGateways/common-egress"
+  }
+}

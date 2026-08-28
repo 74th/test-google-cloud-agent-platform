@@ -70,6 +70,7 @@ metadata:
     component: server
 spec:
   type: ClusterIP
+  clusterIP: __GKE_SERVICE_CLUSTER_IP__
   selector:
     app: mcp-20260823-mcp-server
   ports:

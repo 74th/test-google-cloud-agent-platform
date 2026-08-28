@@ -7,6 +7,7 @@ import types
 import pytest
 
 from agent_service.adapter import ClaudeAgentAdapter, remote_mcp_config
+from agent_service.app import reasoning_engine
 from agent_service.credentials import StaticTokenProvider
 from agent_service.errors import Stage, ValidationError
 from agent_service.models import RegistryEntry, TargetConfig
@@ -61,6 +62,42 @@ def test_resolver_uses_fixed_service_and_rejects_url_before_network() -> None:
         resolver(registry).resolve("cloud-run", requested_url="https://attacker.example.test/mcp")
     assert error.value.stage is Stage.METADATA_VALIDATION
     assert registry.calls == 0
+
+
+def test_unregistered_target_is_rejected_before_registry_or_execution() -> None:
+    registry = FakeRegistry(service())
+    with pytest.raises(ValidationError, match="unknown validation target") as error:
+        resolver(registry).resolve("unregistered-control")
+    assert error.value.stage is Stage.REGISTRY_DISCOVERY
+    assert registry.calls == 0
+
+
+@pytest.mark.asyncio
+async def test_runtime_response_returns_sanitized_correlation_evidence(monkeypatch: pytest.MonkeyPatch) -> None:
+    from agent_service.app import RuntimeRequest
+    from agent_service.models import InvocationEvidence
+
+    async def fake_invoke(target: str, message: str, *, correlation_id: str) -> tuple[str, InvocationEvidence]:
+        assert target == "cloud-run"
+        assert message == "execute validation"
+        assert correlation_id.startswith("mcp-")
+        return "validated", InvocationEvidence(
+            correlation_id="mcp-correlation-1",
+            target=target,
+            service_id="mcp-20260823-cloud-run",
+            endpoint_id="endpoint-1",
+            validated_host="run.example.test",
+            sdk_tool_events=[{"name": "validate_echo", "kind": "ToolUseBlock"}],
+        )
+
+    class FakeRunner:
+        run = staticmethod(fake_invoke)
+
+    monkeypatch.setattr("agent_service.app.build_runner", lambda: FakeRunner())
+    response = await reasoning_engine(RuntimeRequest(class_method="query", input={"target": "cloud-run", "message": "execute validation"}))
+    assert response["correlation_id"] == "mcp-correlation-1"
+    assert response["validation"]["service_id"] == "mcp-20260823-cloud-run"
+    assert response["validation"]["sdk_tool_events"][0]["name"] == "validate_echo"
 
 
 @pytest.mark.parametrize(

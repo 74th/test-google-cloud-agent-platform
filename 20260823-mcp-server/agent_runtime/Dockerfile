@@ -1,7 +1,5 @@
 FROM python:3.12-slim
 
-ARG AGENT_GATEWAY_ROOT_CERTIFICATES=""
-
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt \
@@ -13,12 +11,15 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /app
 RUN apt-get update \
-    && apt-get install --no-install-recommends -y ca-certificates \
-    && rm -rf /var/lib/apt/lists/* \
-    && if [ -n "$AGENT_GATEWAY_ROOT_CERTIFICATES" ]; then \
-         printf '%s\n' "$AGENT_GATEWAY_ROOT_CERTIFICATES" > /usr/local/share/ca-certificates/agent-gateway.crt; \
-         update-ca-certificates; \
-       fi
+    && apt-get install --no-install-recommends -y ca-certificates openssl \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN --mount=type=secret,id=agent-gateway-ca,dst=/run/secrets/agent-gateway-ca \
+    test -s /run/secrets/agent-gateway-ca \
+    && cp /run/secrets/agent-gateway-ca /usr/local/share/ca-certificates/agent-gateway.crt \
+    && chmod 0644 /usr/local/share/ca-certificates/agent-gateway.crt \
+    && openssl x509 -in /usr/local/share/ca-certificates/agent-gateway.crt -noout \
+    && update-ca-certificates
 
 COPY pyproject.toml uv.lock ./
 RUN pip install --no-cache-dir \

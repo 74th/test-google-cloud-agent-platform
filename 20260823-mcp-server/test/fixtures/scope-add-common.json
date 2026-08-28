@@ -1,0 +1,11 @@
+{
+  "resource_changes": [
+    {
+      "address": "google_network_services_agent_gateway.shared",
+      "change": {
+        "actions": ["create"],
+        "after": {"name": "common-egress"}
+      }
+    }
+  ]
+}

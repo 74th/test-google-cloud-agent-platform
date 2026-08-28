@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -euo pipefail
+if printf '%s\n' "$*" | grep -q 'auth configure-docker'; then
+  exit 0
+fi
+exit 0

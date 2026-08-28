@@ -1,0 +1,12 @@
+{
+  "resource_changes": [
+    {
+      "address": "google_compute_network_attachment.agent_gateway",
+      "change": {
+        "actions": ["delete"],
+        "before": {"name": "common-agent-gateway-attachment"},
+        "after": null
+      }
+    }
+  ]
+}

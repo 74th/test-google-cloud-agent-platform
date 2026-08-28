@@ -45,6 +45,17 @@ variable "enable_gke" {
   default     = false
 }
 
+variable "gke_network_name" {
+  description = "Existing VPC used by the common Agent Gateway Network Attachment. The consumer adds only its own subnet."
+  type        = string
+  default     = "common-agent-gateway-vpc"
+
+  validation {
+    condition     = var.gke_network_name == "common-agent-gateway-vpc"
+    error_message = "gke_network_name must be the reviewed common-agent-gateway-vpc; do not create or use an unrelated VPC."
+  }
+}
+
 variable "node_cidr" {
   description = "Dedicated primary subnet range; verified against the project inventory."
   type        = string
@@ -61,6 +72,23 @@ variable "service_cidr" {
   description = "Dedicated GKE Service secondary range."
   type        = string
   default     = "10.242.0.0/20"
+}
+
+variable "gke_proxy_only_cidr" {
+  description = "Consumer-owned proxy-only range required by the regional internal HTTPS Load Balancer."
+  type        = string
+  default     = "10.244.0.0/23"
+}
+
+variable "gke_service_cluster_ip" {
+  description = "Reserved ClusterIP used by the first private DNS/HTTPS reachability probe; avoid GKE system Services."
+  type        = string
+  default     = "10.242.0.20"
+
+  validation {
+    condition     = can(cidrhost(var.service_cidr, 0)) && can(regex("^10\\.242\\.[0-9]+\\.[0-9]+$", var.gke_service_cluster_ip))
+    error_message = "gke_service_cluster_ip must be an address in the dedicated 10.242 service range."
+  }
 }
 
 variable "agent_runtime_image" {
@@ -85,8 +113,8 @@ variable "agent_gateway_id" {
   type        = string
 
   validation {
-    condition     = can(regex("^projects/[^/]+/locations/[^/]+/agentGateways/[^/]+$", var.agent_gateway_id))
-    error_message = "agent_gateway_id must be a fully qualified Agent Gateway resource name."
+    condition     = var.agent_gateway_id == "projects/nnyn-dev/locations/us-central1/agentGateways/common-egress"
+    error_message = "agent_gateway_id must be the reviewed common-egress resource from common/terraform output."
   }
 }
 
@@ -94,12 +122,22 @@ variable "cloud_run_registry_service_id" {
   description = "Stable Registry Service ID for the Cloud Run MCP endpoint."
   type        = string
   default     = "mcp-20260823-cloud-run"
+
+  validation {
+    condition     = can(regex("^mcp-20260823-[a-z0-9-]+$", var.cloud_run_registry_service_id))
+    error_message = "cloud_run_registry_service_id must be a collision-resistant 20260823 consumer ID."
+  }
 }
 
 variable "gke_registry_service_id" {
   description = "Stable Registry Service ID for the GKE MCP endpoint."
   type        = string
   default     = "mcp-20260823-gke"
+
+  validation {
+    condition     = can(regex("^mcp-20260823-[a-z0-9-]+$", var.gke_registry_service_id))
+    error_message = "gke_registry_service_id must be a collision-resistant 20260823 consumer ID."
+  }
 }
 
 variable "cloud_run_auth_audience" {

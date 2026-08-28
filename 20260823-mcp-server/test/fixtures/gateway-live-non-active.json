@@ -1,0 +1,8 @@
+{
+  "name": "projects/nnyn-dev/locations/us-central1/agentGateways/common-egress",
+  "state": "DELETING",
+  "googleManaged": {"governedAccessPath": "AGENT_TO_ANYWHERE"},
+  "protocols": ["MCP"],
+  "registries": ["//agentregistry.googleapis.com/projects/nnyn-dev/locations/us-central1"],
+  "networkConfig": {"egress": {"networkAttachment": "https://www.googleapis.com/compute/v1/projects/nnyn-dev/regions/us-central1/networkAttachments/common-agent-gateway-attachment"}}
+}

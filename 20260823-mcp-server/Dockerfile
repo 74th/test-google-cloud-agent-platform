@@ -11,6 +11,7 @@ COPY --from=dependencies /app/node_modules ./node_modules
 COPY package.json ./
 COPY src ./src
 COPY scripts ./scripts
+COPY toolspec.json ./toolspec.json
 USER node
 EXPOSE 8080
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s CMD node -e "fetch('http://127.0.0.1:' + process.env.PORT + '/healthz').then(r => { if (!r.ok) process.exit(1) }).catch(() => process.exit(1))"

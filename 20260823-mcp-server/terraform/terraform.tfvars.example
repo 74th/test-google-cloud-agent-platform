@@ -16,6 +16,8 @@ enable_gke   = false
 node_cidr    = "10.240.0.0/20"
 pod_cidr     = "10.241.0.0/16"
 service_cidr = "10.242.0.0/20"
+gke_service_cluster_ip = "10.242.0.20"
+gke_proxy_only_cidr = "10.244.0.0/23"
 
 # Required before enable_gke=true. Do not use an anonymous or HTTP fallback.
 gke_mcp_hostname = ""

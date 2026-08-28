@@ -8,7 +8,7 @@ if [[ ! -f "$plan_file" ]]; then
 fi
 
 plan_text="$(terraform -chdir=terraform show -no-color "$plan_file")"
-if grep -Eiq 'name\s*=\s*"autopilot"|network\s*=\s*"default"|subnetwork\s*=\s*"default"|agent-gateway-20260822|claude-agent|allUsers' <<<"$plan_text"; then
+if grep -Eiq 'name\s*=\s*"autopilot"|network\s*=\s*"default"|subnetwork\s*=\s*"default"|common-egress|common-agent-gateway|agw-20260822|claude-agent|allUsers' <<<"$plan_text"; then
   printf '%s\n' 'Refusing: destroy plan contains an out-of-scope resource or public IAM binding.' >&2
   exit 1
 fi

@@ -10,7 +10,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, ValidationError as PydanticValidationError
 
-from .adapter import ClaudeAgentAdapter
+from .adapter import ClaudeAgentAdapter, new_correlation_id
 from .credentials import GoogleIDTokenProvider
 from .errors import ValidationError
 from .models import TargetConfig
@@ -77,25 +77,31 @@ async def health() -> dict[str, str]:
     return {"status": "ok"}
 
 
-async def _invoke(request: RuntimeRequest | str | dict[str, Any], method: str) -> str:
+async def _invoke(request: RuntimeRequest | str | dict[str, Any], method: str) -> tuple[str, dict[str, Any]]:
     target, message = _request_parts(request, method)
+    correlation_id = new_correlation_id()
     try:
-        result, _ = await build_runner().run(target, message)
-        return result
+        result, evidence = await build_runner().run(target, message, correlation_id=correlation_id)
+        sanitized = evidence.sanitized()
+        print(json.dumps({"event": "runtime_mcp_invocation", **sanitized}, ensure_ascii=False), flush=True)
+        return result, sanitized
     except ValidationError as error:
-        raise HTTPException(422, {"stage": error.stage.value, "error": str(error)}) from error
+        print(json.dumps({"event": "runtime_mcp_failure", "correlation_id": correlation_id, "target": target, "stage": error.stage.value, "error": str(error)}, ensure_ascii=False), flush=True)
+        raise HTTPException(422, {"correlation_id": correlation_id, "stage": error.stage.value, "error": str(error)}) from error
 
 
 @app.post("/api/reasoning_engine")
-async def reasoning_engine(request: RuntimeRequest | str | dict[str, Any]) -> dict[str, str]:
-    return {"output": await _invoke(request, "query")}
+async def reasoning_engine(request: RuntimeRequest | str | dict[str, Any]) -> dict[str, Any]:
+    output, evidence = await _invoke(request, "query")
+    return {"output": output, "correlation_id": evidence["correlation_id"], "validation": evidence}
 
 
 @app.post("/api/stream_reasoning_engine")
 async def stream_reasoning_engine(request: RuntimeRequest | str | dict[str, Any]) -> StreamingResponse:
     async def stream() -> AsyncIterator[str]:
         try:
-            yield json.dumps({"output": await _invoke(request, "stream_query")}, ensure_ascii=False) + "\n"
+            output, evidence = await _invoke(request, "stream_query")
+            yield json.dumps({"output": output, "correlation_id": evidence["correlation_id"], "validation": evidence}, ensure_ascii=False) + "\n"
         except HTTPException as error:
             yield json.dumps({"error": error.detail}, ensure_ascii=False) + "\n"
 

@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mcp-20260823-internal-https
+  namespace: 20260823-mcp-server
+  labels:
+    experiment: 20260823-mcp-server
+    component: internal-front-door
+  annotations:
+    kubernetes.io/ingress.class: gce-internal
+    kubernetes.io/ingress.allow-http: "false"
+    kubernetes.io/ingress.regional-static-ip-name: __INTERNAL_IP_NAME__
+spec:
+  tls:
+    - hosts:
+        - __GKE_MCP_HOSTNAME__
+      secretName: mcp-20260823-gke-tls
+  rules:
+    - host: __GKE_MCP_HOSTNAME__
+      http:
+        paths:
+          - path: /mcp
+            pathType: Prefix
+            backend:
+              service:
+                name: mcp-20260823-mcp-server
+                port:
+                  number: 80

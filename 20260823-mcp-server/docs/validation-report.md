@@ -1,5 +1,29 @@
 # 20260823-mcp-server validation report
 
+## 2026-08-28 common-egress migration matrix
+
+The consumer-only plan was applied as a no-op (`0 added, 0 changed, 0 destroyed`).
+The following current results supersede any old-Gateway E2E claim:
+
+| Validation item | Status | Caller / identity / source / Gateway / destination / authorization layer / correlation / expected vs actual / log |
+| --- | --- | --- | --- |
+| Shared Gateway preflight | PASS | operator; consumer Terraform and live API; `common-egress`; exact project/location/direction/protocol/Registry/attachment; expected match, actual match; sanitized inventory evidence |
+| Consumer plan/apply scope | PASS | Terraform consumer state; Runtime association is the only shared value; expected no common action, actual `0/0/0`; apply/read-back evidence |
+| Runtime identity and association | PASS | Runtime `AGENT_IDENTITY`; effective identity is the Runtime principal; source Runtime API; `common-egress`; expected exact digest/association, actual exact match; migration read-back evidence |
+| Registry/control-plane/IAM read-back | PASS | Runtime principal and separate caller/service-agent identities; consumer Registry resources and scoped bindings; expected Terraform/live match, actual match; IAM and migration evidence |
+| Runtime Registry discovery through `common-egress` | FAIL | Runtime effective identity; Agent Runtime source; `common-egress`; Registry Service `mcp-20260823-cloud-run`; expected discovery, actual `registry_discovery / SSLError`; Gateway log `2026-08-28T04:16:23.199600Z`, `240.0.0.2:443`, `default_denied`; no correlation ID returned |
+| Cloud Run governed Agent Runtime / Claude E2E | SKIP | no Gateway allow, Claude Tool-selection event, or server-side MCP execution evidence; not a PASS |
+| Cloud Run negative cases after migration | SKIP | positive path is blocked before endpoint authorization; no new no-token/wrong-audience matrix claimed |
+| GKE private network/TLS/backend route | PASS | consumer-owned private DNS, `gce-internal` `INTERNAL_MANAGED` frontend `10.240.0.5`, proxy-only subnet, trusted TLS from a validation Pod, healthy NEG, and ClusterIP `10.242.0.20` backend. [Evidence](../evidence/gke-common-egress-ilb-20260828.md) |
+| GKE Agent Runtime E2E through common-egress | FAIL | Runtime query stopped at `registry_discovery / SSLError`; Gateway log at `2026-08-28T06:21:16.892925Z` was `CONNECT 403`, `default_denied`. Endpoint authorization and Claude/Pod correlation are not claimed. [Evidence](../evidence/gke-common-egress-ilb-20260828.md) |
+
+The old-Gateway rows below are retained only as `HISTORICAL BASELINE`. They are
+not migration results; their PASS evidence includes the required old-run Tool
+selection and server-side execution logs, but it must not be reused for the
+`common-egress` migration.
+
+## Historical baseline (old Gateway, 2026-08-23/24)
+
 Collected 2026-08-23 in `nnyn-dev`. PASS entries below reference sanitized summaries in `evidence/`; no result is inferred from configuration alone.
 
 | Validation item | Status | Expected / actual / evidence |
