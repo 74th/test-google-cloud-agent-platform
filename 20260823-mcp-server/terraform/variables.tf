@@ -81,20 +81,13 @@ variable "agent_runtime_name" {
 }
 
 variable "agent_gateway_id" {
-  description = "Existing Agent Gateway resource reused by this experiment."
+  description = "Shared Agent Gateway resource ID supplied explicitly from common output."
   type        = string
-  default     = "projects/nnyn-dev/locations/us-central1/agentGateways/agw-20260822-egress"
 
   validation {
     condition     = can(regex("^projects/[^/]+/locations/[^/]+/agentGateways/[^/]+$", var.agent_gateway_id))
     error_message = "agent_gateway_id must be a fully qualified Agent Gateway resource name."
   }
-}
-
-variable "agent_gateway_name" {
-  description = "Dedicated Agent Gateway resource name."
-  type        = string
-  default     = "mcp-20260823-egress"
 }
 
 variable "cloud_run_registry_service_id" {

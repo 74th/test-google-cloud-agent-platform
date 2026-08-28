@@ -1,5 +1,10 @@
 # 20260823-mcp-server validation runbook
 
+The former shared Gateway was retired on 2026-08-28. This consumer does not
+create or manage a Gateway. Supply `agent_gateway_id` explicitly from the
+approved `common` Terraform output after the common Gateway is deployed. Do
+not run the consumer Terraform apply as part of the migration.
+
 This runbook creates only resources labeled `experiment=20260823-mcp-server` in project `nnyn-dev`. It never stores ID tokens, service-account keys, or Terraform secret values in the repository.
 
 ## Prerequisites

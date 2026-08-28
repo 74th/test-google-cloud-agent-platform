@@ -1,5 +1,0 @@
-project_id       = "nnyn-dev"
-location         = "us-central1"
-vertex_project_id = "nnyn-dev"
-vertex_region    = "global"
-gateway_name     = "agw-20260822-egress"

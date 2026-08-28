@@ -8,9 +8,8 @@ experiment_label = "20260823-mcp-server"
 container_image = "us-central1-docker.pkg.dev/nnyn-dev/mcp-20260823-mcp-server/mcp-server@sha256:0000000000000000000000000000000000000000000000000000000000000000"
 agent_runtime_image = "us-central1-docker.pkg.dev/nnyn-dev/mcp-20260823-mcp-server-agent/agent-runtime@sha256:0000000000000000000000000000000000000000000000000000000000000000"
 
-# Reuse the active project-level Agent Gateway; this experiment does not create
-# a second AGENT_TO_ANYWHERE gateway.
-agent_gateway_id = "projects/nnyn-dev/locations/us-central1/agentGateways/agw-20260822-egress"
+# Supply the approved fully-qualified Agent Gateway ID from common output.
+# agent_gateway_id = "projects/nnyn-dev/locations/us-central1/agentGateways/<shared-name>"
 
 # Cloud Run is the first phase. Set true only after reviewing the second plan.
 enable_gke   = false

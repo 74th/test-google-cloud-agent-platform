@@ -12,8 +12,8 @@ image="${registry}/${image_name}:${tag}"
 
 cert_args=()
 gateway_cert=""
-if command -v gcloud >/dev/null; then
-  gateway_cert="$(gcloud network-services agent-gateways describe "${AGENT_GATEWAY_NAME:-agw-20260822-egress}" \
+if command -v gcloud >/dev/null && [[ -n "${AGENT_GATEWAY_NAME:-}" ]]; then
+  gateway_cert="$(gcloud network-services agent-gateways describe "${AGENT_GATEWAY_NAME}" \
     --project="${project_id}" --location="${region}" \
     --format='value[delimiter=\\n](agentGatewayCard.rootCertificates)' 2>/dev/null || true)"
 fi

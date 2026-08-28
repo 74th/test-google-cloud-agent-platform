@@ -1,5 +1,13 @@
 # Agent Registry MCP Server 検証結果
 
+## 2026-08-28 migration status
+
+The former `agw-20260822-egress` Gateway and the two external Runtime consumers
+were deleted during the approved migration. This repository no longer creates
+or owns an Agent Gateway. Its Terraform requires the shared `agent_gateway_id`
+as an explicit input from `common`; consumer Terraform was not reapplied during
+the migration. The historical results below describe the 2026-08-23/24 run.
+
 ## 20260823 governed Agent Runtime change status
 
 この変更では、Cloud Run と GKE の MCP endpoint を Agent Runtime 上の
