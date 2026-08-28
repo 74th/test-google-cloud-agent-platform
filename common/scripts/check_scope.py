@@ -19,12 +19,18 @@ PROTECTED_TYPES = {
 
 AUTHZ_EXTENSION_TYPE = "google_network_services_authz_extension"
 AUTHZ_POLICY_TYPE = "google_network_security_authz_policy"
-COMMON_TYPES = PROTECTED_TYPES | {"google_project_service", AUTHZ_EXTENSION_TYPE, AUTHZ_POLICY_TYPE}
+ENDPOINT_IAM_TYPE = "google_iap_agent_registry_endpoint_iam_member"
+COMMON_TYPES = PROTECTED_TYPES | {
+    "google_project_service",
+    AUTHZ_EXTENSION_TYPE,
+    AUTHZ_POLICY_TYPE,
+    "google_agent_registry_service",
+    ENDPOINT_IAM_TYPE,
+}
 FORBIDDEN_TYPE_MARKERS = (
     "google_container_",
     "google_cloud_run_",
     "google_vertex_ai_",
-    "google_agent_registry_",
     "google_iap_",
     "google_artifact_registry_",
 )
@@ -87,7 +93,7 @@ def validate(plan: dict[str, Any], expected_project: str, expected_region: str, 
         before = resource.get("change", {}).get("before") or {}
         body = after if after else before
 
-        if any(marker in resource_type for marker in FORBIDDEN_TYPE_MARKERS):
+        if any(marker in resource_type for marker in FORBIDDEN_TYPE_MARKERS) and resource_type != ENDPOINT_IAM_TYPE:
             errors.append(f"{address}: consumer-owned resource type is out of scope ({resource_type})")
 
         if resource_type not in COMMON_TYPES:
@@ -111,11 +117,11 @@ def validate(plan: dict[str, Any], expected_project: str, expected_region: str, 
                 errors.append(f"{address}: Authz Extension location is outside {expected_region}")
             if body.get("service") != "iap.googleapis.com":
                 errors.append(f"{address}: Authz Extension must use iap.googleapis.com")
-            if body.get("fail_open") is not True:
-                errors.append(f"{address}: Authz Extension must remain fail_open during DRY_RUN")
+            if body.get("fail_open") is not False:
+                errors.append(f"{address}: Authz Extension must remain fail-closed during enforcement")
             metadata = body.get("metadata") or {}
-            if metadata != {"iamEnforcementMode": "DRY_RUN", "iapPolicyVersion": "V1"}:
-                errors.append(f"{address}: Authz Extension metadata must remain the approved DRY_RUN IAP configuration")
+            if metadata != {"iamEnforcementMode": "ENFORCE", "iapPolicyVersion": "V1"}:
+                errors.append(f"{address}: Authz Extension metadata must remain the approved enforced IAP configuration")
 
         if resource_type == AUTHZ_POLICY_TYPE:
             if body.get("name") != "common-egress-iap-policy":
@@ -149,6 +155,19 @@ def validate(plan: dict[str, Any], expected_project: str, expected_region: str, 
             # unknown is accepted until post-apply read-back can prove it.
             if extensions not in ([expected_extension], [expected_extension_number]) and not (extensions == [] and unknown_extension):
                 errors.append(f"{address}: AuthzPolicy must reference only {expected_extension}")
+
+        if resource_type == ENDPOINT_IAM_TYPE:
+            if body.get("location") != expected_region:
+                errors.append(f"{address}: endpoint IAM location is outside {expected_region}")
+            if body.get("role") != "roles/iap.egressor":
+                errors.append(f"{address}: endpoint IAM role must be roles/iap.egressor")
+            member = body.get("member", "")
+            expected_prefix = (
+                "principal://agents.global.proj-776113568960.system.id.goog/"
+                "resources/aiplatform/projects/776113568960/locations/us-central1/reasoningEngines/"
+            )
+            if not isinstance(member, str) or not member.startswith(expected_prefix):
+                errors.append(f"{address}: endpoint IAM member must be a bounded us-central1 Runtime principal")
 
         project = resource_project(resource)
         if project and project not in (expected_project, str(expected_project)):

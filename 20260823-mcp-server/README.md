@@ -21,8 +21,10 @@ Gateway egress、endpoint authorization、MCP Tool execution を分離して検�
 key はログや evidence に保存しません。
 
 local SDK contract、Cloud Run/GKE backend、Registry metadata validation、旧
-Gateway を使った Agent Runtime baseline、Registry IAM、Cloud Run endpoint
-egress binding、および旧 Gateway 経由の Cloud Run MCP E2E は完了しています。
+Gateway を使った Agent Runtime baseline、consumer 固有 Registry/MCP server IAM、
+Cloud Run endpoint egress binding、および旧 Gateway 経由の Cloud Run MCP E2E は
+完了しています。共通 control-plane Registry Service と endpoint IAM は
+[`common`](../common/README.md) が所有します。
 `common-egress` 移行後の E2E は現在の `default_denied` blockerにより未完了です。
 Google Cloud の project/direction 単位の Gateway 排他制約に合わせ、専用
 `mcp-20260823-egress` は削除し、既存 Gateway は Terraform で管理せず参照だけ
@@ -125,7 +127,7 @@ GKEのDeployment Manifestには、MCP Server／ToolをAgent Registryへ登録す
 | Terraform backend apply (historical) | HISTORICAL PASS | Cloud Run、専用 GKE Standard、VPC、Registry Service を experiment prefix で構築。今回の common-egress migration stateとは別の旧backend結果 |
 | Agent Gateway 構成 | PASS (inventory) | `common-egress` の owner output/live API、属性、Network Attachment、CA fingerprintを確認。共有resourceはconsumer state外 |
 | Agent Runtime 作成 | PASS | `mcp-20260823-runtime`、`AGENT_IDENTITY`、immutable image digest を適用 |
-| Runtime IAM | PASS | Registry viewer、control-plane/MCP endpoint egress、repository-scoped Artifact Registry reader、caller SA token creator を適用 |
+| Runtime IAM | PASS | common-owned control-plane endpoint egress は common 側で管理し、consumer 側では MCP server egress、repository-scoped Artifact Registry reader、caller SA token creator を適用 |
 | Cloud Run Registry egress binding | PASS | Runtime effective identity に MCP-server-scoped `roles/iap.egressor` を付与 |
 | Cloud Run 認証済み baseline (historical) | HISTORICAL PASS | 2026-08-23 の専用 invoker 検証で `initialize`、`tools/list`、`validate_echo` が HTTP 200 |
 | Cloud Run 未認証実行 (historical) | HISTORICAL PASS | 2026-08-24 の再検証で MCP 応答前に HTTP 403 で拒否 |

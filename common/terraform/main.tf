@@ -76,9 +76,8 @@ resource "google_network_services_agent_gateway" "shared" {
   ]
 }
 
-# IAP evaluates the Agent Registry roles/iap.egressor bindings.  Keep this
-# initial attachment in DRY_RUN: it enriches Gateway logs but does not alter
-# the existing default-deny decision until its observed behavior is reviewed.
+# IAP evaluates the Agent Registry roles/iap.egressor bindings. Enforcement is
+# fail-closed so unapproved Runtime identities cannot use the shared Gateway.
 resource "google_network_services_authz_extension" "iap" {
   provider = google-nightly
 
@@ -86,10 +85,10 @@ resource "google_network_services_authz_extension" "iap" {
   location  = var.region
   name      = "common-egress-iap-authz"
   service   = "iap.googleapis.com"
-  fail_open = true
+  fail_open = false
   timeout   = "1s"
   metadata = {
-    iamEnforcementMode = "DRY_RUN"
+    iamEnforcementMode = "ENFORCE"
     iapPolicyVersion   = "V1"
   }
 

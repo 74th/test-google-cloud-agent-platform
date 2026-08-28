@@ -10,9 +10,9 @@
           "location": "us-central1",
           "name": "common-egress-iap-authz",
           "service": "iap.googleapis.com",
-          "fail_open": true,
+          "fail_open": false,
           "metadata": {
-            "iamEnforcementMode": "DRY_RUN",
+            "iamEnforcementMode": "ENFORCE",
             "iapPolicyVersion": "V1"
           }
         }
@@ -37,6 +37,20 @@
               "resources": ["projects/nnyn-dev/locations/us-central1/authzExtensions/common-egress-iap-authz"]
             }]
           }]
+        }
+      }
+    },
+    {
+      "address": "google_iap_agent_registry_endpoint_iam_member.aiplatform_global_runtime_124",
+      "type": "google_iap_agent_registry_endpoint_iam_member",
+      "change": {
+        "actions": ["create"],
+        "after": {
+          "project": "nnyn-dev",
+          "location": "us-central1",
+          "endpoint_id": "agentregistry-00000000-0000-0000-1fbd-4114ff5fd98b",
+          "role": "roles/iap.egressor",
+          "member": "principal://agents.global.proj-776113568960.system.id.goog/resources/aiplatform/projects/776113568960/locations/us-central1/reasoningEngines/124453171392151552"
         }
       }
     }

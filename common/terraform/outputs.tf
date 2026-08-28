@@ -44,11 +44,22 @@ output "agent_gateway_network_attachment" {
 }
 
 output "iap_authz_extension_id" {
-  description = "DRY_RUN IAP Authz Extension attached through the common-owned AuthzPolicy."
+  description = "Fail-closed IAP Authz Extension attached through the common-owned AuthzPolicy."
   value       = google_network_services_authz_extension.iap.id
 }
 
 output "iap_authz_policy_id" {
   description = "Common-owned AuthzPolicy targeting the shared Agent Gateway."
   value       = google_network_security_authz_policy.iap.id
+}
+
+output "shared_registry_service_ids" {
+  description = "Common-owned Registry Service IDs for shared external/control-plane domains."
+  value = {
+    github              = google_agent_registry_service.github.id
+    agentregistry       = google_agent_registry_service.agentregistry.id
+    aiplatform_global   = google_agent_registry_service.aiplatform_global.id
+    aiplatform_regional = google_agent_registry_service.aiplatform_regional.id
+    iamcredentials      = google_agent_registry_service.iamcredentials.id
+  }
 }

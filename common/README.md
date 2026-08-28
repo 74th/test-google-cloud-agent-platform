@@ -1,8 +1,9 @@
 # common: 共有 Agent Gateway 基盤
 
-`common` は、実験間で共有する Agent Gateway の**基盤を作成・所有する**
-Terraform root です。個別の Agent Runtime、Agent Registry Service、MCP
-endpoint、GKE、Cloud Run はここでは管理しません。
+`common` は、実験間で共有する Agent Gateway と、複数 consumer が同じ宛先を
+参照するための共通 Registry/control-plane 定義を**作成・所有する** Terraform
+root です。個別の Agent Runtime、consumer 固有の MCP endpoint、GKE、Cloud
+Run はここでは管理しません。
 
 ## 管理対象
 
@@ -14,6 +15,14 @@ resource を作成・維持します。
 - `common-egress`（`AGENT_TO_ANYWHERE`、`MCP`）
 - IAP Authz Extension と、それを `common-egress` にのみ関連付ける
   AuthzPolicy
+- 共通 Registry Service として次の endpoint 定義
+  - `github.com`
+  - `agentregistry.googleapis.com`
+  - `aiplatform.googleapis.com`
+  - `us-central1-aiplatform.googleapis.com`
+  - `iamcredentials.googleapis.com`
+- 上記共通 endpoint に対する、実測・承認済み Runtime の resource-scoped
+  `roles/iap.egressor` binding
 - 上記に必要な API enablement state
 
 この Terraform state は `common/terraform` に閉じています。利用側は common
@@ -32,9 +41,32 @@ terraform -chdir=terraform output -raw agent_gateway_id
 渡してください。VPC、subnet、Network Attachment、AuthzPolicy の ID は
 consumer の所有物ではありません。
 
-consumer が所有するものは、Agent Runtime、Agent Registry Service、Runtime
-identity と resource-scoped IAM、private DNS、MCP endpoint、GKE/Cloud Run、
-endpoint authorization、およびアプリケーション実行ログです。
+consumer が所有するものは、Agent Runtime、consumer 固有の Agent Registry
+Service（`*.run.app` や `gke.mcp-20260823.internal`）、Runtime identity と
+その endpoint/MCP server authorization、private DNS、MCP endpoint、
+GKE/Cloud Run、およびアプリケーション実行ログです。共通 Registry Service
+の URL を consumer 側で重複作成したり、common state を import したりしません。
+
+### ドメインの所有範囲
+
+次の境界で管理します。
+
+| ドメイン | 所有 | 方針 |
+| --- | --- | --- |
+| `github.com` | common | 複数 consumer で共有する外部 endpoint |
+| `agentregistry.googleapis.com` | common | Registry discovery/control plane |
+| `aiplatform.googleapis.com` | common | Vertex AI global control plane |
+| `us-central1-aiplatform.googleapis.com` | common | Vertex AI regional control plane |
+| `iamcredentials.googleapis.com` | common | 共通の audience token 発行 endpoint |
+| `storage.googleapis.com` | 条件付き | 複数 consumer の共通 GCS 利用が実証された場合だけ移管 |
+| `storage.mtls.googleapis.com` | consumer | 現状は BYOC 固有用途 |
+| `logging.googleapis.com` | 保留 | 現行 Runtime 経路での必要性が未実証 |
+| `*.run.app` | consumer | Cloud Run MCP Server 固有 |
+| `gke.mcp-20260823.internal` | consumer | private GKE MCP endpoint 固有 |
+
+common はドメインを登録するだけで全 Runtime を自動許可しません。IAM は
+確認済み Runtime principal と endpoint に限定して管理し、未観測の宛先や
+`allUsers` は追加しません。
 
 ## 検証の担当境界
 

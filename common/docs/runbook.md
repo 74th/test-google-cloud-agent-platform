@@ -6,7 +6,10 @@
 - Region: `us-central1`
 - Terraform root/state: `common/terraform`, local backend `terraform.tfstate`
 - Main resources: dedicated VPC, `/28` PSC interface subnet, Network Attachment, VPC-connected Agent Gateway
-- Consumer resources such as Agent Runtime, Agent Registry Service, MCP server, GKE, Cloud Run, Artifact Registry, endpoint IAM, and authorization policy are out of scope.
+- Consumer resources such as Agent Runtime, consumer-specific Agent Registry
+  Service, MCP server, GKE, Cloud Run, Artifact Registry, endpoint IAM, and
+  endpoint authorization policy are out of scope. Common-owned shared Registry
+  Services and their explicitly approved resource-scoped bindings are in scope.
 
 The Network Attachment is mandatory: provider schema exposes Agent Gateway VPC connectivity as `network_config.egress.network_attachment`. Merely creating a VPC and subnet does not connect the Gateway.
 
@@ -46,12 +49,18 @@ values, and public or credential-like values. The fixture tests in
 `tests/test_terraform.sh` must continue to show both accepted and rejected
 cases.
 
-Expected planned infrastructure is four main resources plus API-enablement state:
+Expected planned infrastructure is four main resources plus API-enablement state;
+shared Registry Services and only observed Runtime-scoped endpoint bindings may
+also appear:
 
 - `google_compute_network.agent_gateway`
 - `google_compute_subnetwork.agent_gateway`
 - `google_compute_network_attachment.agent_gateway`
 - `google_network_services_agent_gateway.shared`
+- `google_agent_registry_service.*` for the five common domains documented in
+  `README.md`
+- `google_iap_agent_registry_endpoint_iam_member.*` only for an observed,
+  approved Runtime principal and common endpoint
 
 ## Read-only access diagnosis
 

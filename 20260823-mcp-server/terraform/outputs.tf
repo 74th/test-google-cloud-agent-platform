@@ -63,21 +63,6 @@ output "cloud_run_registry_endpoint" {
   value = data.google_agent_registry_mcp_server.cloud_run.id
 }
 
-output "agentregistry_control_plane_service" {
-  value = google_agent_registry_service.agentregistry_control_plane.id
-}
-
-output "aiplatform_regional_control_plane_service" {
-  value = google_agent_registry_service.aiplatform_regional_control_plane.id
-}
-
-output "aiplatform_global_control_plane_service" {
-  value = google_agent_registry_service.aiplatform_global_control_plane.id
-}
-
-output "iamcredentials_control_plane_service" {
-  value = google_agent_registry_service.iamcredentials_control_plane.id
-}
 
 output "gke_registry_service" {
   value = try(google_agent_registry_service.gke[0].id, null)
