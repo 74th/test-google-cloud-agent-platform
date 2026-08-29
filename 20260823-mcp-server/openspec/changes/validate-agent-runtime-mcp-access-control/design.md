@@ -54,13 +54,37 @@ Cloud Run receives an ID token whose audience is the exact Cloud Run service URL
 
 Making either endpoint unauthenticated and relying only on Agent Gateway was rejected because any caller outside the governed runtime path could then invoke the MCP Server directly.
 
-### 4. Expose GKE through an HTTPS load balancer with IAP while preserving ClusterIP
+### 4. Use GKE Gateway API for the regional internal load-balancer path
 
-The MCP Deployment and `ClusterIP` Service remain the backend. A GKE-supported Gateway or Ingress creates an external HTTPS Application Load Balancer with a dedicated hostname, trusted certificate, and IAP-protected backend. Only the load balancer reaches the Kubernetes backend; the Pod and `ClusterIP` are not directly Internet-addressable. The Agent Runtime caller identity is granted access, while unauthenticated and unauthorized identities are denied before MCP execution.
+The MCP Deployment and `ClusterIP` backend remain internal. GKE Gateway API
+with the GA `gke-l7-rilb` GatewayClass creates a regional
+`INTERNAL_MANAGED` Application Load Balancer and an `HTTPRoute` to the
+service. The Gateway API controller requires a `NamedAddress`, so the
+consumer reserves a `SHARED_LOADBALANCER_VIP` and references its name. A
+`HealthCheckPolicy` explicitly checks `/healthz` on the serving container port.
 
-The exact Gateway-versus-Ingress API is selected during capability detection based on the installed GKE and provider surfaces, but the security contract is fixed: trusted HTTPS, fail-closed identity enforcement, no public bypass, and server-side authorization logs. `gke_mcp_hostname` and its DNS/certificate authorization are explicit apply prerequisites. Implementation must stop rather than downgrade to plain HTTP or anonymous access when those prerequisites are absent.
+The first Gateway API phase is an explicitly bounded HTTP diagnostic. It is
+private to the common VPC and has no IAP policy; its only purpose is to prove
+Gateway -> ILB -> ClusterIP/NEG -> Pod routing without the previous private
+origin-CA failure. It is not an authenticated Agent Runtime E2E PASS and is
+not a production fallback. The existing Ingress is left intact during the
+comparison, and a second ClusterIP Service with the same Pod selector is used
+because GKE does not allow one Service to be referenced by both an Ingress and
+a Gateway.
 
-An Internal Load Balancer was rejected for this change because no private route from the managed Agent Runtime has been established. A public `LoadBalancer` Service without application-layer authentication was rejected because network reachability would become the only access control.
+For a bounded common-egress comparison, the same Gateway API resource may also
+expose an HTTPS listener using the out-of-band test certificate. The consumer
+temporarily points its registered GKE hostname at the Gateway VIP through a
+reviewed DNS-only plan, runs the existing Runtime query, and then restores the
+Ingress VIP. This proves whether common-egress reaches the Gateway API path,
+but a private/self-managed origin CA or missing endpoint authorization remains
+a diagnostic failure; it does not relax the final trusted HTTPS requirement.
+
+The final Agent Runtime path remains HTTPS with IAP or an equivalent
+fail-closed caller authorization. It requires an operator-authorized
+hostname, trusted certificate, exact audience, OAuth/IAP prerequisites, and
+server-side authorization evidence. No anonymous or public HTTP listener is
+accepted for that final path.
 
 ### 5. Keep Registry lifecycle changes separate from runtime deployment
 
@@ -79,7 +103,7 @@ Negative cases must demonstrate where processing stopped. In particular, an Agen
 - [Claude Agent SDK remote MCP or dynamic headers differ from the assumed API] → Pin after capability tests, add adapter-level contract tests, and stop before cloud deployment if the SDK cannot send refreshed credentials.
 - [Agent Runtime effective identity cannot mint an ID token directly] → Use one dedicated keyless caller Service Account with narrowly scoped token-creator delegation and record the complete identity chain.
 - [Agent Gateway requires additional Google control-plane endpoints] → Inventory actual deny logs, register only required managed endpoints, and keep them separate from MCP destination approvals.
-- [GKE IAP/Gateway integration or trusted DNS is unavailable] → Treat trusted hostname and certificate authorization as prerequisites; do not create an unauthenticated fallback and mark live GKE E2E incomplete rather than PASS.
+- [GKE IAP/Gateway integration or trusted DNS is unavailable] → Use only the bounded private HTTP Gateway diagnostic to isolate routing, retain the final HTTPS/IAP prerequisite, and mark live GKE E2E incomplete rather than PASS.
 - [Registry projection or IAM propagation is eventually consistent] → Use bounded retries keyed to exact Service/endpoint IDs and record propagation time separately from request latency.
 - [Registry metadata is changed to an allowed but unintended endpoint] → Validate immutable project/location/Service ID plus reviewed host and Tool schema, and require a matching Gateway policy update for host changes.
 - [Two authorization layers obscure failures] → Emit stage-specific errors and correlate Gateway, endpoint, and MCP logs instead of using the final Claude response alone.

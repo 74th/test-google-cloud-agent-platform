@@ -140,6 +140,17 @@ variable "gke_registry_service_id" {
   }
 }
 
+variable "gke_http_diagnostic_registry_service_id" {
+  description = "Stable Registry Service ID for the explicit private HTTP Gateway API routing diagnostic."
+  type        = string
+  default     = "mcp-20260823-gke-http-diagnostic"
+
+  validation {
+    condition     = can(regex("^mcp-20260823-[a-z0-9-]+$", var.gke_http_diagnostic_registry_service_id))
+    error_message = "gke_http_diagnostic_registry_service_id must be a collision-resistant 20260823 consumer ID."
+  }
+}
+
 variable "cloud_run_auth_audience" {
   description = "Exact Cloud Run ID-token audience; defaults to the created service URI."
   type        = string
@@ -157,8 +168,31 @@ variable "gke_mcp_hostname" {
   }
 }
 
+variable "gke_gateway_diagnostic_hostname" {
+  description = "Private DNS hostname used only by the unauthenticated Gateway API HTTP routing diagnostic."
+  type        = string
+  default     = "gke-gateway-http.mcp-20260823.internal"
+
+  validation {
+    condition     = can(regex("^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?\\.[a-z]{2,}$", var.gke_gateway_diagnostic_hostname))
+    error_message = "gke_gateway_diagnostic_hostname must be a DNS hostname."
+  }
+}
+
+variable "enable_gateway_api_https_probe" {
+  description = "Temporarily point the consumer GKE hostname at the Gateway API HTTPS VIP for a bounded common-egress diagnostic. The Gateway certificate remains an out-of-band test certificate."
+  type        = bool
+  default     = false
+}
+
 variable "gke_auth_audience" {
   description = "Exact authentication audience configured for the GKE front door."
+  type        = string
+  default     = ""
+}
+
+variable "gke_http_diagnostic_auth_audience" {
+  description = "Exact audience used for the explicit private HTTP diagnostic request; it is not endpoint authorization."
   type        = string
   default     = ""
 }

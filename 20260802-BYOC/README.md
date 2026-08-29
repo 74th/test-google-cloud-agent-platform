@@ -62,15 +62,18 @@ terraform plan
 terraform apply
 
 cd ..
-export PROJECT_ID=your-project-id LOCATION=us-central1
+export PROJECT_ID=nnyn-dev LOCATION=us-central1
+export AGENT_GATEWAY=projects/nnyn-dev/locations/us-central1/agentGateways/common-egress
 export REPOSITORY=byoc-query-verification TAG="${TAG:-manual-$(date -u +%Y%m%dT%H%M%SZ)}"
 IMAGE_URI="$(./scripts/build_push.sh)"
+IMAGE_DIGEST_URI="$(gcloud artifacts docker images describe "$IMAGE_URI" --project="$PROJECT_ID" --format='value(image_summary.fully_qualified_digest)')"
 uv run python -m scripts.deploy_agent \
-  --project "$PROJECT_ID" --location "$LOCATION" --image-uri "$IMAGE_URI" \
+  --project "$PROJECT_ID" --location "$LOCATION" --image-uri "$IMAGE_DIGEST_URI" \
+  --agent-gateway "$AGENT_GATEWAY" \
   --service-account "byoc-query-runtime@${PROJECT_ID}.iam.gserviceaccount.com"
 ```
 
-作成コマンドは `results/deployment.json` にエージェントリソース名と operation schema を保存します。Agent Platform のカスタムコンテナ契約（`0.0.0.0:8080`、ルートおよび既存 API パス、`classMethods` のルーティング）は [公式ランタイム契約](https://cloud.google.com/gemini-enterprise-agent-platform/scale/runtime/runtime-contract) を確認してください（確認日: 2026-08-02）。
+`--agent-gateway` には完全修飾 Gateway ID を指定してください。Gateway を使う BYOC Runtime は `AGENT_IDENTITY` を使用し、`--image-uri` は Artifact Registry の immutable `@sha256:` digest を指定します。作成後の live GET では Gateway、identity、`spec.containerSpec.imageUri` の digest を照合します。BYOC の Reasoning Engine GET にない `revision`、`traffic`、`deployedModels` は必須確認項目ではありません。作成結果には Runtime、digest、Gateway、identity、時刻だけを保存します。Agent Platform のカスタムコンテナ契約（`0.0.0.0:8080`、ルートおよび既存 API パス、`classMethods` のルーティング）は [公式ランタイム契約](https://cloud.google.com/gemini-enterprise-agent-platform/scale/runtime/runtime-contract) を確認してください（確認日: 2026-08-02）。
 
 デプロイ後は以下で REST 経路を検証します。
 
@@ -127,6 +130,8 @@ uv run byoc-query-job --project "$PROJECT_ID" --location "$LOCATION" \
 
 総合結果は、5段階すべて成功なら `動作確認`、ルート到達後に失敗または出力欠落があれば `配送確認・動作未確認`、proxy の入力取得拒否なら `GCS入力取得失敗`、十分なログ検索でルート受信がなければ `未到達`、権限・期限・関連付け不足があれば `判定不能` です。結果には Cloud Logging の検索フィルター、対象リソース、時間範囲、ジョブ状態遷移を含め、ログ本文や入力本文、認証情報は保存しません。REST `:asyncQuery` の GCS 入力方式は SDK 経路とは別に記録して比較します。
 
+共有 Gateway を関連付けた Runtime では、query-job の managed proxy 自身による GCS 入力取得も Gateway の egress policy の影響を受けます。caller 側で GCS IAM と `serviceusage.services.use` が成功していても、Gateway の decision log が `default_denied` なら BYOC への `POST /` 到達前に失敗します。Gateway policy の変更は common 所有者の別承認が必要です。
+
 ## 2026-08-02 の検証結果
 
 対象は `us-central1` にデプロイした検証専用の BYOC エージェントです。REST `:query` と `:streamQuery`、および Cloud Logging の同じ `verification_id` を照合しました。SDK バージョンは `google-cloud-aiplatform 1.163.0`、公式ドキュメント確認日は 2026-08-02 です。
@@ -166,12 +171,17 @@ uv run byoc-query-job --project "$PROJECT_ID" --location "$LOCATION" \
 
 ## 後片付け
 
-対象名を明示してエージェントを削除してから Terraform 管理リソースを削除します。
+検証後の Runtime と Terraform 管理リソースは保持します。人間が inventory と destroy plan を確認し、明示的に承認した場合だけ、対象名を明示してエージェントを削除してから Terraform 管理リソースを削除します。
 
 ```bash
 uv run python -m scripts.delete_agent --project "$PROJECT_ID" --location "$LOCATION" \
   --agent-resource "projects/.../locations/.../reasoningEngines/..."
-cd terraform && terraform destroy
+terraform -chdir=terraform plan -destroy -input=false \
+  -out=../results/byoc-destroy-review-YYYYMMDD.tfplan
+terraform -chdir=terraform show -json \
+  ../results/byoc-destroy-review-YYYYMMDD.tfplan | jq '.resource_changes'
 ```
 
-`terraform destroy` の plan を確認し、意図した検証専用の Artifact Registry、サービスアカウント、GCS バケットだけであることを確認してください。
+Runtime は完全修飾 ID を一つずつ明示し、Terraform は保存した BYOC-only plan を人間が確認してから適用してください。2026-08-28 のレビュー済み plan は `results/byoc-destroy-review-20260828.tfplan` で、11 件の delete のみ（BYOC Artifact Registry、サービスアカウント/IAM、GCS、API state）です。共有 `common-egress`、VPC、subnet、Network Attachment、他 consumer は対象外です。Runtime の削除と plan の適用はいずれもこの検証では実行していません。
+
+2026-08-28 の共有 Gateway 検証結果は [結果文書](results/common-egress-validation-20260828.md) を参照してください。

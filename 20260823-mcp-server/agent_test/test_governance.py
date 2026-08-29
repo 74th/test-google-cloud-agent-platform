@@ -121,6 +121,36 @@ def test_metadata_validation_fails_before_token_generation(mutator) -> None:
     assert error.value.stage in {Stage.METADATA_VALIDATION, Stage.REGISTRY_DISCOVERY}
 
 
+def test_http_is_allowed_only_for_explicit_diagnostic_target() -> None:
+    registry = FakeRegistry(
+        service(
+            name="projects/test/locations/us-central1/services/http-diagnostic",
+            interfaces=[{"url": "http://gateway.example.test/mcp", "protocolBinding": "JSONRPC"}],
+        )
+    )
+    resolver_instance = RegistryResolver(
+        registry,
+        "test",
+        "us-central1",
+        {
+            "gke-http-diagnostic": TargetConfig(
+                "gke-http-diagnostic",
+                "http-diagnostic",
+                frozenset({"gateway.example.test"}),
+                "https://gateway.example.test/diagnostic",
+                allowed_schemes=frozenset({"http"}),
+            )
+        },
+        {"gke-http-diagnostic": TOOL},
+    )
+    assert resolver_instance.resolve("gke-http-diagnostic").url == "http://gateway.example.test/mcp"
+
+    https_registry = FakeRegistry(service(interfaces=[{"url": "http://run.example.test/mcp", "protocolBinding": "JSONRPC"}]))
+    with pytest.raises(ValidationError) as error:
+        resolver(https_registry).resolve("cloud-run")
+    assert error.value.stage is Stage.METADATA_VALIDATION
+
+
 def test_lifecycle_is_resolved_per_invocation_and_deleted_entry_has_no_cache() -> None:
     registry = FakeRegistry(service())
     instance = resolver(registry)

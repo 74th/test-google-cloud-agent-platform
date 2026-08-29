@@ -68,6 +68,22 @@ output "gke_registry_service" {
   value = try(google_agent_registry_service.gke[0].id, null)
 }
 
+output "gke_http_diagnostic_registry_service" {
+  value = try(google_agent_registry_service.gke_http_diagnostic[0].id, null)
+}
+
 output "mcp_caller_service_account" {
   value = try(google_service_account.mcp_caller[0].email, null)
+}
+
+output "gke_gateway_ip" {
+  description = "Static internal VIP reserved for the GKE Gateway API diagnostic path."
+  value       = try(google_compute_address.gke_gateway[0].address, null)
+}
+
+output "common_registry_endpoints" {
+  description = "Read-only IDs of the common-owned Registry endpoints used by this consumer."
+  value = {
+    for name, endpoint in data.google_agent_registry_endpoint.common : name => endpoint.id
+  }
 }

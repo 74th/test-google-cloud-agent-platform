@@ -78,6 +78,23 @@ spec:
       port: 80
       targetPort: http
 ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mcp-20260823-gateway-backend
+  namespace: 20260823-mcp-server
+  labels:
+    experiment: 20260823-mcp-server
+    component: gateway-backend
+spec:
+  type: ClusterIP
+  selector:
+    app: mcp-20260823-mcp-server
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+---
 apiVersion: batch/v1
 kind: Job
 metadata:

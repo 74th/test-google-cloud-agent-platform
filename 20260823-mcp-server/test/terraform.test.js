@@ -23,6 +23,7 @@ describe("Terraform guardrails", () => {
     expect(terraform["gke.tf"]).toContain("workload_identity_config");
     expect(fs.readFileSync("k8s/mcp.yaml.tmpl", "utf8")).toContain("type: ClusterIP");
     expect(fs.readFileSync("k8s/mcp.yaml.tmpl", "utf8")).toContain("__IMAGE_DIGEST__");
+    expect(fs.readFileSync("k8s/mcp.yaml.tmpl", "utf8")).toContain("mcp-20260823-gateway-backend");
   });
 
   it("declares isolated governed Agent Runtime resources", () => {
@@ -41,16 +42,33 @@ describe("Terraform guardrails", () => {
 
   it("fails closed for the GKE front-door prerequisites", () => {
     expect(terraform["variables.tf"]).toContain("gke_mcp_hostname");
+    expect(terraform["variables.tf"]).toContain("gke_gateway_diagnostic_hostname");
+    expect(terraform["variables.tf"]).toContain("enable_gateway_api_https_probe");
     expect(terraform["registry.tf"]).toContain("GKE Registry registration requires");
     expect(fs.readFileSync("k8s/mcp.yaml.tmpl", "utf8")).toContain("type: ClusterIP");
     expect(fs.readFileSync("k8s/mcp.yaml.tmpl", "utf8")).not.toContain("type: LoadBalancer");
     expect(terraform["gke_ilb.tf"]).toContain('address_type = "INTERNAL"');
     expect(terraform["gke_ilb.tf"]).toContain('purpose       = "REGIONAL_MANAGED_PROXY"');
+    expect(terraform["gke_ilb.tf"]).toContain('purpose      = "SHARED_LOADBALANCER_VIP"');
+    expect(terraform["scripts/check_scope.py"] || fs.readFileSync("scripts/check_scope.py", "utf8")).toContain("gke_gateway_diagnostic");
     expect(terraform["gke_ilb.tf"]).toContain('role          = "ACTIVE"');
     expect(terraform["gke_ilb.tf"]).toContain('visibility  = "private"');
     expect(fs.readFileSync("k8s/gke-internal-https.yaml.tmpl", "utf8")).toContain("gce-internal");
     expect(fs.readFileSync("k8s/gke-internal-https.yaml.tmpl", "utf8")).toContain('ingress.allow-http: "false"');
     expect(fs.readFileSync("k8s/gke-internal-https.yaml.tmpl", "utf8")).toContain("mcp-20260823-mcp-server");
+    const gateway = fs.readFileSync("k8s/gke-gateway-http-diagnostic.yaml.tmpl", "utf8");
+    expect(terraform["gke.tf"]).toContain('channel = "CHANNEL_STANDARD"');
+    expect(gateway).toContain("gatewayClassName: gke-l7-rilb");
+    expect(gateway).toContain("kind: HTTPRoute");
+    expect(gateway).toContain("kind: HealthCheckPolicy");
+    expect(gateway).toContain("protocol: HTTP");
+    expect(gateway).toContain("protocol: HTTPS");
+    expect(gateway).toContain("certificateRefs:");
+    expect(gateway).toContain("Diagnostic-only");
+    expect(terraform["registry.tf"]).toContain("gke_http_diagnostic");
+    expect(terraform["registry.tf"]).toContain("http://${var.gke_gateway_diagnostic_hostname}/mcp");
+    expect(terraform["agent_runtime.tf"]).toContain("GKE_HTTP_DIAGNOSTIC_ALLOWED_HOSTS");
+    expect(terraform["agent_runtime.tf"]).toContain("GKE_HTTP_DIAGNOSTIC_AUTH_AUDIENCE");
   });
 
   it("rejects common, default, unrelated, and destroy plan actions", () => {
@@ -62,6 +80,7 @@ describe("Terraform guardrails", () => {
   it("accepts a consumer-only plan", () => {
     expect(execFileSync("python3", ["scripts/check_scope.py", "test/fixtures/scope-consumer-only.json"], { encoding: "utf8" })).toContain("PASS");
     expect(execFileSync("python3", ["scripts/check_scope.py", "test/fixtures/scope-gke-common-vpc.json"], { encoding: "utf8" })).toContain("PASS");
+    expect(execFileSync("python3", ["scripts/check_scope.py", "test/fixtures/scope-gateway-api.json"], { encoding: "utf8" })).toContain("PASS");
   });
 
   it("has a fail-closed shared Gateway preflight", () => {
@@ -73,19 +92,32 @@ describe("Terraform guardrails", () => {
     expect(() => execFileSync("python3", ["scripts/gateway_preflight.py", "--owner-json", "test/fixtures/gateway-owner-retired.json", "--live-json", "test/fixtures/gateway-live-valid.json"], { stdio: "pipe" })).toThrow();
   });
 
-  it("uses consumer-owned collision-resistant control-plane registrations", () => {
-    expect(terraform["registry.tf"]).toContain('service_id   = "${var.name_prefix}-agentregistry"');
-    expect(terraform["registry.tf"]).toContain('service_id   = "${var.name_prefix}-aiplatform"');
-    expect(terraform["registry.tf"]).toContain('service_id   = "${var.name_prefix}-aiplatform-global"');
-    expect(terraform["registry.tf"]).toContain('service_id   = "${var.name_prefix}-iamcredentials"');
-    expect(terraform["registry.tf"]).not.toContain("20260822 managed");
+  it("references common-owned control-plane endpoints without recreating them", () => {
+    expect(terraform["common_endpoints.tf"]).toContain('data "google_agent_registry_endpoint" "common"');
+    expect(terraform["common_endpoints.tf"]).toContain("20260828 shared Gateway GitHub allow endpoint");
+    expect(terraform["common_endpoints.tf"]).toContain("mcp-20260823-mcp-server Agent Registry control plane");
+    expect(terraform["common_endpoints.tf"]).toContain("mcp-20260823-mcp-server Vertex AI global control plane");
+    expect(terraform["common_endpoints.tf"]).toContain("mcp-20260823-mcp-server Vertex AI regional control plane");
+    expect(terraform["common_endpoints.tf"]).toContain("mcp-20260823-mcp-server IAM Credentials control plane");
+    expect(terraform["registry.tf"]).not.toContain("agentregistry_control_plane");
+    expect(terraform["registry.tf"]).not.toContain("aiplatform_global_control_plane");
+    expect(terraform["registry.tf"]).not.toContain("iamcredentials_control_plane");
     expect(terraform["variables.tf"]).toContain("cloud_run_registry_service_id");
     expect(terraform["variables.tf"]).toContain("gke_registry_service_id");
   });
 
+  it("owns Runtime-specific egress grants for common endpoints", () => {
+    const commonEndpointIam = terraform["common_endpoint_iam.tf"];
+    expect(commonEndpointIam).toContain('resource "google_iap_agent_registry_endpoint_iam_member" "runtime"');
+    expect(commonEndpointIam).toContain("for_each = data.google_agent_registry_endpoint.common");
+    expect((commonEndpointIam.match(/roles\/iap\.egressor/g) || []).length).toBe(1);
+    expect(commonEndpointIam).toContain("google_vertex_ai_reasoning_engine.runtime.spec[0].effective_identity");
+    expect(commonEndpointIam).not.toContain("google_agent_registry_service");
+  });
+
   it("keeps egress and endpoint authorization resource-scoped", () => {
     const registry = terraform["registry.tf"];
-    expect((registry.match(/roles\/iap\.egressor/g) || []).length).toBe(6);
+    expect((registry.match(/roles\/iap\.egressor/g) || []).length).toBe(3);
     expect(registry).not.toMatch(/google_project_iam_member[\s\S]{0,240}roles\/iap\.egressor/);
     expect(terraform["iam.tf"]).toContain('role    = "roles/aiplatform.user"');
     expect(terraform["cloud_run.tf"]).toContain('role     = "roles/run.invoker"');

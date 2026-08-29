@@ -46,6 +46,12 @@ resource "google_container_cluster" "mcp" {
     channel = "REGULAR"
   }
 
+  # Gateway API is managed by the GKE control plane. This enables the
+  # regional internal Application Load Balancer GatewayClass gke-l7-rilb.
+  gateway_api_config {
+    channel = "CHANNEL_STANDARD"
+  }
+
   resource_labels = local.common_labels
 }
 

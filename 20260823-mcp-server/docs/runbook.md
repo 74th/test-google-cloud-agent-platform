@@ -43,7 +43,9 @@ Build and push a versioned image to the Terraform-created repository, resolve it
 Review a second plan with `enable_gke=true`, then apply it. The first trial keeps
 the MCP Service as `ClusterIP` and validates it only from inside GKE. The
 private-front-door trial adds a consumer-owned private DNS zone, internal IP,
-proxy-only subnet, and `gce-internal` HTTPS Ingress backed by that ClusterIP.
+proxy-only subnet, and a GKE Gateway API `gke-l7-rilb` regional internal
+Application Load Balancer. The legacy HTTPS Ingress is retained only for
+comparison while the Gateway path is evaluated.
 Render and apply the backend manifests only after the cluster is Ready:
 
 ```sh
@@ -53,10 +55,62 @@ kubectl -n 20260823-mcp-server rollout status deployment/mcp-20260823-mcp-server
 kubectl -n 20260823-mcp-server wait --for=condition=complete job/mcp-20260823-validation
 ```
 
-The GKE endpoint is intentionally cluster-local. Run the registry-discovered URL check from a Pod, not from a cluster-external client.
+The GKE Services remain `ClusterIP`, but the Gateway-specific Service has the
+same Pod selector as the original MCP Service. Run the cluster-local baseline
+from a Pod, then run the Gateway API HTTP diagnostic separately. The HTTP
+diagnostic is not an authenticated Agent Runtime result.
 
-The internal HTTPS phase uses the reviewed hostname
-`gke.mcp-20260823.internal`, private frontend `10.240.0.5`, and the
+After enabling Gateway API with the `enable_gke=true` Terraform plan, apply the
+backend manifests above and then apply the diagnostic Gateway resources. The
+static VIP is the Terraform output `gke_gateway_ip` and the Gateway controller
+requires its address to be a `NamedAddress`:
+
+```sh
+sed -e 's/__GKE_GATEWAY_DIAGNOSTIC_HOSTNAME__/gke-gateway-http.mcp-20260823.internal/g' \
+  k8s/gke-gateway-http-diagnostic.yaml.tmpl | kubectl apply -f -
+kubectl get gatewayclass
+kubectl -n 20260823-mcp-server get gateway,httproute,healthcheckpolicy
+kubectl -n 20260823-mcp-server describe gateway mcp-20260823-gke-gateway
+```
+
+Verify `Programmed=True`, `GatewayHealthy=True`, route `Reconciled=True`, and
+a healthy NEG before probing `http://gke-gateway-http.mcp-20260823.internal/mcp` from a
+non-host-network Pod. Record the Pod-side result in [Gateway API HTTP diagnostic evidence](../evidence/gke-gateway-api-http-diagnostic-20260829.md).
+
+The explicit `gke-http-diagnostic` target can now be used for a bounded
+Runtime/common-egress routing diagnostic. It is the only target that accepts an
+HTTP Registry interface; `cloud-run` and `gke` remain HTTPS-only:
+
+```sh
+python3 ../common/scripts/gateway_probe.py \
+  --runtime-project 776113568960 --runtime-location us-central1 \
+  --runtime-id 8548154799411953664 \
+  --registry-service mcp-20260823-gke-http-diagnostic \
+  --target gke-http-diagnostic --gateway-project nnyn-dev \
+  --gateway-id projects/nnyn-dev/locations/us-central1/agentGateways/common-egress \
+  --timeout 180 --output /tmp/mcp-gke-http-runtime.json
+```
+
+The observed result was Runtime HTTP 400 at `tool_execution`, with a
+common-egress Gateway `ALLOWED` record for the HTTP request but no GKE Pod
+execution. This is diagnostic evidence, not an Agent Runtime E2E PASS and not
+proof of a universal managed Runtime HTTP restriction. See [Runtime HTTP
+diagnostic evidence](../evidence/gke-gateway-api-http-runtime-diagnostic-20260829.md).
+
+For a bounded common-egress comparison, the same Gateway can also expose an
+HTTPS listener on `443` using the out-of-band `mcp-20260823-gke-tls` Secret.
+The certificate is a private test certificate and is expected to fail the
+common-egress origin trust check; this is diagnostic evidence, not a governed
+E2E result. Review and apply a consumer-only DNS plan that sets
+`enable_gateway_api_https_probe=true`, then run the GKE Runtime query. Restore
+the default (`false`) with a second reviewed plan immediately after the probe.
+The Registry Service, MCP endpoint IAM, and common control-plane endpoint IAM
+remain managed by this consumer Terraform; the common Service/Endpoint
+resources themselves are only data-source dependencies. See
+[GKE Gateway API through common-egress evidence](../evidence/gke-gateway-api-common-egress-20260829.md).
+
+The legacy internal HTTPS phase uses the reviewed hostname
+`gke.mcp-20260823.internal`, private frontend `10.240.0.2`, and the
 `mcp-20260823-mcp-server` ClusterIP backend. The Kubernetes TLS Secret used for
 this test is self-managed and must be supplied out of band; do not commit its
 private key or certificate body. A successful Pod-side check is only network,
@@ -64,7 +118,7 @@ TLS, and backend evidence. It is not Agent Runtime E2E until endpoint
 authorization, `common-egress` allow, Claude Tool selection, and server-side
 correlation are all present.
 
-After the ClusterIP trial, supply an out-of-band TLS certificate and key for
+After the Gateway API HTTP routing diagnostic, supply an out-of-band TLS certificate and key for
 `gke.mcp-20260823.internal` to the namespace, then apply the internal Ingress
 template:
 
@@ -123,8 +177,12 @@ python3 scripts/gateway_preflight.py \
 
 The consumer owns only its Registry Services/interfaces, endpoint-scoped IAM,
 Runtime, and MCP workloads. It does not reuse 20260822 control-plane entries.
-The GKE HTTPS phase is separately blocked until
-`gke_mcp_hostname`, DNS control, trusted TLS, and IAP audience are reviewed.
+The GKE HTTPS phase is provisioned with the reviewed `gke_mcp_hostname`, private
+DNS, and trusted TLS test certificate. The Gateway API HTTP diagnostic currently
+proves Pod-side `initialize` and `tools/call` through the regional internal ALB,
+but it has no IAP policy and is not a governed GKE E2E PASS. The prior HTTPS ILB
+result remains a Runtime-side HTTP 503 after common-egress `ALLOWED`; endpoint
+authorization and Runtime-to-Pod execution remain unproven.
 
 ## Evidence order
 
@@ -149,10 +207,11 @@ python3 scripts/check_scope.py <saved plan JSON>
 terraform -chdir=terraform apply <reviewed plan>
 ```
 
-2026-08-28 の Runtime query は `registry_discovery / SSLError` で停止し、同時刻の
-Gateway request logは `240.0.0.2:443` と `default_denied` を示しました。このため
-Cloud Runの no-token / wrong-audience / endpoint-unauthorized、egress-unbound、
-Claude Tool selection、server-side MCP executionは移行後のPASSにしていません。
-追加の共有ポリシー変更は common owner の承認が必要であり、consumer は推測で
-`common-egress` や authz extension を変更しません。GKE は private DNS、trusted TLS、
-internal HTTPS Load Balancer、endpoint authorization が未構築なので SKIP です。
+2026-08-29 のCloud Run Runtime queryは `common-egress` Gateway `ALLOWED`、
+Claude Tool event、Cloud Run HTTP 200、server-side MCP executionを同一
+correlation IDで確認しました。GKEは同日、Registry discoveryとGateway
+`ALLOWED`後にInternal HTTPS Load Balancerの `initialize` がHTTP 503で停止し、
+GKE application executionは確認できませんでした。GKE内のTLS検証付きILB
+backend smokeは別途成功していますが、endpoint authorizationとRuntime-to-Pod
+executionはPASSにしていません。追加の共有ポリシー変更はcommon ownerの承認が
+必要であり、consumerは推測で`common-egress`やAuthz extensionを変更しません。

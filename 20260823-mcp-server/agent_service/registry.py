@@ -153,8 +153,9 @@ class RegistryResolver:
             url = _first(interface, "url")
             binding = _first(interface, "protocolBinding", "protocol_binding")
             parsed = urlparse(url or "")
-            if parsed.scheme != "https":
-                raise ValueError("interface must use HTTPS")
+            if parsed.scheme not in config.allowed_schemes:
+                schemes = ", ".join(sorted(config.allowed_schemes))
+                raise ValueError(f"interface scheme must be one of: {schemes}")
             if parsed.hostname not in config.allowed_hosts:
                 raise ValueError("interface host is not allowlisted")
             if binding != "JSONRPC":

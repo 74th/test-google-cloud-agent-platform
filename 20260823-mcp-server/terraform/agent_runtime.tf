@@ -117,6 +117,27 @@ resource "google_vertex_ai_reasoning_engine" "runtime" {
       dynamic "env" {
         for_each = var.enable_gke ? [1] : []
         content {
+          name  = "GKE_HTTP_DIAGNOSTIC_REGISTRY_SERVICE_ID"
+          value = var.gke_http_diagnostic_registry_service_id
+        }
+      }
+      dynamic "env" {
+        for_each = var.enable_gke ? [1] : []
+        content {
+          name  = "GKE_HTTP_DIAGNOSTIC_ALLOWED_HOSTS"
+          value = var.gke_gateway_diagnostic_hostname
+        }
+      }
+      dynamic "env" {
+        for_each = var.enable_gke ? [1] : []
+        content {
+          name  = "GKE_HTTP_DIAGNOSTIC_AUTH_AUDIENCE"
+          value = var.gke_http_diagnostic_auth_audience
+        }
+      }
+      dynamic "env" {
+        for_each = var.enable_gke ? [1] : []
+        content {
           name  = "GKE_ALLOWED_HOSTS"
           value = var.gke_mcp_hostname
         }

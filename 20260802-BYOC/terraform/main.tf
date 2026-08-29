@@ -5,12 +5,21 @@ terraform {
       source  = "hashicorp/google"
       version = "~> 6.0"
     }
+    google-nightly = {
+      source  = "hashicorp/google-nightly"
+      version = "2026.4.8-7.27.0"
+    }
   }
 }
 
 provider "google" {
   project = var.project_id
   region  = var.location
+}
+
+provider "google-nightly" {
+  project = var.registry_project_id
+  region  = var.registry_location
 }
 
 resource "google_project_service" "required" {

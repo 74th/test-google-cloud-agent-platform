@@ -50,7 +50,7 @@ export async function createHttpServer() {
       const hostingTarget = request.headers["x-mcp-hosting-target"];
       const mcpServer = createMcpServer({
         correlationId: typeof correlationId === "string" && /^[a-z0-9][a-z0-9-]{7,63}$/.test(correlationId) ? correlationId : undefined,
-        hostingTarget: hostingTarget === "cloud-run" || hostingTarget === "gke" ? hostingTarget : undefined,
+        hostingTarget: hostingTarget === "cloud-run" || hostingTarget === "gke" || hostingTarget === "gke-http-diagnostic" ? hostingTarget : undefined,
       });
       const transport = new StreamableHTTPServerTransport({
         sessionIdGenerator: undefined,

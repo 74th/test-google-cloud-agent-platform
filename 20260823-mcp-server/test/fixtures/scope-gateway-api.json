@@ -1,0 +1,25 @@
+{
+  "resource_changes": [
+    {
+      "address": "google_compute_address.gke_gateway[0]",
+      "change": {
+        "actions": ["create"],
+        "after": {
+          "name": "mcp-20260823-mcp-server-gke-gateway-vip",
+          "purpose": "SHARED_LOADBALANCER_VIP",
+          "subnetwork": "projects/nnyn-dev/regions/us-central1/subnetworks/mcp-20260823-mcp-server-subnet"
+        }
+      }
+    },
+    {
+      "address": "google_dns_record_set.gke_gateway_diagnostic[0]",
+      "change": {
+        "actions": ["create"],
+        "after": {
+          "name": "gke-gateway-http.mcp-20260823.internal.",
+          "rrdatas": ["10.240.0.6"]
+        }
+      }
+    }
+  ]
+}

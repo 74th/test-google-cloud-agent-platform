@@ -83,4 +83,21 @@ describe("stateless MCP HTTP server", () => {
       await new Promise((resolve) => server.close(resolve));
     }
   });
+
+  it("preserves the explicit HTTP diagnostic hosting marker", async () => {
+    const server = await createHttpServer();
+    await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));
+    try {
+      const executed = await requestWithHeaders(server, 3, "tools/call", {
+        "x-mcp-correlation-id": "mcp-http-diagnostic-1",
+        "x-mcp-hosting-target": "gke-http-diagnostic",
+      }, { name: "validate_echo", arguments: { message: "diagnostic" } });
+      expect(executed.body.result.structuredContent).toMatchObject({
+        correlationId: "mcp-http-diagnostic-1",
+        hostingTarget: "gke-http-diagnostic",
+      });
+    } finally {
+      await new Promise((resolve) => server.close(resolve));
+    }
+  });
 });

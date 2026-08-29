@@ -22,17 +22,19 @@ ALLOWED_ADDRESSES = (
         r"^google_project_iam_member\.(registry_viewer|vertex_user|cloud_run_logs|gke_node_logs|gke_node_metrics|gke_node_artifacts)$"
     ),
     re.compile(r"^google_vertex_ai_reasoning_engine\.runtime$"),
-    re.compile(r"^google_agent_registry_service\.(cloud_run|gke|agentregistry_control_plane|aiplatform_regional_control_plane|aiplatform_global_control_plane|iamcredentials_control_plane)$"),
-    re.compile(r"^google_iap_agent_registry_endpoint_iam_member\.(agentregistry_control_plane|aiplatform_regional_control_plane|aiplatform_global_control_plane|iamcredentials_control_plane)$"),
-    re.compile(r"^google_iap_agent_registry_mcp_server_iam_member\.(cloud_run|gke)$"),
+    re.compile(r"^google_agent_registry_service\.(cloud_run|gke|gke_http_diagnostic|agentregistry_control_plane|aiplatform_regional_control_plane|aiplatform_global_control_plane|iamcredentials_control_plane)$"),
+    re.compile(r"^google_iap_agent_registry_endpoint_iam_member\.(runtime|agentregistry_control_plane|aiplatform_regional_control_plane|aiplatform_global_control_plane|iamcredentials_control_plane)$"),
+    re.compile(r"^google_iap_agent_registry_mcp_server_iam_member\.(cloud_run|gke|gke_http_diagnostic)$"),
     re.compile(r"^google_compute_network\.mcp$"),
     re.compile(r"^google_compute_subnetwork\.mcp$"),
     re.compile(r"^google_container_cluster\.mcp$"),
     re.compile(r"^google_container_node_pool\.mcp$"),
     re.compile(r"^google_compute_address\.gke_internal_https$"),
+    re.compile(r"^google_compute_address\.gke_gateway$"),
     re.compile(r"^google_compute_subnetwork\.gke_proxy_only$"),
     re.compile(r"^google_dns_managed_zone\.gke_private$"),
     re.compile(r"^google_dns_record_set\.gke_mcp$"),
+    re.compile(r"^google_dns_record_set\.gke_gateway_diagnostic$"),
 )
 
 FORBIDDEN = re.compile(
@@ -70,11 +72,25 @@ def _strings(value: Any) -> list[str]:
     return []
 
 
+def _has_default_network(value: Any) -> bool:
+    """Reject an actual default network reference, not enum values like DEFAULT."""
+    if isinstance(value, dict):
+        for name, child in value.items():
+            if name in {"network", "subnetwork", "network_name", "subnetwork_name"}:
+                if isinstance(child, str) and child.strip().lower() == "default":
+                    return True
+            if _has_default_network(child):
+                return True
+    elif isinstance(value, list):
+        return any(_has_default_network(child) for child in value)
+    return False
+
+
 def _allowed(address: str, values: list[str]) -> bool:
     normalized_address = re.sub(r"\[[^\]]+\]$", "", address)
     if not any(pattern.fullmatch(normalized_address) for pattern in ALLOWED_ADDRESSES):
         return False
-    if any(value.strip().lower() == "default" or "/networks/default" in value or "/subnetworks/default" in value for value in values):
+    if any("/networks/default" in value or "/subnetworks/default" in value for value in values):
         return False
     if address.startswith("google_project_service.required"):
         return any(service in values for service in ALLOWED_API_SERVICES)
@@ -102,6 +118,7 @@ def _scope_values(address: str, values: list[str]) -> list[str]:
             "common-agent-gateway-vpc",
             "projects/nnyn-dev/global/networks/common-agent-gateway-vpc",
             "https://www.googleapis.com/compute/v1/projects/nnyn-dev/global/networks/common-agent-gateway-vpc",
+            "https://compute.googleapis.com/compute/v1/projects/nnyn-dev/global/networks/common-agent-gateway-vpc",
         }
         return [value for value in values if value not in shared_network_values]
     if normalized_address == "google_vertex_ai_reasoning_engine.runtime":
@@ -120,6 +137,9 @@ def check(plan: dict[str, Any]) -> list[str]:
         joined = "\n".join(values)
         normalized_address = re.sub(r"\[[^\]]+\]$", "", address)
         scope_values = _scope_values(address, values)
+        if _has_default_network(change.get("change", {})):
+            failures.append(f"default VPC reference in {address}")
+            continue
         if FORBIDDEN.search("\n".join(scope_values)):
             failures.append(f"forbidden scope marker in {address}")
             continue

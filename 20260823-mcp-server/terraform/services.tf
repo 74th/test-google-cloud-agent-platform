@@ -1,17 +1,13 @@
 locals {
   required_services = toset([
-    "agentregistry.googleapis.com",
     "aiplatform.googleapis.com",
     "artifactregistry.googleapis.com",
-    "compute.googleapis.com",
     "container.googleapis.com",
     "iam.googleapis.com",
     "iamcredentials.googleapis.com",
     "iap.googleapis.com",
     "logging.googleapis.com",
     "monitoring.googleapis.com",
-    "networksecurity.googleapis.com",
-    "networkservices.googleapis.com",
     "run.googleapis.com",
   ])
 }

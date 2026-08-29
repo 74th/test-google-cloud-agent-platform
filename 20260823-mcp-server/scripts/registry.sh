@@ -7,7 +7,7 @@ tool_spec="${TOOL_SPEC_PATH:-toolspec.json}"
 cloud_run_service="${CLOUD_RUN_REGISTRY_SERVICE:-mcp-20260823-cloud-run}"
 gke_service="${GKE_REGISTRY_SERVICE:-mcp-20260823-gke}"
 cloud_run_url="${CLOUD_RUN_INTERFACE_URL:-}"
-gke_url="${GKE_INTERFACE_URL:-http://mcp-20260823-mcp-server/mcp}"
+gke_url="${GKE_INTERFACE_URL:-https://gke.mcp-20260823.internal/mcp}"
 
 usage() {
   printf '%s\n' "Usage: $0 <apply|search|describe|delete> [cloud-run|gke]"
@@ -40,7 +40,7 @@ esac
 
 case "${1:-}" in
   apply)
-    [[ -n "$interface_url" ]] || { printf '%s\n' 'CLOUD_RUN_INTERFACE_URL is required for cloud-run apply.' >&2; exit 2; }
+    [[ -n "$interface_url" ]] || { printf '%s\n' 'An interface URL is required for registry apply.' >&2; exit 2; }
     create_args=("$service_name" "${registry_args[@]}" \
       --display-name="20260823-mcp-server ${2:-cloud-run}" \
       --description="20260823-mcp-server MCP validation entry" \

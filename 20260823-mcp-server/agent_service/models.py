@@ -11,6 +11,7 @@ class TargetConfig:
     allowed_hosts: frozenset[str]
     audience: str
     tool_name: str = "validate_echo"
+    allowed_schemes: frozenset[str] = frozenset({"https"})
 
 
 @dataclass(frozen=True)

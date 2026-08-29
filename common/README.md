@@ -21,8 +21,6 @@ resource を作成・維持します。
   - `aiplatform.googleapis.com`
   - `us-central1-aiplatform.googleapis.com`
   - `iamcredentials.googleapis.com`
-- 上記共通 endpoint に対する、実測・承認済み Runtime の resource-scoped
-  `roles/iap.egressor` binding
 - 上記に必要な API enablement state
 
 この Terraform state は `common/terraform` に閉じています。利用側は common
@@ -64,9 +62,14 @@ GKE/Cloud Run、およびアプリケーション実行ログです。共通 Reg
 | `*.run.app` | consumer | Cloud Run MCP Server 固有 |
 | `gke.mcp-20260823.internal` | consumer | private GKE MCP endpoint 固有 |
 
-common はドメインを登録するだけで全 Runtime を自動許可しません。IAM は
-確認済み Runtime principal と endpoint に限定して管理し、未観測の宛先や
-`allUsers` は追加しません。
+common はドメインを登録するだけで全 Runtime を自動許可しません。Runtime
+固有の IAM は consumer workspace が確認済み Runtime principal と endpoint
+に限定して管理します。consumer は common endpoint を data source で参照し、
+resource-scoped `roles/iap.egressor` binding だけを自身の state で管理します。
+未観測の宛先や `allUsers` は追加しません。
+
+既存 state に残る旧 Runtime の binding は移行完了までの legacy exception で
+あり、新しい Runtime の binding を common state に追加しません。
 
 ## 検証の担当境界
 

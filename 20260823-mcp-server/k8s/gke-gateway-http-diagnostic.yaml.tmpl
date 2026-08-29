@@ -1,0 +1,90 @@
+# Diagnostic-only Gateway API path.
+#
+# The HTTP listener is intentionally unauthenticated and diagnostic-only. The
+# HTTPS listener below reuses the out-of-band test certificate so that the
+# shared common-egress path can be compared with the Gateway API path. That
+# certificate is private/self-managed, so a Gateway-origin TLS failure is
+# expected and must not be reported as an authenticated Agent Runtime E2E PASS.
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: mcp-20260823-gke-gateway
+  namespace: 20260823-mcp-server
+  labels:
+    experiment: 20260823-mcp-server
+    component: gateway-api-diagnostic
+spec:
+  gatewayClassName: gke-l7-rilb
+  addresses:
+    - type: NamedAddress
+      value: mcp-20260823-mcp-server-gke-gateway-vip
+  listeners:
+    - name: http
+      protocol: HTTP
+      port: 80
+      allowedRoutes:
+        namespaces:
+          from: Same
+        kinds:
+          - kind: HTTPRoute
+    - name: https
+      hostname: __GKE_MCP_HOSTNAME__
+      protocol: HTTPS
+      port: 443
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            name: mcp-20260823-gke-tls
+      allowedRoutes:
+        namespaces:
+          from: Same
+        kinds:
+          - kind: HTTPRoute
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: mcp-20260823-gke-route
+  namespace: 20260823-mcp-server
+  labels:
+    experiment: 20260823-mcp-server
+    component: gateway-api-diagnostic
+spec:
+  parentRefs:
+    - name: mcp-20260823-gke-gateway
+      sectionName: http
+    - name: mcp-20260823-gke-gateway
+      sectionName: https
+  hostnames:
+    - __GKE_GATEWAY_DIAGNOSTIC_HOSTNAME__
+    - __GKE_MCP_HOSTNAME__
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /mcp
+      backendRefs:
+        - name: mcp-20260823-gateway-backend
+          port: 80
+---
+apiVersion: networking.gke.io/v1
+kind: HealthCheckPolicy
+metadata:
+  name: mcp-20260823-gke-healthcheck
+  namespace: 20260823-mcp-server
+  labels:
+    experiment: 20260823-mcp-server
+    component: gateway-api-diagnostic
+spec:
+  default:
+    config:
+      type: HTTP
+      httpHealthCheck:
+        portSpecification: USE_FIXED_PORT
+        port: 8080
+        requestPath: /healthz
+  targetRef:
+    group: ""
+    kind: Service
+    name: mcp-20260823-gateway-backend

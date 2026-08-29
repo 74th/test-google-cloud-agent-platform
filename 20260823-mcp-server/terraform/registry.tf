@@ -57,6 +57,39 @@ resource "google_agent_registry_service" "gke" {
   }
 }
 
+# Explicit routing diagnostic only. This HTTP interface is not an authenticated
+# GKE front door and must never be used as the governed HTTPS target.
+resource "google_agent_registry_service" "gke_http_diagnostic" {
+  count    = var.enable_gke ? 1 : 0
+  provider = google-nightly
+
+  project      = var.project_id
+  location     = var.region
+  service_id   = var.gke_http_diagnostic_registry_service_id
+  display_name = "20260823 GKE Gateway API HTTP diagnostic"
+
+  interfaces {
+    url              = "http://${var.gke_gateway_diagnostic_hostname}/mcp"
+    protocol_binding = "JSONRPC"
+  }
+
+  mcp_server_spec {
+    type    = "TOOL_SPEC"
+    content = local.tool_spec_content
+  }
+
+  lifecycle {
+    precondition {
+      condition     = var.gke_gateway_diagnostic_hostname != "" && var.gke_http_diagnostic_auth_audience != ""
+      error_message = "GKE HTTP diagnostic registration requires its reviewed hostname and diagnostic audience."
+    }
+    precondition {
+      condition     = can(regex("^mcp-20260823-", var.gke_http_diagnostic_registry_service_id))
+      error_message = "GKE HTTP diagnostic Registry Service must remain consumer-owned and collision-resistant."
+    }
+  }
+}
+
 data "google_agent_registry_mcp_server" "cloud_run" {
   provider = google
 
@@ -78,6 +111,17 @@ data "google_agent_registry_mcp_server" "gke" {
   depends_on = [google_agent_registry_service.gke]
 }
 
+data "google_agent_registry_mcp_server" "gke_http_diagnostic" {
+  count    = var.enable_gke ? 1 : 0
+  provider = google
+
+  project  = var.project_id
+  location = var.region
+  filter   = "displayName=\"20260823 GKE Gateway API HTTP diagnostic\""
+
+  depends_on = [google_agent_registry_service.gke_http_diagnostic]
+}
+
 resource "google_iap_agent_registry_mcp_server_iam_member" "cloud_run" {
   provider = google-nightly
 
@@ -95,6 +139,17 @@ resource "google_iap_agent_registry_mcp_server_iam_member" "gke" {
   project       = var.project_id
   location      = var.region
   mcp_server_id = data.google_agent_registry_mcp_server.gke[0].mcp_server_id
+  role          = "roles/iap.egressor"
+  member        = "principal://${google_vertex_ai_reasoning_engine.runtime.spec[0].effective_identity}"
+}
+
+resource "google_iap_agent_registry_mcp_server_iam_member" "gke_http_diagnostic" {
+  count    = var.enable_gke ? 1 : 0
+  provider = google-nightly
+
+  project       = var.project_id
+  location      = var.region
+  mcp_server_id = data.google_agent_registry_mcp_server.gke_http_diagnostic[0].mcp_server_id
   role          = "roles/iap.egressor"
   member        = "principal://${google_vertex_ai_reasoning_engine.runtime.spec[0].effective_identity}"
 }

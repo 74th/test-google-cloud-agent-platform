@@ -22,3 +22,11 @@ gke_proxy_only_cidr = "10.244.0.0/23"
 # Required before enable_gke=true. Do not use an anonymous or HTTP fallback.
 gke_mcp_hostname = ""
 gke_auth_audience = ""
+
+# Explicit routing diagnostic only. This does not authorize the endpoint or
+# satisfy the governed GKE HTTPS requirement.
+gke_http_diagnostic_auth_audience = ""
+
+# Diagnostic only: when true, the reviewed GKE hostname temporarily resolves
+# to the Gateway API HTTPS VIP instead of the legacy HTTPS Ingress VIP.
+enable_gateway_api_https_probe = false

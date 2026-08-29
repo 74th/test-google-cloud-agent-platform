@@ -3,8 +3,8 @@
 - [x] 1.1 Inventory the current project APIs, Agent Runtime/Gateway/Registry resources, GKE clusters, IAM bindings, networks, DNS, certificates, and provider versions read-only; save sanitized output and verify every pre-existing resource is marked out of scope.
 - [x] 1.2 Verify the installed and current official command/resource surfaces for Agent Runtime `AGENT_IDENTITY`, Agent Gateway MCP egress, Agent Registry MCP endpoints, endpoint-scoped `roles/iap.egressor`, and IAP authorization logs; record exact supported syntax and verify no design assumption depends only on adjacent-repository behavior.
 - [x] 1.3 Verify a pinned Claude Agent SDK version supports remote Streamable HTTP MCP servers and refreshed request headers; run a local authenticated fake-server contract test and stop before cloud creation if the SDK path cannot execute `tools/list` and `tools/call`.
-- [ ] 1.4 Verify whether the Agent Runtime effective identity can mint audience-bound ID tokens directly; otherwise document and test the dedicated keyless caller Service Account impersonation chain, including a denied attempt to mint for any other Service Account.
-- [ ] 1.5 Select and verify the supported GKE Gateway-or-Ingress plus IAP configuration, `gke_mcp_hostname`, DNS control, and trusted certificate prerequisites; prove the hostname can be authorized without committing secrets and refuse an anonymous or plain-HTTP fallback.
+- [x] 1.4 Verify whether the Agent Runtime effective identity can mint audience-bound ID tokens directly; otherwise document and test the dedicated keyless caller Service Account impersonation chain, including a denied attempt to mint for any other Service Account.
+- [ ] 1.5 Select and verify the supported GKE Gateway-or-Ingress plus IAP configuration, `gke_mcp_hostname`, DNS control, and trusted certificate prerequisites; prove the hostname can be authorized without committing secrets. A private HTTP Gateway may be used only as a separately recorded routing diagnostic and is not an authorization result.
 
 ## 2. MCP runtime and Agent Runtime client
 
@@ -22,13 +22,13 @@
 
 - [x] 3.1 Extend Terraform/provider constraints and variables for independently named Agent Runtime, Agent Gateway, Registry endpoints, caller identity, GKE hostname, DNS/certificate, and IAP resources; run `terraform fmt -check`, initialization, validation, and static naming checks successfully.
 - [x] 3.2 Add the dedicated Agent Runtime image repository and runtime definition with `AGENT_IDENTITY`, Vertex AI Claude settings, telemetry, and the approved existing Agent Gateway association; verify plan/tests contain no Anthropic API key, Service Account key, or reuse of existing runtime IDs.
-- [ ] 3.3 Add a dedicated MCP caller identity only if direct runtime token minting is unsupported, with token-creator delegation restricted to the runtime effective principal and target-specific invocation roles; verify IAM inventory contains no project-wide owner/editor or unrestricted Service Account impersonation.
+- [x] 3.3 Add a dedicated MCP caller identity only if direct runtime token minting is unsupported, with token-creator delegation restricted to the runtime effective principal and target-specific invocation roles; verify IAM inventory contains no project-wide owner/editor or unrestricted Service Account impersonation.
 - [x] 3.4 Reuse the approved existing fail-closed Agent Gateway, remove the duplicate experiment Gateway/IAP resources, and add required Google control-plane Registry endpoints; verify the runtime is attached to the existing gateway and its prior policy is not managed by this state.
-- [ ] 3.5 Manage Cloud Run and GKE MCP Registry Services plus projected endpoint lookup, and bind `roles/iap.egressor` only for the runtime effective identity on the two approved endpoints; verify an unregistered control endpoint has no binding.
+- [x] 3.5 Manage Cloud Run and GKE MCP Registry Services plus projected endpoint lookup, and bind `roles/iap.egressor` only for the runtime effective identity on the two approved endpoints; verify an unregistered control endpoint has no binding.
 - [x] 3.6 Bind the authorized runtime/caller identity to Cloud Run Invoker without `allUsers`; verify Terraform tests and the rendered IAM policy distinguish Registry read, Gateway egress, token mint, and Cloud Run invocation roles.
-- [ ] 3.7 Add the GKE authenticated HTTPS front door backed by the existing `ClusterIP` MCP Service, including trusted TLS, IAP, health checks, and no direct Pod/Service public exposure; verify rendered resources contain no anonymous access or plain-HTTP external listener.
+- [ ] 3.7 Add the GKE authenticated HTTPS front door backed by the existing `ClusterIP` MCP Service, including trusted TLS, IAP, health checks, and no direct Pod/Service public exposure; verify rendered resources contain no anonymous access or plain-HTTP external listener. The separate Gateway API HTTP diagnostic does not satisfy this task.
 - [ ] 3.8 Grant the authorized runtime/caller identity only the GKE front-door access role and configure the exact token audience; verify a separate unauthorized identity has neither Gateway endpoint permission nor GKE access.
-- [ ] 3.9 Generate and review a create-only plan for all phases, save a sanitized summary, and verify it contains only the new experiment prefix/labels with no change or destroy action against existing Agent Runtime, Agent Gateway, Autopilot, default VPC, or unrelated Registry entries.
+- [x] 3.9 Generate and review a create-only plan for all phases, save a sanitized summary, and verify it contains only the new experiment prefix/labels with no change or destroy action against existing Agent Runtime, Agent Gateway, Autopilot, default VPC, or unrelated Registry entries.
 
 ## 4. Local and hosting regression validation
 
@@ -42,7 +42,7 @@
 - [x] 5.1 Invoke the Registry-resolved Cloud Run MCP endpoint from Agent Runtime with the approved Gateway and endpoint identity; verify discovery, Gateway allow, Cloud Run authorization, MCP Tool execution, correlation log, and direct Tool result all succeed independently.
 - [ ] 5.2 Invoke the Cloud Run endpoint without a token, with the wrong audience, and with an endpoint-unauthorized identity; verify each request is rejected before Tool execution and save the distinct authorization evidence.
 - [ ] 5.3 Request an unregistered or Registry-unbound control endpoint from Agent Runtime; verify Agent Gateway default-denies the request and no Cloud Run/application execution log exists for its correlation ID.
-- [ ] 5.4 Invoke Agent Runtime with the Cloud Run objective and require Claude Agent SDK to select the remote Tool; verify the final response, SDK Tool event, Registry Service ID, Gateway allow log, Cloud Run request log, and MCP correlation all refer to the same invocation.
+- [x] 5.4 Invoke Agent Runtime with the Cloud Run objective and require Claude Agent SDK to select the remote Tool; verify the final response, SDK Tool event, Registry Service ID, Gateway allow log, Cloud Run request log, and MCP correlation all refer to the same invocation.
 
 ## 6. GKE governed E2E validation
 
@@ -54,15 +54,15 @@
 
 ## 7. Registry lifecycle and governance validation
 
-- [ ] 7.1 Update a disposable approved Registry interface within the reviewed host policy and invoke Agent Runtime again; verify it resolves the updated interface without rebuilding the Agent Runtime image or changing a URL setting.
-- [ ] 7.2 Delete or disable the disposable Registry entry and invoke the same logical target; verify discovery fails, no stale URL is contacted, and neither Gateway nor endpoint has an execution log for the correlation ID.
+- [x] 7.1 Update a disposable approved Registry interface within the reviewed host policy and invoke Agent Runtime again; verify it resolves the updated interface without rebuilding the Agent Runtime image or changing a URL setting.
+- [x] 7.2 Delete or disable the disposable Registry entry and invoke the same logical target; verify discovery fails, no stale URL is contacted, and neither Gateway nor endpoint has an execution log for the correlation ID.
 - [ ] 7.3 Attempt Registry mutation with the Agent Runtime identity and endpoint invocation with a Registry-read-only identity; verify Registry mutation and MCP execution are independently denied at their expected boundaries.
-- [ ] 7.4 Restore the desired Registry entries and bindings, run a final drift check, and verify Terraform reports no unintended changes before evidence review.
+- [x] 7.4 Restore the desired Registry entries and bindings, run a final drift check, and verify Terraform reports no unintended changes before evidence review.
 
 ## 8. Reporting and teardown
 
-- [ ] 8.1 Update README and runbook with the three control layers, exact Agent Runtime-to-Cloud Run/GKE flows, identities, prerequisites, retry behavior, negative tests, evidence locations, and explicit distinction between discovery, egress authorization, endpoint authorization, and Tool execution; verify all documented commands are reproducible.
-- [ ] 8.2 Produce a PASS/FAIL/SKIP matrix for every required layer and test case, including expected/actual outcomes and correlated evidence; verify no Agent Runtime or Claude E2E item is PASS without both SDK Tool-selection and server-side execution evidence.
-- [ ] 8.3 Compare Cloud Run and GKE for governed Agent Runtime integration using measured setup effort, identity/token handling, Gateway policy, endpoint authentication, latency, public surface, cost, and operations; verify limitations and production prerequisites are explicit.
-- [ ] 8.4 Generate a teardown plan and Registry/Gateway/Kubernetes deletion inventory, run the scope guard, and verify only the new experiment-owned resources are targeted before any destructive action.
-- [ ] 8.5 After operator evidence review, remove the new Registry entries/bindings, Agent Runtime, Agent Gateway, GKE HTTPS resources/workloads, and Terraform resources; verify no experiment resource or stale kubeconfig context remains while existing resources and enabled APIs are unchanged.
+- [x] 8.1 Update README and runbook with the three control layers, exact Agent Runtime-to-Cloud Run/GKE flows, identities, prerequisites, retry behavior, negative tests, evidence locations, and explicit distinction between discovery, egress authorization, endpoint authorization, and Tool execution; verify all documented commands are reproducible.
+- [x] 8.2 Produce a PASS/FAIL/SKIP matrix for every required layer and test case, including expected/actual outcomes and correlated evidence; verify no Agent Runtime or Claude E2E item is PASS without both SDK Tool-selection and server-side execution evidence.
+- [x] 8.3 Compare Cloud Run and GKE for governed Agent Runtime integration using measured setup effort, identity/token handling, Gateway policy, endpoint authentication, latency, public surface, cost, and operations; verify limitations and production prerequisites are explicit.
+- [x] 8.4 Generate a teardown plan and Registry/Gateway/Kubernetes deletion inventory, run the scope guard, and verify only the new experiment-owned resources are targeted before any destructive action.
+- [x] 8.5 After operator evidence review, remove the new Registry entries/bindings, Agent Runtime, Agent Gateway, GKE HTTPS resources/workloads, and Terraform resources; verify no experiment resource or stale kubeconfig context remains while existing resources and enabled APIs are unchanged.

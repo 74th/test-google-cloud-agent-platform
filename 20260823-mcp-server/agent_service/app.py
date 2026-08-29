@@ -34,7 +34,7 @@ def build_runner() -> ValidationRunner:
     project = os.getenv("REGISTRY_PROJECT", "nnyn-dev")
     location = os.getenv("REGISTRY_LOCATION", "us-central1")
     tool = _tool_spec()
-    targets = {
+    targets: dict[str, TargetConfig] = {
         "cloud-run": TargetConfig(
             name="cloud-run",
             service_id=os.getenv("CLOUD_RUN_REGISTRY_SERVICE_ID", "mcp-20260823-cloud-run"),
@@ -48,6 +48,16 @@ def build_runner() -> ValidationRunner:
             audience=os.getenv("GKE_AUTH_AUDIENCE", ""),
         ),
     }
+    diagnostic_hosts = frozenset(filter(None, os.getenv("GKE_HTTP_DIAGNOSTIC_ALLOWED_HOSTS", "").split(",")))
+    diagnostic_audience = os.getenv("GKE_HTTP_DIAGNOSTIC_AUTH_AUDIENCE", "")
+    if diagnostic_hosts and diagnostic_audience:
+        targets["gke-http-diagnostic"] = TargetConfig(
+            name="gke-http-diagnostic",
+            service_id=os.getenv("GKE_HTTP_DIAGNOSTIC_REGISTRY_SERVICE_ID", "mcp-20260823-gke-http-diagnostic"),
+            allowed_hosts=diagnostic_hosts,
+            audience=diagnostic_audience,
+            allowed_schemes=frozenset({"http"}),
+        )
     missing = [name for name in ("cloud-run",) if not targets[name].allowed_hosts or not targets[name].audience]
     if missing:
         raise RuntimeError(f"missing reviewed target configuration: {','.join(missing)}")
@@ -65,7 +75,7 @@ def _request_parts(request: RuntimeRequest | str | dict[str, Any], expected: str
     payload = normalized.input or {}
     target = payload.get("target")
     message = payload.get("message")
-    if target not in {"cloud-run", "gke"} or not isinstance(message, str) or not message.strip():
+    if target not in {"cloud-run", "gke", "gke-http-diagnostic"} or not isinstance(message, str) or not message.strip():
         raise HTTPException(400, "input.target and non-empty input.message are required")
     if re.search(r"https?://", message, re.IGNORECASE) or payload.get("url") is not None:
         raise HTTPException(400, "endpoint URLs are not accepted")
