@@ -40,10 +40,12 @@ no dependency on any other project or prior experiment.
 
 ## What works
 
-The Gateway-associated Runtime's synchronous contract is not exercised in
-this report (see [Known gap](#known-gap-not-part-of-this-report)), but the
+The Gateway-associated Runtime's synchronous contract also works correctly
+(see [The same Gateway works correctly for ordinary application
+traffic](#the-same-gateway-works-correctly-for-ordinary-application-traffic)
+below). As the control for the `run_query_job` comparison, the
 **identically-configured, non-Gateway Runtime's `run_query_job`** was
-verified end to end on 2026-09-12 as the control:
+verified end to end on 2026-09-12:
 
 1. GCS input object written and downloaded (`gcs_input`: success).
 2. Application container (`job-container`) received `POST /`
@@ -74,18 +76,166 @@ Observed results:
 1. The input object was written by the SDK and is independently readable by
    our own credentials (`gcs_input` preflight succeeds).
 2. In the query-job execution window, `proxy-container` (a platform-internal
-   component; we do not assume it is customer-configurable) logs a Python
-   traceback failing to download that same input object over a plain HTTPS
-   connection to `storage.googleapis.com`:
+   component; we do not assume it is customer-configurable) logs the
+   following complete Python exception chain failing to download that same
+   input object over a plain HTTPS connection to `storage.googleapis.com`.
+   This is the full, unedited traceback reconstructed from Cloud Logging in
+   original write order (sorted by `timestamp`, then `insertId`; individual
+   frame lines arrived as separate log entries), reproduced verbatim so the
+   `proxy-container` owner can act on it directly:
 
    ```
-   requests.exceptions.SSLError: HTTPSConnectionPool(host='storage.googleapis.com', port=443):
-   Max retries exceeded with url: /download/storage/v1/b/dev-74th-20260912-byoc-queryjobs/o/query-jobs%2Fgateway-20260912T051707Z_input.json?alt=media
-   (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1082)')))
+   Traceback (most recent call last):
+     File "/usr/local/lib/python3.14/site-packages/urllib3/connectionpool.py", line 464, in _make_request
+       self._validate_conn(conn)
+       ~~~~~~~~~~~~~~~~~~~^^^^^^
+     File "/usr/local/lib/python3.14/site-packages/urllib3/connectionpool.py", line 1106, in _validate_conn
+       conn.connect()
+       ~~~~~~~~~~~~^^
+     File "/usr/local/lib/python3.14/site-packages/urllib3/connection.py", line 796, in connect
+       sock_and_verified = _ssl_wrap_socket_and_match_hostname(
+           sock=sock,
+       ...<14 lines>...
+           assert_fingerprint=self.assert_fingerprint,
+       )
+     File "/usr/local/lib/python3.14/site-packages/urllib3/connection.py", line 975, in _ssl_wrap_socket_and_match_hostname
+       ssl_sock = ssl_wrap_socket(
+           sock=sock,
+       ...<8 lines>...
+           tls_in_tls=tls_in_tls,
+       )
+     File "/usr/local/lib/python3.14/site-packages/urllib3/util/ssl_.py", line 433, in ssl_wrap_socket
+       ssl_sock = _ssl_wrap_socket_impl(sock, context, tls_in_tls, server_hostname)
+     File "/usr/local/lib/python3.14/site-packages/urllib3/util/ssl_.py", line 477, in _ssl_wrap_socket_impl
+       return ssl_context.wrap_socket(sock, server_hostname=server_hostname)
+              ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     File "/usr/local/lib/python3.14/ssl.py", line 455, in wrap_socket
+       return self.sslsocket_class._create(
+              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+           sock=sock,
+           ^^^^^^^^^^
+       ...<5 lines>...
+           session=session
+           ^^^^^^^^^^^^^^^
+       )
+       ^
+     File "/usr/local/lib/python3.14/ssl.py", line 1076, in _create
+       self.do_handshake()
+       ~~~~~~~~~~~~~~~~~^^
+     File "/usr/local/lib/python3.14/ssl.py", line 1372, in do_handshake
+       self._sslobj.do_handshake()
+       ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+   ssl.SSLEOFError: [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1082)
+   During handling of the above exception, another exception occurred:
+   Traceback (most recent call last):
+     File "/usr/local/lib/python3.14/site-packages/urllib3/connectionpool.py", line 788, in urlopen
+       response = self._make_request(
+           conn,
+       ...<10 lines>...
+           **response_kw,
+       )
+     File "/usr/local/lib/python3.14/site-packages/urllib3/connectionpool.py", line 488, in _make_request
+       raise new_e
+   urllib3.exceptions.SSLError: [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1082)
+   The above exception was the direct cause of the following exception:
+   Traceback (most recent call last):
+     File "/usr/local/lib/python3.14/site-packages/requests/adapters.py", line 696, in send
+       resp = conn.urlopen(
+           method=request.method,
+       ...<9 lines>...
+           chunked=chunked,
+       )
+     File "/usr/local/lib/python3.14/site-packages/urllib3/connectionpool.py", line 842, in urlopen
+       retries = retries.increment(
+           method, url, error=new_e, _pool=self, _stacktrace=sys.exc_info()[2]
+       )
+     File "/usr/local/lib/python3.14/site-packages/urllib3/util/retry.py", line 543, in increment
+       raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='storage.googleapis.com', port=443): Max retries exceeded with url: /download/storage/v1/b/dev-74th-20260912-byoc-queryjobs/o/query-jobs%2Fgateway-20260912T051707Z_input.json?alt=media (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1082)')))
+   During handling of the above exception, another exception occurred:
+   Traceback (most recent call last):
+     File "/usr/local/lib/python3.14/site-packages/google/api_core/retry/retry_unary.py", line 148, in retry_target
+       result = target()
+     File "/usr/local/lib/python3.14/site-packages/google/cloud/storage/_media/requests/download.py", line 253, in retriable_request
+       result = transport.request(method, url, **request_kwargs)
+     File "/usr/local/lib/python3.14/site-packages/google/auth/transport/requests.py", line 629, in request
+       response = super(AuthorizedSession, self).request(
+           method,
+       ...<4 lines>...
+           **kwargs
+       )
+     File "/usr/local/lib/python3.14/site-packages/requests/sessions.py", line 651, in request
+       resp = self.send(prep, **send_kwargs)
+     File "/usr/local/lib/python3.14/site-packages/requests/sessions.py", line 784, in send
+       r = adapter.send(request, **kwargs)
+     File "/usr/local/lib/python3.14/site-packages/requests/adapters.py", line 727, in send
+       raise SSLError(e, request=request)
+   requests.exceptions.SSLError: HTTPSConnectionPool(host='storage.googleapis.com', port=443): Max retries exceeded with url: /download/storage/v1/b/dev-74th-20260912-byoc-queryjobs/o/query-jobs%2Fgateway-20260912T051707Z_input.json?alt=media (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1082)')))
+   The above exception was the direct cause of the following exception:
+   Traceback (most recent call last):
+     File "/app/client.py", line 380, in <module>
+       main()
+       ~~~~^^
+     File "/app/client.py", line 357, in main
+       query_content: str = _download_from_gcs(
+                            ~~~~~~~~~~~~~~~~~~^
+           storage_client, input_gcs_uri, kms_key_name=kms_key_name
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+       )
+       ^
+     File "/app/client.py", line 284, in _download_from_gcs
+       return blob.download_as_text()
+              ~~~~~~~~~~~~~~~~~~~~~^^
+     File "/usr/local/lib/python3.14/site-packages/google/cloud/storage/blob.py", line 1787, in download_as_text
+       data = self.download_as_bytes(
+           client=client,
+       ...<11 lines>...
+           single_shot_download=single_shot_download,
+       )
+     File "/usr/local/lib/python3.14/site-packages/google/cloud/storage/blob.py", line 1552, in download_as_bytes
+       self._prep_and_do_download(
+       ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+           string_buffer,
+           ^^^^^^^^^^^^^^
+       ...<13 lines>...
+           single_shot_download=single_shot_download,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+       )
+       ^
+     File "/usr/local/lib/python3.14/site-packages/google/cloud/storage/blob.py", line 4718, in _prep_and_do_download
+       self._do_download(
+       ~~~~~~~~~~~~~~~~~^
+           transport,
+           ^^^^^^^^^^
+       ...<9 lines>...
+           single_shot_download=single_shot_download,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+       )
+       ^
+     File "/usr/local/lib/python3.14/site-packages/google/cloud/storage/blob.py", line 1094, in _do_download
+       response = download.consume(transport, timeout=timeout)
+     File "/usr/local/lib/python3.14/site-packages/google/cloud/storage/_media/requests/download.py", line 280, in consume
+       return _request_helpers.wait_and_retry(retriable_request, self._retry_strategy)
+              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     File "/usr/local/lib/python3.14/site-packages/google/cloud/storage/_media/requests/_request_helpers.py", line 107, in wait_and_retry
+       return func()
+     File "/usr/local/lib/python3.14/site-packages/google/api_core/retry/retry_unary.py", line 295, in retry_wrapped_func
+       return retry_target(
+           target,
+       ...<3 lines>...
+           on_error=on_error,
+       )
+     File "/usr/local/lib/python3.14/site-packages/google/api_core/retry/retry_unary.py", line 157, in retry_target
+       next_sleep = _retry_error_helper(
+           exc,
+       ...<6 lines>...
+           timeout,
+       )
+     File "/usr/local/lib/python3.14/site-packages/google/api_core/retry/retry_base.py", line 230, in _retry_error_helper
+       raise final_exc from source_exc
+   google.api_core.exceptions.RetryError: Timeout of 120.0s exceeded, last exception: HTTPSConnectionPool(host='storage.googleapis.com', port=443): Max retries exceeded with url: /download/storage/v1/b/dev-74th-20260912-byoc-queryjobs/o/query-jobs%2Fgateway-20260912T051707Z_input.json?alt=media (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1082)')))
    ```
-
-   preceded by `google.api_core.exceptions.RetryError: Timeout of 120.0s
-   exceeded`.
 3. `job-container` (our application) never logs a `POST /` for this attempt
    at all -- confirmed by a Cloud Logging query bounded to the attempt's
    time window and this Runtime's resource ID (see
@@ -140,9 +290,12 @@ certificate private keys.
 - `results/evaluation-case1-no-gateway.json` -- baseline structured evaluation.
 - `results/query-job-gateway.jsonl` -- failing attempt trace (Gateway-associated).
 - `results/evaluation-case3-gateway.json` -- failing attempt structured evaluation.
+- `results/case3-proxy-container-full-traceback.txt` -- the traceback quoted
+  above, as plain text.
 - `results/case3-proxy-container-traceback.json` -- full raw Cloud Logging
-  entries for `proxy-container`/`job-container` during the failing attempt,
-  including the complete Python traceback.
+  entries for `proxy-container`/`job-container` during the failing attempt
+  (timestamps, insertIds, labels), from which the traceback above was
+  reconstructed.
 - `terraform/` -- the complete, minimal Terraform configuration that
   reproduces this environment from an empty project (no external module
   dependencies).
