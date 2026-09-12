@@ -1,0 +1,191 @@
+[
+  {
+    "httpRequest": {
+      "latency": "0.094504s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "7.0.2.3:1025",
+      "requestMethod": "GET",
+      "requestSize": "165",
+      "requestUrl": "https://www.tohoho-web.com/index.htm",
+      "responseSize": "324",
+      "status": 403,
+      "userAgent": "20260912-agent-gateway-byoc-longrunning-webfetch/1.0"
+    },
+    "insertId": "ftm0a4f3qt4bp",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {},
+      "authzPolicyInfo": {
+        "policies": [
+          {
+            "name": "projects/819111046046/locations/us-central1/authzPolicies/byoc20260912-egress-iap-policy",
+            "result": "DENIED"
+          }
+        ],
+        "result": "DENIED"
+      },
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "www.tohoho-web.com",
+        "matchedRules": [
+          {
+            "action": "ALLOWED",
+            "name": "default_denied"
+          }
+        ],
+        "requestWasTlsIntercepted": true,
+        "serverNameIndication": "www.tohoho-web.com"
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "v53wwDHZ8Rn6WnOOFowKM4ZAUP8jCNb/A9d/wQ7WTnY",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      },
+      "tlsSniHostname": "www.tohoho-web.com"
+    },
+    "logName": "projects/dev-74th-20260912/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-09-12T05:47:25.812800812Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "byoc20260912-egress",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "us-central1",
+        "network_name": "projects/a1cae0d927b73ac19p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "854555400134"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "WARNING",
+    "timestamp": "2026-09-12T05:47:17.607886Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.295913s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "7.0.2.3:1027",
+      "requestMethod": "GET",
+      "requestSize": "152",
+      "requestUrl": "https://github.com/74th",
+      "responseSize": "136255",
+      "serverIp": "140.82.114.3:443",
+      "status": 200,
+      "userAgent": "20260912-agent-gateway-byoc-longrunning-webfetch/1.0"
+    },
+    "insertId": "ergsz0e2thk0",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {
+        "agentRegistryResource": "projects/854555400134/locations/us-central1/endpoints/agentregistry-00000000-0000-0000-135a-607f8a89b774"
+      },
+      "authzPolicyInfo": {
+        "policies": [
+          {
+            "name": "projects/819111046046/locations/us-central1/authzPolicies/byoc20260912-egress-iap-policy",
+            "result": "ALLOWED"
+          }
+        ],
+        "result": "ALLOWED"
+      },
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "github.com",
+        "matchedRules": [
+          {
+            "action": "ALLOWED",
+            "name": "default_denied"
+          }
+        ],
+        "requestWasTlsIntercepted": true,
+        "serverNameIndication": "github.com"
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "v53wwDHZ8Rn6WnOOFowKM4ZAUP8jCNb/A9d/wQ7WTnY",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      },
+      "tlsSniHostname": "github.com"
+    },
+    "logName": "projects/dev-74th-20260912/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-09-12T05:47:26.589286983Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "byoc20260912-egress",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "us-central1",
+        "network_name": "projects/a1cae0d927b73ac19p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "854555400134"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-09-12T05:47:17.301096Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.537655s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "7.0.2.3:1024",
+      "requestMethod": "GET",
+      "requestSize": "152",
+      "requestUrl": "https://github.com/74th",
+      "responseSize": "136270",
+      "serverIp": "140.82.114.4:443",
+      "status": 200,
+      "userAgent": "20260912-agent-gateway-byoc-longrunning-webfetch/1.0"
+    },
+    "insertId": "6p9ilaf29sdiw",
+    "jsonPayload": {
+      "@type": "type.googleapis.com/google.cloud.loadbalancing.type.LoadBalancerLogEntry",
+      "agentGatewayInfo": {
+        "agentRegistryResource": "projects/854555400134/locations/us-central1/endpoints/agentregistry-00000000-0000-0000-135a-607f8a89b774"
+      },
+      "authzPolicyInfo": {
+        "policies": [
+          {
+            "name": "projects/819111046046/locations/us-central1/authzPolicies/byoc20260912-egress-iap-policy",
+            "result": "ALLOWED"
+          }
+        ],
+        "result": "ALLOWED"
+      },
+      "enforcedGatewaySecurityPolicy": {
+        "hostname": "github.com",
+        "matchedRules": [
+          {
+            "action": "ALLOWED",
+            "name": "default_denied"
+          }
+        ],
+        "requestWasTlsIntercepted": true,
+        "serverNameIndication": "github.com"
+      },
+      "mtls": {
+        "clientCertChainVerified": "false",
+        "clientCertError": "client_cert_validation_not_performed",
+        "clientCertPresent": "true",
+        "clientCertSha256Fingerprint": "v53wwDHZ8Rn6WnOOFowKM4ZAUP8jCNb/A9d/wQ7WTnY",
+        "clientCertValidEndTime": "1970-01-01T00:00:00Z",
+        "clientCertValidStartTime": "1970-01-01T00:00:00Z"
+      },
+      "tlsSniHostname": "github.com"
+    },
+    "logName": "projects/dev-74th-20260912/logs/networkservices.googleapis.com%2Fgateway_requests",
+    "receiveTimestamp": "2026-09-12T05:47:20.640770843Z",
+    "resource": {
+      "labels": {
+        "gateway_name": "byoc20260912-egress",
+        "gateway_type": "SECURE_WEB_GATEWAY",
+        "location": "us-central1",
+        "network_name": "projects/a1cae0d927b73ac19p-tp/global/networks/uk1-25feb-2-vpc4",
+        "resource_container": "854555400134"
+      },
+      "type": "networkservices.googleapis.com/Gateway"
+    },
+    "severity": "INFO",
+    "timestamp": "2026-09-12T05:47:14.605559Z"
+  }
+]

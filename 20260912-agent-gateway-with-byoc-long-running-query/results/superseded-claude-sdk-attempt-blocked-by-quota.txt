@@ -1,0 +1,13 @@
+エラー: Agent Runtime 呼び出しが HTTP 400 で失敗しました。
+
+Root cause: 429 RESOURCE_EXHAUSTED on
+aiplatform.googleapis.com/global_online_prediction_requests_per_base_model
+for anthropic-claude-haiku-4-5 in project dev-74th-20260912 (see README.md
+"Known gap" section). Confirmed via direct rawPredict call, independent of
+the Agent Gateway / BYOC container code in this repository.
+
+Superseded: the byoc_runtime container was redesigned to fetch URLs
+directly (no LLM) instead of using the Claude Agent SDK, since the
+verification only needs to confirm Agent Gateway allow/deny behavior for
+outbound HTTP(S) requests -- see results/sync-query-gateway.txt and
+results/default-deny-check.txt for the current, successful results.

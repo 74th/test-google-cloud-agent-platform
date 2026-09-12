@@ -1,0 +1,73 @@
+{
+  "attempt_id": "query-job-5e3112b8-a268-4e56-8135-0067e04bab3a",
+  "ended_at": "2026-09-12T05:24:10.445429+00:00",
+  "event": "evaluation",
+  "job_name": "projects/854555400134/locations/us-central1/operations/6033194252077367296",
+  "log_window": {
+    "ended_at": "2026-09-12T05:25:10.447979+00:00",
+    "started_at": "2026-09-12T05:16:09.798485+00:00"
+  },
+  "marker": "query-job-5e3112b8-a268-4e56-8135-0067e04bab3a",
+  "result": "GCS入力取得失敗",
+  "stages": {
+    "gcs_input": {
+      "evidence": [
+        {
+          "container_name": "proxy-container",
+          "severity": "ERROR",
+          "timestamp": "2026-09-12T05:22:32.881938+00:00"
+        },
+        {
+          "container_name": "proxy-container",
+          "severity": "ERROR",
+          "timestamp": "2026-09-12T05:22:32.882795+00:00"
+        },
+        {
+          "container_name": "proxy-container",
+          "severity": "ERROR",
+          "timestamp": "2026-09-12T05:22:32.883886+00:00"
+        },
+        {
+          "container_name": "proxy-container",
+          "severity": "ERROR",
+          "timestamp": "2026-09-12T05:22:32.884641+00:00"
+        },
+        {
+          "container_name": "proxy-container",
+          "severity": "ERROR",
+          "timestamp": "2026-09-12T05:22:32.887392+00:00"
+        }
+      ],
+      "reason": "proxy による GCS 入力取得または配送前処理が失敗",
+      "state": "failure"
+    },
+    "gcs_output": {
+      "evidence": [
+        {
+          "accessible": true,
+          "exists": false,
+          "uri": "gs://dev-74th-20260912-byoc-queryjobs/query-jobs/gateway-20260912T051707Z.json"
+        }
+      ],
+      "reason": "期待する GCS 出力が存在しない",
+      "state": "failure"
+    },
+    "http_delivery": {
+      "reason": "対象時間範囲に POST / の受信ログなし",
+      "state": "failure"
+    },
+    "job_terminal_state": {
+      "evidence": [
+        {
+          "state": "RUNNING"
+        }
+      ],
+      "reason": "監視期限までに成功・失敗終端を確認できない",
+      "state": "unknown"
+    },
+    "processing": {
+      "reason": "対応する処理イベントなし",
+      "state": "unknown"
+    }
+  }
+}

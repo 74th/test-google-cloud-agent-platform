@@ -1,0 +1,3535 @@
+[
+  {
+    "insertId": "6aa4e198000d75120d094f08",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:32.891843888Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "severity": "ERROR",
+    "textPayload": "Traceback (most recent call last):\n  File \"/usr/local/lib/python3.14/site-packages/urllib3/connectionpool.py\", line 464, in _make_request\n    self._validate_conn(conn)\n    ~~~~~~~~~~~~~~~~~~~^^^^^^\n  File \"/usr/local/lib/python3.14/site-packages/urllib3/connectionpool.py\", line 1106, in _validate_conn\n    conn.connect()\n    ~~~~~~~~~~~~^^\n  File \"/usr/local/lib/python3.14/site-packages/urllib3/connection.py\", line 796, in connect\n    sock_and_verified = _ssl_wrap_socket_and_match_hostname(",
+    "timestamp": "2026-09-12T05:22:32.881938Z"
+  },
+  {
+    "insertId": "6aa4e198000d753360ccbffc",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:32.891843888Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "        sock=sock,",
+    "timestamp": "2026-09-12T05:22:32.881971Z"
+  },
+  {
+    "insertId": "6aa4e198000d753fe6ebc296",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:32.891843888Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    ...<14 lines>...",
+    "timestamp": "2026-09-12T05:22:32.881983Z"
+  },
+  {
+    "insertId": "6aa4e198000d75495b743ab6",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:32.891843888Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "        assert_fingerprint=self.assert_fingerprint,",
+    "timestamp": "2026-09-12T05:22:32.881993Z"
+  },
+  {
+    "insertId": "6aa4e198000d7553e2321abe",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:32.891843888Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    )",
+    "timestamp": "2026-09-12T05:22:32.882003Z"
+  },
+  {
+    "insertId": "6aa4e198000d755e89853e0d",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:32.891843888Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "  File \"/usr/local/lib/python3.14/site-packages/urllib3/connection.py\", line 975, in _ssl_wrap_socket_and_match_hostname",
+    "timestamp": "2026-09-12T05:22:32.882014Z"
+  },
+  {
+    "insertId": "6aa4e198000d756894bdea0f",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    ssl_sock = ssl_wrap_socket(",
+    "timestamp": "2026-09-12T05:22:32.882024Z"
+  },
+  {
+    "insertId": "6aa4e198000d75720d03c527",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "        sock=sock,",
+    "timestamp": "2026-09-12T05:22:32.882034Z"
+  },
+  {
+    "insertId": "6aa4e198000d757a1f267809",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    ...<8 lines>...",
+    "timestamp": "2026-09-12T05:22:32.882042Z"
+  },
+  {
+    "insertId": "6aa4e198000d7584d5174a55",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "        tls_in_tls=tls_in_tls,",
+    "timestamp": "2026-09-12T05:22:32.882052Z"
+  },
+  {
+    "insertId": "6aa4e198000d758d4f8656d8",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    )",
+    "timestamp": "2026-09-12T05:22:32.882061Z"
+  },
+  {
+    "insertId": "6aa4e198000d759690f84210",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "  File \"/usr/local/lib/python3.14/site-packages/urllib3/util/ssl_.py\", line 433, in ssl_wrap_socket",
+    "timestamp": "2026-09-12T05:22:32.882070Z"
+  },
+  {
+    "insertId": "6aa4e198000d759f64d80358",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    ssl_sock = _ssl_wrap_socket_impl(sock, context, tls_in_tls, server_hostname)",
+    "timestamp": "2026-09-12T05:22:32.882079Z"
+  },
+  {
+    "insertId": "6aa4e198000d75a90805b1f2",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "  File \"/usr/local/lib/python3.14/site-packages/urllib3/util/ssl_.py\", line 477, in _ssl_wrap_socket_impl",
+    "timestamp": "2026-09-12T05:22:32.882089Z"
+  },
+  {
+    "insertId": "6aa4e198000d75b2cec2e629",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    return ssl_context.wrap_socket(sock, server_hostname=server_hostname)",
+    "timestamp": "2026-09-12T05:22:32.882098Z"
+  },
+  {
+    "insertId": "6aa4e198000d75bb18b95edb",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+    "timestamp": "2026-09-12T05:22:32.882107Z"
+  },
+  {
+    "insertId": "6aa4e198000d75c579b24148",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "  File \"/usr/local/lib/python3.14/ssl.py\", line 455, in wrap_socket",
+    "timestamp": "2026-09-12T05:22:32.882117Z"
+  },
+  {
+    "insertId": "6aa4e198000d75cd13dac82b",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    return self.sslsocket_class._create(",
+    "timestamp": "2026-09-12T05:22:32.882125Z"
+  },
+  {
+    "insertId": "6aa4e198000d75d613a94674",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^",
+    "timestamp": "2026-09-12T05:22:32.882134Z"
+  },
+  {
+    "insertId": "6aa4e198000d75e060767f77",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "        sock=sock,",
+    "timestamp": "2026-09-12T05:22:32.882144Z"
+  },
+  {
+    "insertId": "6aa4e198000d75e97fda872e",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "        ^^^^^^^^^^",
+    "timestamp": "2026-09-12T05:22:32.882153Z"
+  },
+  {
+    "insertId": "6aa4e198000d75f2b3a0940d",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    ...<5 lines>...",
+    "timestamp": "2026-09-12T05:22:32.882162Z"
+  },
+  {
+    "insertId": "6aa4e198000d75fbb13ad569",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "        session=session",
+    "timestamp": "2026-09-12T05:22:32.882171Z"
+  },
+  {
+    "insertId": "6aa4e198000d7605fe38f96e",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "        ^^^^^^^^^^^^^^^",
+    "timestamp": "2026-09-12T05:22:32.882181Z"
+  },
+  {
+    "insertId": "6aa4e198000d760f060bbe9c",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    )",
+    "timestamp": "2026-09-12T05:22:32.882191Z"
+  },
+  {
+    "insertId": "6aa4e198000d7617528ca124",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    ^",
+    "timestamp": "2026-09-12T05:22:32.882199Z"
+  },
+  {
+    "insertId": "6aa4e198000d762162de0d8f",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "  File \"/usr/local/lib/python3.14/ssl.py\", line 1076, in _create",
+    "timestamp": "2026-09-12T05:22:32.882209Z"
+  },
+  {
+    "insertId": "6aa4e198000d762b1df7d852",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    self.do_handshake()",
+    "timestamp": "2026-09-12T05:22:32.882219Z"
+  },
+  {
+    "insertId": "6aa4e198000d76340862ed6f",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    ~~~~~~~~~~~~~~~~~^^",
+    "timestamp": "2026-09-12T05:22:32.882228Z"
+  },
+  {
+    "insertId": "6aa4e198000d763f02769d6a",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "  File \"/usr/local/lib/python3.14/ssl.py\", line 1372, in do_handshake",
+    "timestamp": "2026-09-12T05:22:32.882239Z"
+  },
+  {
+    "insertId": "6aa4e198000d76482db76ebe",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    self._sslobj.do_handshake()",
+    "timestamp": "2026-09-12T05:22:32.882248Z"
+  },
+  {
+    "insertId": "6aa4e198000d765254c9ac49",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    ~~~~~~~~~~~~~~~~~~~~~~~~~^^",
+    "timestamp": "2026-09-12T05:22:32.882258Z"
+  },
+  {
+    "insertId": "6aa4e198000d76666ddb0028",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "ssl.SSLEOFError: [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1082)",
+    "timestamp": "2026-09-12T05:22:32.882278Z"
+  },
+  {
+    "insertId": "6aa4e198000d7674c9307535",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "During handling of the above exception, another exception occurred:",
+    "timestamp": "2026-09-12T05:22:32.882292Z"
+  },
+  {
+    "insertId": "6aa4e198000d786b8966a1cd",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "severity": "ERROR",
+    "textPayload": "Traceback (most recent call last):\n  File \"/usr/local/lib/python3.14/site-packages/urllib3/connectionpool.py\", line 788, in urlopen\n    response = self._make_request(",
+    "timestamp": "2026-09-12T05:22:32.882795Z"
+  },
+  {
+    "insertId": "6aa4e198000d78735eee6afe",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "        conn,",
+    "timestamp": "2026-09-12T05:22:32.882803Z"
+  },
+  {
+    "insertId": "6aa4e198000d787ccf15e595",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    ...<10 lines>...",
+    "timestamp": "2026-09-12T05:22:32.882812Z"
+  },
+  {
+    "insertId": "6aa4e198000d78841016bd96",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "        **response_kw,",
+    "timestamp": "2026-09-12T05:22:32.882820Z"
+  },
+  {
+    "insertId": "6aa4e198000d788dac12c809",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    )",
+    "timestamp": "2026-09-12T05:22:32.882829Z"
+  },
+  {
+    "insertId": "6aa4e198000d789684ee0515",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "  File \"/usr/local/lib/python3.14/site-packages/urllib3/connectionpool.py\", line 488, in _make_request",
+    "timestamp": "2026-09-12T05:22:32.882838Z"
+  },
+  {
+    "insertId": "6aa4e198000d789faf8c8bd4",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    raise new_e",
+    "timestamp": "2026-09-12T05:22:32.882847Z"
+  },
+  {
+    "insertId": "6aa4e198000d78aae2c43b06",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "urllib3.exceptions.SSLError: [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1082)",
+    "timestamp": "2026-09-12T05:22:32.882858Z"
+  },
+  {
+    "insertId": "6aa4e198000d78b55553496c",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "The above exception was the direct cause of the following exception:",
+    "timestamp": "2026-09-12T05:22:32.882869Z"
+  },
+  {
+    "insertId": "6aa4e198000d7cae5975daa1",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "severity": "ERROR",
+    "textPayload": "Traceback (most recent call last):\n  File \"/usr/local/lib/python3.14/site-packages/requests/adapters.py\", line 696, in send\n    resp = conn.urlopen(",
+    "timestamp": "2026-09-12T05:22:32.883886Z"
+  },
+  {
+    "insertId": "6aa4e198000d7cbbdfd90e9e",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "        method=request.method,",
+    "timestamp": "2026-09-12T05:22:32.883899Z"
+  },
+  {
+    "insertId": "6aa4e198000d7cc33a42d00f",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    ...<9 lines>...",
+    "timestamp": "2026-09-12T05:22:32.883907Z"
+  },
+  {
+    "insertId": "6aa4e198000d7ccdcc72830d",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "        chunked=chunked,",
+    "timestamp": "2026-09-12T05:22:32.883917Z"
+  },
+  {
+    "insertId": "6aa4e198000d7cd68b5b26e2",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    )",
+    "timestamp": "2026-09-12T05:22:32.883926Z"
+  },
+  {
+    "insertId": "6aa4e198000d7ce6edcbf8aa",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "  File \"/usr/local/lib/python3.14/site-packages/urllib3/connectionpool.py\", line 842, in urlopen",
+    "timestamp": "2026-09-12T05:22:32.883942Z"
+  },
+  {
+    "insertId": "6aa4e198000d7cf07a4a7c26",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    retries = retries.increment(",
+    "timestamp": "2026-09-12T05:22:32.883952Z"
+  },
+  {
+    "insertId": "6aa4e198000d7cfbddff05e0",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "        method, url, error=new_e, _pool=self, _stacktrace=sys.exc_info()[2]",
+    "timestamp": "2026-09-12T05:22:32.883963Z"
+  },
+  {
+    "insertId": "6aa4e198000d7d04b2b79400",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    )",
+    "timestamp": "2026-09-12T05:22:32.883972Z"
+  },
+  {
+    "insertId": "6aa4e198000d7d0d5f6c38d6",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "  File \"/usr/local/lib/python3.14/site-packages/urllib3/util/retry.py\", line 543, in increment",
+    "timestamp": "2026-09-12T05:22:32.883981Z"
+  },
+  {
+    "insertId": "6aa4e198000d7d24846e9e04",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]",
+    "timestamp": "2026-09-12T05:22:32.884004Z"
+  },
+  {
+    "insertId": "6aa4e198000d7d2d06aad76d",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+    "timestamp": "2026-09-12T05:22:32.884013Z"
+  },
+  {
+    "insertId": "6aa4e198000d7d3d069eb241",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='storage.googleapis.com', port=443): Max retries exceeded with url: /download/storage/v1/b/dev-74th-20260912-byoc-queryjobs/o/query-jobs%2Fgateway-20260912T051707Z_input.json?alt=media (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1082)')))",
+    "timestamp": "2026-09-12T05:22:32.884029Z"
+  },
+  {
+    "insertId": "6aa4e198000d7d48a300fb1a",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "During handling of the above exception, another exception occurred:",
+    "timestamp": "2026-09-12T05:22:32.884040Z"
+  },
+  {
+    "insertId": "6aa4e198000d7fa17fd56877",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "severity": "ERROR",
+    "textPayload": "Traceback (most recent call last):\n  File \"/usr/local/lib/python3.14/site-packages/google/api_core/retry/retry_unary.py\", line 148, in retry_target\n    result = target()\n  File \"/usr/local/lib/python3.14/site-packages/google/cloud/storage/_media/requests/download.py\", line 253, in retriable_request\n    result = transport.request(method, url, **request_kwargs)\n  File \"/usr/local/lib/python3.14/site-packages/google/auth/transport/requests.py\", line 629, in request\n    response = super(AuthorizedSession, self).request(",
+    "timestamp": "2026-09-12T05:22:32.884641Z"
+  },
+  {
+    "insertId": "6aa4e198000d7facf4cf2f32",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "        method,",
+    "timestamp": "2026-09-12T05:22:32.884652Z"
+  },
+  {
+    "insertId": "6aa4e198000d7fb656d39a94",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    ...<4 lines>...",
+    "timestamp": "2026-09-12T05:22:32.884662Z"
+  },
+  {
+    "insertId": "6aa4e198000d7fbf3c8a6418",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "        **kwargs",
+    "timestamp": "2026-09-12T05:22:32.884671Z"
+  },
+  {
+    "insertId": "6aa4e198000d7fc8f8734777",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    )",
+    "timestamp": "2026-09-12T05:22:32.884680Z"
+  },
+  {
+    "insertId": "6aa4e198000d7fd31b38c471",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "  File \"/usr/local/lib/python3.14/site-packages/requests/sessions.py\", line 651, in request",
+    "timestamp": "2026-09-12T05:22:32.884691Z"
+  },
+  {
+    "insertId": "6aa4e198000d7fdca9536663",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    resp = self.send(prep, **send_kwargs)",
+    "timestamp": "2026-09-12T05:22:32.884700Z"
+  },
+  {
+    "insertId": "6aa4e198000d7ff1812f90ff",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "  File \"/usr/local/lib/python3.14/site-packages/requests/sessions.py\", line 784, in send",
+    "timestamp": "2026-09-12T05:22:32.884721Z"
+  },
+  {
+    "insertId": "6aa4e198000d7ffcb9239e4f",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    r = adapter.send(request, **kwargs)",
+    "timestamp": "2026-09-12T05:22:32.884732Z"
+  },
+  {
+    "insertId": "6aa4e198000d8005fc79f13f",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "  File \"/usr/local/lib/python3.14/site-packages/requests/adapters.py\", line 727, in send",
+    "timestamp": "2026-09-12T05:22:32.884741Z"
+  },
+  {
+    "insertId": "6aa4e198000d8016c6c8cfbe",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    raise SSLError(e, request=request)",
+    "timestamp": "2026-09-12T05:22:32.884758Z"
+  },
+  {
+    "insertId": "6aa4e198000d8025f8762466",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "requests.exceptions.SSLError: HTTPSConnectionPool(host='storage.googleapis.com', port=443): Max retries exceeded with url: /download/storage/v1/b/dev-74th-20260912-byoc-queryjobs/o/query-jobs%2Fgateway-20260912T051707Z_input.json?alt=media (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1082)')))",
+    "timestamp": "2026-09-12T05:22:32.884773Z"
+  },
+  {
+    "insertId": "6aa4e198000d802f8fead521",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "The above exception was the direct cause of the following exception:",
+    "timestamp": "2026-09-12T05:22:32.884783Z"
+  },
+  {
+    "insertId": "6aa4e198000d8a608d84f816",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "severity": "ERROR",
+    "textPayload": "Traceback (most recent call last):\n  File \"/app/client.py\", line 380, in <module>\n    main()\n    ~~~~^^\n  File \"/app/client.py\", line 357, in main\n    query_content: str = _download_from_gcs(\n                         ~~~~~~~~~~~~~~~~~~^",
+    "timestamp": "2026-09-12T05:22:32.887392Z"
+  },
+  {
+    "insertId": "6aa4e198000d8a70da0e5c68",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "        storage_client, input_gcs_uri, kms_key_name=kms_key_name",
+    "timestamp": "2026-09-12T05:22:32.887408Z"
+  },
+  {
+    "insertId": "6aa4e198000d8a7d08b0c9df",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+    "timestamp": "2026-09-12T05:22:32.887421Z"
+  },
+  {
+    "insertId": "6aa4e198000d8a87e4ee0781",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    )",
+    "timestamp": "2026-09-12T05:22:32.887431Z"
+  },
+  {
+    "insertId": "6aa4e198000d8a97da3fe8b2",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    ^",
+    "timestamp": "2026-09-12T05:22:32.887447Z"
+  },
+  {
+    "insertId": "6aa4e198000d8aa2ac9f7be6",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "  File \"/app/client.py\", line 284, in _download_from_gcs",
+    "timestamp": "2026-09-12T05:22:32.887458Z"
+  },
+  {
+    "insertId": "6aa4e198000d8aac3f33fd48",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    return blob.download_as_text()",
+    "timestamp": "2026-09-12T05:22:32.887468Z"
+  },
+  {
+    "insertId": "6aa4e198000d8abfc4182ef6",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "           ~~~~~~~~~~~~~~~~~~~~~^^",
+    "timestamp": "2026-09-12T05:22:32.887487Z"
+  },
+  {
+    "insertId": "6aa4e198000d8aca69e243ef",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "  File \"/usr/local/lib/python3.14/site-packages/google/cloud/storage/blob.py\", line 1787, in download_as_text",
+    "timestamp": "2026-09-12T05:22:32.887498Z"
+  },
+  {
+    "insertId": "6aa4e198000d8ad483d9701f",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    data = self.download_as_bytes(",
+    "timestamp": "2026-09-12T05:22:32.887508Z"
+  },
+  {
+    "insertId": "6aa4e198000d8ade5548f879",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "        client=client,",
+    "timestamp": "2026-09-12T05:22:32.887518Z"
+  },
+  {
+    "insertId": "6aa4e198000d8ae7bde78c7f",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    ...<11 lines>...",
+    "timestamp": "2026-09-12T05:22:32.887527Z"
+  },
+  {
+    "insertId": "6aa4e198000d8af1ea6b40a7",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "        single_shot_download=single_shot_download,",
+    "timestamp": "2026-09-12T05:22:32.887537Z"
+  },
+  {
+    "insertId": "6aa4e198000d8afb9236e3f4",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    )",
+    "timestamp": "2026-09-12T05:22:32.887547Z"
+  },
+  {
+    "insertId": "6aa4e198000d8b057d02b152",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "  File \"/usr/local/lib/python3.14/site-packages/google/cloud/storage/blob.py\", line 1552, in download_as_bytes",
+    "timestamp": "2026-09-12T05:22:32.887557Z"
+  },
+  {
+    "insertId": "6aa4e198000d8b0e82b6039a",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    self._prep_and_do_download(",
+    "timestamp": "2026-09-12T05:22:32.887566Z"
+  },
+  {
+    "insertId": "6aa4e198000d8b1822284999",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    ~~~~~~~~~~~~~~~~~~~~~~~~~~^",
+    "timestamp": "2026-09-12T05:22:32.887576Z"
+  },
+  {
+    "insertId": "6aa4e198000d8b2317e167ab",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "        string_buffer,",
+    "timestamp": "2026-09-12T05:22:32.887587Z"
+  },
+  {
+    "insertId": "6aa4e198000d8b2c3d2b9b89",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "        ^^^^^^^^^^^^^^",
+    "timestamp": "2026-09-12T05:22:32.887596Z"
+  },
+  {
+    "insertId": "6aa4e198000d8b356dc7da6d",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    ...<13 lines>...",
+    "timestamp": "2026-09-12T05:22:32.887605Z"
+  },
+  {
+    "insertId": "6aa4e198000d8b3fd9778c20",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "        single_shot_download=single_shot_download,",
+    "timestamp": "2026-09-12T05:22:32.887615Z"
+  },
+  {
+    "insertId": "6aa4e198000d8b497e05b16d",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+    "timestamp": "2026-09-12T05:22:32.887625Z"
+  },
+  {
+    "insertId": "6aa4e198000d8b543523ed0c",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    )",
+    "timestamp": "2026-09-12T05:22:32.887636Z"
+  },
+  {
+    "insertId": "6aa4e198000d8b5df210e2b1",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    ^",
+    "timestamp": "2026-09-12T05:22:32.887645Z"
+  },
+  {
+    "insertId": "6aa4e198000d8b684196be22",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "  File \"/usr/local/lib/python3.14/site-packages/google/cloud/storage/blob.py\", line 4718, in _prep_and_do_download",
+    "timestamp": "2026-09-12T05:22:32.887656Z"
+  },
+  {
+    "insertId": "6aa4e198000d8b72ec4d2e18",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    self._do_download(",
+    "timestamp": "2026-09-12T05:22:32.887666Z"
+  },
+  {
+    "insertId": "6aa4e198000d8b7d988abbcf",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    ~~~~~~~~~~~~~~~~~^",
+    "timestamp": "2026-09-12T05:22:32.887677Z"
+  },
+  {
+    "insertId": "6aa4e198000d8b86645712b0",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "        transport,",
+    "timestamp": "2026-09-12T05:22:32.887686Z"
+  },
+  {
+    "insertId": "6aa4e198000d8b901349549b",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "        ^^^^^^^^^^",
+    "timestamp": "2026-09-12T05:22:32.887696Z"
+  },
+  {
+    "insertId": "6aa4e198000d8b99ff6da8b5",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    ...<9 lines>...",
+    "timestamp": "2026-09-12T05:22:32.887705Z"
+  },
+  {
+    "insertId": "6aa4e198000d8ba6c7323570",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "        single_shot_download=single_shot_download,",
+    "timestamp": "2026-09-12T05:22:32.887718Z"
+  },
+  {
+    "insertId": "6aa4e198000d8bb0024b7b66",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+    "timestamp": "2026-09-12T05:22:32.887728Z"
+  },
+  {
+    "insertId": "6aa4e198000d8bbbb9ee9545",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    )",
+    "timestamp": "2026-09-12T05:22:32.887739Z"
+  },
+  {
+    "insertId": "6aa4e198000d8bc57b0f920d",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    ^",
+    "timestamp": "2026-09-12T05:22:32.887749Z"
+  },
+  {
+    "insertId": "6aa4e198000d8bd0a124872b",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "  File \"/usr/local/lib/python3.14/site-packages/google/cloud/storage/blob.py\", line 1094, in _do_download",
+    "timestamp": "2026-09-12T05:22:32.887760Z"
+  },
+  {
+    "insertId": "6aa4e198000d8bda7050c9a1",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    response = download.consume(transport, timeout=timeout)",
+    "timestamp": "2026-09-12T05:22:32.887770Z"
+  },
+  {
+    "insertId": "6aa4e198000d8be4d3874304",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "  File \"/usr/local/lib/python3.14/site-packages/google/cloud/storage/_media/requests/download.py\", line 280, in consume",
+    "timestamp": "2026-09-12T05:22:32.887780Z"
+  },
+  {
+    "insertId": "6aa4e198000d8bef51fb10a2",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    return _request_helpers.wait_and_retry(retriable_request, self._retry_strategy)",
+    "timestamp": "2026-09-12T05:22:32.887791Z"
+  },
+  {
+    "insertId": "6aa4e198000d8bf9b73691f9",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+    "timestamp": "2026-09-12T05:22:32.887801Z"
+  },
+  {
+    "insertId": "6aa4e198000d8c04282de6f8",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "  File \"/usr/local/lib/python3.14/site-packages/google/cloud/storage/_media/requests/_request_helpers.py\", line 107, in wait_and_retry",
+    "timestamp": "2026-09-12T05:22:32.887812Z"
+  },
+  {
+    "insertId": "6aa4e198000d8c0e26ea8eba",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    return func()",
+    "timestamp": "2026-09-12T05:22:32.887822Z"
+  },
+  {
+    "insertId": "6aa4e198000d8c48b7cf83a8",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "  File \"/usr/local/lib/python3.14/site-packages/google/api_core/retry/retry_unary.py\", line 295, in retry_wrapped_func",
+    "timestamp": "2026-09-12T05:22:32.887880Z"
+  },
+  {
+    "insertId": "6aa4e198000d8c528f5aeec7",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    return retry_target(",
+    "timestamp": "2026-09-12T05:22:32.887890Z"
+  },
+  {
+    "insertId": "6aa4e198000d8c5c89a292ff",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "        target,",
+    "timestamp": "2026-09-12T05:22:32.887900Z"
+  },
+  {
+    "insertId": "6aa4e198000d8c663145c7f5",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    ...<3 lines>...",
+    "timestamp": "2026-09-12T05:22:32.887910Z"
+  },
+  {
+    "insertId": "6aa4e198000d8c6fef48cc19",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "        on_error=on_error,",
+    "timestamp": "2026-09-12T05:22:32.887919Z"
+  },
+  {
+    "insertId": "6aa4e198000d8c7a24d62d87",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    )",
+    "timestamp": "2026-09-12T05:22:32.887930Z"
+  },
+  {
+    "insertId": "6aa4e198000d8c83b915607b",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "  File \"/usr/local/lib/python3.14/site-packages/google/api_core/retry/retry_unary.py\", line 157, in retry_target",
+    "timestamp": "2026-09-12T05:22:32.887939Z"
+  },
+  {
+    "insertId": "6aa4e198000d8c8e817a6b1e",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    next_sleep = _retry_error_helper(",
+    "timestamp": "2026-09-12T05:22:32.887950Z"
+  },
+  {
+    "insertId": "6aa4e198000d8c9b552976b8",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "        exc,",
+    "timestamp": "2026-09-12T05:22:32.887963Z"
+  },
+  {
+    "insertId": "6aa4e198000d8ca4db8dc0de",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    ...<6 lines>...",
+    "timestamp": "2026-09-12T05:22:32.887972Z"
+  },
+  {
+    "insertId": "6aa4e198000d8caeae53aa7d",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "        timeout,",
+    "timestamp": "2026-09-12T05:22:32.887982Z"
+  },
+  {
+    "insertId": "6aa4e198000d8cb7c6685418",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    )",
+    "timestamp": "2026-09-12T05:22:32.887991Z"
+  },
+  {
+    "insertId": "6aa4e198000d8cc1bee18b0b",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "  File \"/usr/local/lib/python3.14/site-packages/google/api_core/retry/retry_base.py\", line 230, in _retry_error_helper",
+    "timestamp": "2026-09-12T05:22:32.888001Z"
+  },
+  {
+    "insertId": "6aa4e198000d8ccb64d37c54",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "    raise final_exc from source_exc",
+    "timestamp": "2026-09-12T05:22:32.888011Z"
+  },
+  {
+    "insertId": "6aa4e1990000b8515ff227f0",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T05:22:33.227939154Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "google.api_core.exceptions.RetryError: Timeout of 120.0s exceeded, last exception: HTTPSConnectionPool(host='storage.googleapis.com', port=443): Max retries exceeded with url: /download/storage/v1/b/dev-74th-20260912-byoc-queryjobs/o/query-jobs%2Fgateway-20260912T051707Z_input.json?alt=media (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1082)')))",
+    "timestamp": "2026-09-12T05:22:33.047185Z"
+  }
+]

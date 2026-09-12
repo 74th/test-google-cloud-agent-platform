@@ -1,0 +1,86 @@
+{
+  "attempt_id": "query-job-5c77278f-c9fb-499f-9b7e-feb2abb16d4a",
+  "ended_at": "2026-09-12T05:15:48.793672+00:00",
+  "event": "evaluation",
+  "job_name": "projects/854555400134/locations/us-central1/operations/5351346409763241984",
+  "log_window": {
+    "ended_at": "2026-09-12T05:16:48.793806+00:00",
+    "started_at": "2026-09-12T05:11:48.396105+00:00"
+  },
+  "marker": "query-job-5c77278f-c9fb-499f-9b7e-feb2abb16d4a",
+  "result": "判定不能",
+  "stages": {
+    "gcs_input": {
+      "evidence": [
+        {
+          "accessible": true,
+          "content_type": "text/plain",
+          "exists": true,
+          "size": 97,
+          "updated": "2026-09-12T05:12:54.040000+00:00",
+          "uri": "gs://dev-74th-20260912-byoc-queryjobs/query-jobs/no-gateway-20260912T051246Z_input.json"
+        }
+      ],
+      "state": "success"
+    },
+    "gcs_output": {
+      "evidence": [
+        {
+          "accessible": true,
+          "content_type": "application/x-ndjson",
+          "exists": true,
+          "size": 15,
+          "updated": "2026-09-12T05:16:37.576000+00:00",
+          "uri": "gs://dev-74th-20260912-byoc-queryjobs/query-jobs/no-gateway-20260912T051246Z.json"
+        }
+      ],
+      "state": "success"
+    },
+    "http_delivery": {
+      "evidence": [
+        {
+          "container_name": "job-container",
+          "event": "http_received",
+          "method": "POST",
+          "path": "/",
+          "request_id": "b1ae1baf-4e24-4f67-8796-2e2f120a6a4c",
+          "severity": "INFO",
+          "timestamp": "2026-09-12T05:13:59.624467+00:00"
+        },
+        {
+          "container_name": "job-container",
+          "event": "http_received",
+          "method": "POST",
+          "path": "/",
+          "request_id": "7f8ef8fa-bbb9-4883-aac3-38dc83f56e62",
+          "severity": "INFO",
+          "timestamp": "2026-09-12T05:16:27.491074+00:00"
+        }
+      ],
+      "state": "success"
+    },
+    "job_terminal_state": {
+      "evidence": [
+        {
+          "state": "RUNNING"
+        }
+      ],
+      "reason": "監視期限までに成功・失敗終端を確認できない",
+      "state": "unknown"
+    },
+    "processing": {
+      "evidence": [
+        {
+          "class_method": "query_job",
+          "container_name": "job-container",
+          "event": "query_completed",
+          "request_id": "7f8ef8fa-bbb9-4883-aac3-38dc83f56e62",
+          "severity": "INFO",
+          "timestamp": "2026-09-12T05:16:37.494034+00:00",
+          "verification_id": "query-job-5c77278f-c9fb-499f-9b7e-feb2abb16d4a"
+        }
+      ],
+      "state": "success"
+    }
+  }
+}

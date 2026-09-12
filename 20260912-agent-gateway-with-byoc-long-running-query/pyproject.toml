@@ -1,0 +1,33 @@
+[project]
+name = "20260912-agent-gateway-with-byoc-long-running-query"
+version = "0.1.0"
+description = "Minimal reproduction: Agent Gateway (AGENT_TO_ANYWHERE) + BYOC long-running query job"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi==0.115.14",
+    "uvicorn[standard]==0.35.0",
+]
+
+[build-system]
+requires = ["setuptools==80.9.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["byoc_runtime*", "scripts*"]
+
+[project.optional-dependencies]
+deploy = [
+    "google-auth==2.47.0",
+    "google-cloud-aiplatform==1.163.0",
+    "google-cloud-logging==3.11.4",
+    "google-cloud-storage==2.19.0",
+]
+test = ["httpx==0.28.1", "pytest==8.4.1", "pytest-asyncio==1.1.0"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+
+[tool.uv]
+package = true
