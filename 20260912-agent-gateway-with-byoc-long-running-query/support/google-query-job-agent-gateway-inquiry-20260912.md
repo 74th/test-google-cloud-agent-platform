@@ -241,12 +241,31 @@ Observed results:
    time window and this Runtime's resource ID (see
    `scripts/query_job.py::collect_log_evidence`).
 4. No GCS output object was ever written.
-5. The job operation remained `RUNNING` through our observation window
-   (7 minutes); we did not force-cancel it.
+5. The job operation had not reached a terminal state within our 7-minute
+   monitoring window. A later `GET` on the operation confirms it eventually
+   terminated in failure:
+
+   ```json
+   {
+     "name": "projects/854555400134/locations/us-central1/operations/6033194252077367296",
+     "done": true,
+     "error": {
+       "code": 13,
+       "message": "Task reasoning-engine-246973951098486784-job-msm2h-task0 failed with exit code: 1 and message: The container exited with an error."
+     }
+   }
+   ```
+
+   This exactly matches the exit-code-13 failure symptom recorded in the
+   2026-08-29 report against `nnyn-dev`. The baseline (no-Gateway) job's
+   operation, fetched the same way, terminated successfully with
+   `outputGcsUri` set.
 
 Full raw log entries (including the complete traceback) are attached as
 `results/case3-proxy-container-traceback.json`; the structured evaluation is
-`results/evaluation-case3-gateway.json`.
+`results/evaluation-case3-gateway.json`; the operation terminal states above
+are `results/additional-verification-20260912/operation-gateway-6033194252077367296.json`
+and `results/additional-verification-20260912/operation-no-gateway-5351346409763241984.json`.
 
 ### Relationship to the 2026-08-29 report
 
@@ -267,13 +286,31 @@ interception/inspection this Gateway association introduces on the
 query-job's own GCS delivery path fails in more than one way, rather than
 hitting one fixed, deterministic error.
 
+### GCS destination authorization does not explain the failure
+
+We tested whether the failure is simply that `storage.googleapis.com` /
+`storage.mtls.googleapis.com` were never allow-listed as Agent Registry
+Services: we registered both and granted the Gateway-associated Runtime's
+identity `roles/iap.egressor` on both endpoints, then repeated the
+`run_query_job` attempt. **The failure was identical, and Agent Gateway's
+own access log recorded zero entries for this Gateway (any hostname) during
+either the before- or after-change attempt** -- in contrast to our ordinary
+`query`/WebFetch traffic in the same project, which the Gateway does log
+with an explicit `authzPolicyInfo.result`. We could not find any IAP or
+Gateway log evidence that the query-job's connection was ever evaluated by
+this Gateway's policy at all. Full detail:
+`support/additional-verification-report-20260912.md`.
+
 ## Questions for Google
 
 1. Is Agent Engine BYOC `run_query_job` supported at all when the Runtime
    has an `AGENT_TO_ANYWHERE` Agent Gateway association?
 2. Does the query-job Cloud Storage input/output path execute through the
    Agent Gateway, including the component that appears in our logs as
-   `proxy-container`?
+   `proxy-container`? If so, why does allow-listing the destination in
+   Agent Registry (with a matching IAP grant) produce no Gateway/IAP access
+   log entry at all for this traffic, unlike ordinary application egress
+   from the same Runtime?
 3. If Gateway TLS inspection applies to this Google-managed, platform-internal
    path, what is the supported way for that platform component to trust or
    bypass the Gateway's certificate handling for its own GCS calls?
@@ -299,6 +336,10 @@ certificate private keys.
 - `terraform/` -- the complete, minimal Terraform configuration that
   reproduces this environment from an empty project (no external module
   dependencies).
+- `support/additional-verification-report-20260912.md` and
+  `results/additional-verification-20260912/` -- the GCS destination
+  authorization test described above, including the empty Gateway-log
+  query result and the operation terminal states.
 
 ## The same Gateway works correctly for ordinary application traffic
 

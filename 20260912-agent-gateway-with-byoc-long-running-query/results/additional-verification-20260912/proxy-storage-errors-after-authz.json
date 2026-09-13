@@ -1,0 +1,422 @@
+[
+  {
+    "insertId": "6aa4f4d40001510d0808ae5c",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T06:44:36.318068207Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "google.api_core.exceptions.RetryError: Timeout of 120.0s exceeded, last exception: HTTPSConnectionPool(host='storage.googleapis.com', port=443): Max retries exceeded with url: /download/storage/v1/b/dev-74th-20260912-byoc-queryjobs/o/query-jobs%2Fgateway-before-authz-20260912T062410Z_input.json?alt=media (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1082)')))",
+    "timestamp": "2026-09-12T06:44:36.086285Z"
+  },
+  {
+    "insertId": "6aa4f4d3000ed6efeb1a71ba",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T06:44:36.318068207Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "requests.exceptions.SSLError: HTTPSConnectionPool(host='storage.googleapis.com', port=443): Max retries exceeded with url: /download/storage/v1/b/dev-74th-20260912-byoc-queryjobs/o/query-jobs%2Fgateway-before-authz-20260912T062410Z_input.json?alt=media (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1082)')))",
+    "timestamp": "2026-09-12T06:44:35.972527Z"
+  },
+  {
+    "insertId": "6aa4f4d3000ed43fd4313291",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T06:44:36.318068207Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='storage.googleapis.com', port=443): Max retries exceeded with url: /download/storage/v1/b/dev-74th-20260912-byoc-queryjobs/o/query-jobs%2Fgateway-before-authz-20260912T062410Z_input.json?alt=media (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1082)')))",
+    "timestamp": "2026-09-12T06:44:35.971839Z"
+  },
+  {
+    "insertId": "6aa4f4790003bd275004eddc",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T06:43:05.472800596Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "google.api_core.exceptions.RetryError: Timeout of 120.0s exceeded, last exception: HTTPSConnectionPool(host='storage.googleapis.com', port=443): Max retries exceeded with url: /download/storage/v1/b/dev-74th-20260912-byoc-queryjobs/o/query-jobs%2Fgateway-after-authz-20260912T063608Z_input.json?alt=media (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1082)')))",
+    "timestamp": "2026-09-12T06:43:05.245031Z"
+  },
+  {
+    "insertId": "6aa4f4790001f8d180afa802",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T06:43:05.472800596Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "requests.exceptions.SSLError: HTTPSConnectionPool(host='storage.googleapis.com', port=443): Max retries exceeded with url: /download/storage/v1/b/dev-74th-20260912-byoc-queryjobs/o/query-jobs%2Fgateway-after-authz-20260912T063608Z_input.json?alt=media (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1082)')))",
+    "timestamp": "2026-09-12T06:43:05.129233Z"
+  },
+  {
+    "insertId": "6aa4f4790001f6f43a2e5d03",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T06:43:05.472800596Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='storage.googleapis.com', port=443): Max retries exceeded with url: /download/storage/v1/b/dev-74th-20260912-byoc-queryjobs/o/query-jobs%2Fgateway-after-authz-20260912T063608Z_input.json?alt=media (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1082)')))",
+    "timestamp": "2026-09-12T06:43:05.128756Z"
+  },
+  {
+    "insertId": "6aa4f3bc000073f6646dad93",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T06:39:56.258922385Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "google.api_core.exceptions.RetryError: Timeout of 120.0s exceeded, last exception: HTTPSConnectionPool(host='storage.googleapis.com', port=443): Max retries exceeded with url: /download/storage/v1/b/dev-74th-20260912-byoc-queryjobs/o/query-jobs%2Fgateway-before-authz-20260912T062410Z_input.json?alt=media (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1082)')))",
+    "timestamp": "2026-09-12T06:39:56.029686Z"
+  },
+  {
+    "insertId": "6aa4f3bb000df63275da8aa5",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T06:39:56.258922385Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "requests.exceptions.SSLError: HTTPSConnectionPool(host='storage.googleapis.com', port=443): Max retries exceeded with url: /download/storage/v1/b/dev-74th-20260912-byoc-queryjobs/o/query-jobs%2Fgateway-before-authz-20260912T062410Z_input.json?alt=media (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1082)')))",
+    "timestamp": "2026-09-12T06:39:55.914994Z"
+  },
+  {
+    "insertId": "6aa4f3bb000df480eb7f806c",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T06:39:56.258922385Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='storage.googleapis.com', port=443): Max retries exceeded with url: /download/storage/v1/b/dev-74th-20260912-byoc-queryjobs/o/query-jobs%2Fgateway-before-authz-20260912T062410Z_input.json?alt=media (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1082)')))",
+    "timestamp": "2026-09-12T06:39:55.914560Z"
+  },
+  {
+    "insertId": "6aa4f2410008d238a2363bf4",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T06:33:37.789470353Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "google.api_core.exceptions.RetryError: Timeout of 120.0s exceeded, last exception: HTTPSConnectionPool(host='storage.googleapis.com', port=443): Max retries exceeded with url: /download/storage/v1/b/dev-74th-20260912-byoc-queryjobs/o/query-jobs%2Fgateway-before-authz-20260912T062410Z_input.json?alt=media (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1082)')))",
+    "timestamp": "2026-09-12T06:33:37.578104Z"
+  },
+  {
+    "insertId": "6aa4f2410006d7201e634fcb",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T06:33:37.789470353Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "requests.exceptions.SSLError: HTTPSConnectionPool(host='storage.googleapis.com', port=443): Max retries exceeded with url: /download/storage/v1/b/dev-74th-20260912-byoc-queryjobs/o/query-jobs%2Fgateway-before-authz-20260912T062410Z_input.json?alt=media (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1082)')))",
+    "timestamp": "2026-09-12T06:33:37.448288Z"
+  },
+  {
+    "insertId": "6aa4f2410006d4a0bf8312e3",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T06:33:37.789470353Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='storage.googleapis.com', port=443): Max retries exceeded with url: /download/storage/v1/b/dev-74th-20260912-byoc-queryjobs/o/query-jobs%2Fgateway-before-authz-20260912T062410Z_input.json?alt=media (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1082)')))",
+    "timestamp": "2026-09-12T06:33:37.447648Z"
+  },
+  {
+    "insertId": "6aa4f11c000b2b9015d71bf7",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T06:28:44.965219962Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "google.api_core.exceptions.RetryError: Timeout of 120.0s exceeded, last exception: HTTPSConnectionPool(host='storage.googleapis.com', port=443): Max retries exceeded with url: /download/storage/v1/b/dev-74th-20260912-byoc-queryjobs/o/query-jobs%2Fgateway-before-authz-20260912T062410Z_input.json?alt=media (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1082)')))",
+    "timestamp": "2026-09-12T06:28:44.732048Z"
+  },
+  {
+    "insertId": "6aa4f11c0009776e28fba2c2",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T06:28:44.965219962Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "requests.exceptions.SSLError: HTTPSConnectionPool(host='storage.googleapis.com', port=443): Max retries exceeded with url: /download/storage/v1/b/dev-74th-20260912-byoc-queryjobs/o/query-jobs%2Fgateway-before-authz-20260912T062410Z_input.json?alt=media (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1082)')))",
+    "timestamp": "2026-09-12T06:28:44.620398Z"
+  },
+  {
+    "insertId": "6aa4f11c0009755e023e316c",
+    "labels": {
+      "aiplatform-resource-category": "reasoning_engine",
+      "container_name": "proxy-container",
+      "gcpn_a_outer_resource_0": "_-_-aiplatform_ngoogleapis_ncom_-projects_-854555400134_-locati",
+      "gcpn_a_outer_resource_1": "ons_-us--central1_-reasoning-engines_-246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_0": "projects_--_--_854555400134_--_--_locations_--_--_us--central1_",
+      "gcpn_c_ucaip_full_resource_name_1": "--_--_reasoning-engines_--_--_246973951098486784",
+      "gcpn_c_ucaip_full_resource_name_2": "",
+      "gcpn_c_ucaip_full_resource_name_3": "",
+      "gcpn_c_ucaip_full_resource_name_4": "",
+      "gcpn_encoding_version": "version_1",
+      "managed-by": "reasoning-engine"
+    },
+    "logName": "projects/dev-74th-20260912/logs/aiplatform.googleapis.com%2Freasoning_engine_stderr",
+    "receiveTimestamp": "2026-09-12T06:28:44.965219962Z",
+    "resource": {
+      "labels": {
+        "location": "us-central1",
+        "reasoning_engine_id": "246973951098486784",
+        "resource_container": "854555400134"
+      },
+      "type": "aiplatform.googleapis.com/ReasoningEngine"
+    },
+    "textPayload": "urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='storage.googleapis.com', port=443): Max retries exceeded with url: /download/storage/v1/b/dev-74th-20260912-byoc-queryjobs/o/query-jobs%2Fgateway-before-authz-20260912T062410Z_input.json?alt=media (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1082)')))",
+    "timestamp": "2026-09-12T06:28:44.619870Z"
+  }
+]

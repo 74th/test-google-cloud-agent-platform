@@ -213,6 +213,23 @@ Test case 1 against the identically-built, identically-configured Runtime
 minus the Gateway association succeeded cleanly, isolating the Gateway
 association as the variable that causes the failure.
 
+A later `GET` on the operation confirms it terminates in failure
+(`error.code=13`, "The container exited with an error"), matching the
+2026-08-29 report's symptom exactly; see
+`results/additional-verification-20260912/operation-gateway-6033194252077367296.json`.
+
+### Additional verification: GCS destination authorization does not fix it
+
+Registering `storage.googleapis.com`/`storage.mtls.googleapis.com` as Agent
+Registry Services and granting the Gateway Runtime's identity
+`roles/iap.egressor` on both made no difference, and produced zero Agent
+Gateway access-log entries for this traffic at all (unlike the
+default-deny demonstration above, which the Gateway does log). Full
+detail, evidence, and the resulting new question for Google:
+`support/additional-verification-report-20260912.md`. The diagnostic
+Registry/IAM changes were reverted afterward; this repo's Terraform is back
+to only allow-listing `https://github.com`.
+
 ## Notes for whoever files the Google Support case
 
 - Nothing in `byoc_runtime` calls a model. `query`/`stream_query` are a

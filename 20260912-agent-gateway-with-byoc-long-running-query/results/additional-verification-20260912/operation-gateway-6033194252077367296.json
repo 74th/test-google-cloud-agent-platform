@@ -1,0 +1,8 @@
+{
+  "name": "projects/854555400134/locations/us-central1/operations/6033194252077367296",
+  "done": true,
+  "error": {
+    "code": 13,
+    "message": "Task reasoning-engine-246973951098486784-job-msm2h-task0 failed with exit code: 1 and message: The container exited with an error."
+  }
+}

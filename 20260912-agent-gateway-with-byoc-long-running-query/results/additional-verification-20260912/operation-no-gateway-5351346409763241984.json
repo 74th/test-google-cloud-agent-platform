@@ -1,0 +1,8 @@
+{
+  "name": "projects/854555400134/locations/us-central1/operations/5351346409763241984",
+  "done": true,
+  "response": {
+    "@type": "type.googleapis.com/google.cloud.aiplatform.v1beta1.AsyncQueryReasoningEngineResponse",
+    "outputGcsUri": "gs://dev-74th-20260912-byoc-queryjobs/query-jobs/no-gateway-20260912T051246Z.json"
+  }
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "createTime": "2026-09-12T06:31:38.594636934Z",
+    "displayName": "20260912 diagnostic storage.mtls.googleapis.com allow endpoint",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://storage.mtls.googleapis.com"
+      }
+    ],
+    "name": "projects/dev-74th-20260912/locations/us-central1/services/byoc20260912-storage-mtls",
+    "registryResource": "projects/854555400134/locations/us-central1/endpoints/agentregistry-00000000-0000-0000-9a56-4890ea30670a",
+    "updateTime": "2026-09-12T06:31:39.734343179Z"
+  },
+  {
+    "createTime": "2026-09-12T06:31:38.619812321Z",
+    "displayName": "20260912 diagnostic storage.googleapis.com allow endpoint",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://storage.googleapis.com"
+      }
+    ],
+    "name": "projects/dev-74th-20260912/locations/us-central1/services/byoc20260912-storage-https",
+    "registryResource": "projects/854555400134/locations/us-central1/endpoints/agentregistry-00000000-0000-0000-85d4-620b90beb4f6",
+    "updateTime": "2026-09-12T06:31:40.289008664Z"
+  },
+  {
+    "createTime": "2026-09-12T04:33:20.968075658Z",
+    "displayName": "20260912 repro GitHub allow endpoint",
+    "endpointSpec": {
+      "type": "NO_SPEC"
+    },
+    "interfaces": [
+      {
+        "protocolBinding": "HTTP_JSON",
+        "url": "https://github.com"
+      }
+    ],
+    "name": "projects/dev-74th-20260912/locations/us-central1/services/byoc20260912-github-allow",
+    "registryResource": "projects/854555400134/locations/us-central1/endpoints/agentregistry-00000000-0000-0000-135a-607f8a89b774",
+    "updateTime": "2026-09-12T04:33:21.217564147Z"
+  }
+]
