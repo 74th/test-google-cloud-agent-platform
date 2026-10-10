@@ -2,7 +2,9 @@
 
 SlackBotからClaude Agent SDKを利用する際に、会話セッションごとの作業環境をGKE上で管理するためのPythonライブラリを設計する。Sandboxの作成・再接続・サスペンド・終了と、sandboxd経由のコマンド実行・ファイル操作を提供する。
 
-**このREADMEは実装前の仕様案。掲載するPython API、設定形式、ディレクトリ、テストコマンドは今後実装するもの。クラスタの作成や動作検証はまだ行っていない。** 公式資料・ソース確認日: 2026-10-10。
+**Python packageの主要機能を実装し、専用GKE上でsession manager、sandboxd command / file経路、suspend / resume、tracker復旧、300秒idleによる自動suspend、10秒・60秒保持期限後の削除・新世代作成・通知を検証済み。** 全16シナリオの受け入れが完了したという意味ではなく、7日間の実時間待ちはしていない。環境・実施範囲・制限は[session managerのGKE検証記録](docs/validation/session-manager-gke.md)を参照。設定描画とGKE上のasync lifecycle例は[async利用例](docs/async-usage.md)を参照。公式資料・ソース確認日: 2026-10-10。
+
+`gke-session-sandbox`は`protobuf>=6.31.1,<7`に対応し、`google-cloud-aiplatform`などprotobuf 7を許さない依存との同居を可能にする。sandboxd protocolの生成コードもprotobuf 6対応版を同梱する。実際のsolver確認で`google-cloud-aiplatform 2.4.0`と同じ環境に解決できることを確認した。
 
 ## 1. 提案の要点と前提
 
@@ -21,7 +23,7 @@ SlackBotからClaude Agent SDKを利用する際に、会話セッションご�
 | 消失通知 | 永続イベントとして保持し、呼び出し元が次の会話コンテキストへ反映 |
 | 共有コード | 既存PVCを読み取り専用マウント。Sandbox終了時にも削除しない |
 | ネットワーク | GKEのFQDNNetworkPolicyと通常のNetworkPolicyを併用 |
-| 自動管理 | Botとは別の監視デーモンが60秒ごとにcommand状態を確認し、Kubernetes APIで停止 |
+| 自動管理 | API process内のbackground taskが60秒ごとにcommand状態を確認し、Kubernetes APIで停止 |
 | 作成時パラメータ | 追加envをruntime containerへ挿入。ユーザメールアドレス等を渡せる |
 | Kubernetesメタデータ | session ID、実行数、最後の終了時刻、0件確認時刻等をannotationsへ記録 |
 
@@ -56,10 +58,9 @@ controller / CRD / SDK / sandboxdのバージョンとコンテナimage digest�
 flowchart LR
   B[SlackBot / 将来のAgent adapter] --> M[SandboxManager]
   M --> R[SessionRepository / 永続イベント]
-  W[LifecycleReconciler / 60秒ごとの監視デーモン] --> R
-  W -->|command状態の照会| T[Pod内CommandTracker / 追加実装]
   M --> K[Kubernetes API]
-  W --> K
+  M -. 同じprocessのbackground task .-> R
+  M -. command状態とgateを照会 .-> T[Pod内CommandTracker / 追加実装]
   K --> C[Agent Sandbox controller]
   C --> P[Sandbox Pod: ツール + sandboxd]
   M -->|command要求| T
@@ -73,13 +74,13 @@ flowchart LR
 - `TemplateRenderer`: YAML読込、型付きパラメータ挿入、reserved field検証、digest算出。
 - `KubernetesBackend`: Sandbox / PVC / Service / policyの操作とwatch。Kubernetes固有処理を隔離する。
 - `SandboxdRuntime`: command、stream、stdin、signal、ファイルAPIを共通のPython型へ変換。
-- `CommandTracker`: Pod内で全ユーザcommandの開始・実行・終了を追跡し、実行中一覧と最終終了時刻を照会可能にする追加runtime機能。呼び出し元の接続終了後も状態を管理する。
+- `CommandTracker`: Pod内でcommandの開始・実行・終了を追跡し、ID指定の状態照会と受付gateを提供するruntime機能。呼び出し元の接続終了後も状態を管理する。
 - `SessionRepository`: 状態・世代・command記録・排他・通知をPodとは独立して永続化。
-- `LifecycleReconciler`: 60秒ごとにCommandTrackerと実リソースを照合し、メタデータ更新・アイドル停止・期限削除・途中失敗の回復を行う。Kubernetes APIへのアクセス権限を持つ常駐Deploymentとして運用する。
+- `LifecycleReconciler`: API process内のasync taskとして60秒ごとにRepositoryのcommand ID一覧、CommandTracker、実リソースを照合し、メタデータ更新・アイドル停止・期限削除・途中失敗の回復を行う。process再起動時はRepositoryを読み直して監視を再開する。
 
-初期版のRepositoryは管理用namespace内の**セッションごとのConfigMap**とLeaseで実装する。ConfigMapの`resourceVersion`を使ってCAS更新し、セッション単位のLeaseで変更操作を排他する。Sandbox namespaceとのcross-namespace ownerReferenceは設定しない。ConfigMapには会話本文、コード、認証情報を保存しない。Sandboxのservice accountにはこの管理namespaceへのアクセスを与えない。
+SessionRepositoryは**管理API専用PVC上のSQLite**を正本にする。SessionRecordとsession単位のLeaseをtransactionとversion条件付き更新で保護するため、同時requestの更新競合を検出し、ConfigMapの1 MiB制限にも依存しない。API process / Podの再起動後は同じPVC上のdatabaseからsession一覧と状態を読み直す。会話本文、workspace、認証情報はこのDBに保存しない。
 
-ConfigMapは少数セッションの検証向け。レコードサイズと未ackイベント数に上限を設け、通知未処理のまま上限に達した場合は新規世代作成を止める。大量セッションでは同じRepository interfaceをSQL等へ置換する。クライアントを終了してもSessionRecordとSandboxは残す。
+GKEでは管理API用のReadWriteOnce PVCを`/var/lib/session-sandbox`へmountする。mountが無ければAPIを起動失敗させ、containerの一時領域へ誤保存しない。管理APIはreplicas=1で動かし、同じclaimを複数nodeのPodに同時mountしない。専用StorageClassは`Retain`を使うため、PVC削除後に残ったdiskは内容を確認してから手動削除する。SQLiteのtransaction / file lockは同じdatabaseへ接続するrequest / process間の書込みを保護する。未ack event数は上限を設け、通知未処理のまま上限に達した場合は新規世代作成を止める。クライアントを終了してもSessionRecordとSandboxは残す。
 
 ## 4. セッションと永続データ
 
@@ -112,7 +113,7 @@ ConfigMapは少数セッションの検証向け。レコードサイズと未ac
 
 | Annotation（prefix: `session-sandbox.example.com/`） | 値 / 更新条件 |
 | --- | --- |
-| `tenant-id`, `session-id` | 作成時に渡された文字列。Sandboxと管理用ConfigMapへ保存 |
+| `tenant-id`, `session-id` | 作成時に渡された文字列。Sandboxと管理APIのSQLite Repositoryへ保存 |
 | `last-command-started-at`, `last-command-finished-at` | trackerが観測した実際の開始 / 終了時刻 |
 | `running-command-count` | 状態照会で確認した実行数の文字列。未知を0と書かない |
 | `last-commands-checked-at` | 照会に成功した最新時刻 |
@@ -121,9 +122,9 @@ ConfigMapは少数セッションの検証向け。レコードサイズと未ac
 | `command-state-known`, `runtime-instance-id` | 状態の確定可否とPod / trackerの起動識別子 |
 | `suspended-at`, `expires-at` | サスペンド完了時刻と削除期限 |
 
-これらのannotationsはSandbox本体に保存し、Podが消えても保持する。終了後に必要なsession ID・イベント・最終状態は管理用ConfigMapにも残す。SessionRecordを正本とし、annotationへの反映途中でクラッシュした場合はreconcilerが回復する。タイムスタンプをPod templateへ毎分反映してPod更新を引き起こすことはしない。
+これらのannotationsはSandbox本体に保存し、Podが消えても保持する。終了後に必要なsession ID・イベント・最終状態はSQLite Repositoryにも残す。SessionRecordを正本とし、annotationへの反映途中でクラッシュした場合はreconcilerが回復する。タイムスタンプをPod templateへ毎分反映してPod更新を引き起こすことはしない。
 
-ユーザメールアドレスはenvで渡し、label / annotationへ自動コピーしない。metadataへの書込みは管理client / デーモンだけが行い、実行PodにKubernetes API権限を渡さない。
+ユーザメールアドレスはenvで渡し、label / annotationへ自動コピーしない。metadataへの書込みは管理API processだけが行い、実行PodにKubernetes API権限を渡さない。
 
 ## 5. ライフサイクル
 
@@ -147,9 +148,9 @@ stateDiagram-v2
 
 利用側は`commands.run()` / `commands.start()`を呼ぶだけでよい。`activity()`、`touch()`、heartbeatの実装は要求しない。commandを送ると必要に応じてSandboxを再開し、ライブラリとCommandTrackerが受付・実行・終了を自動記録する。LLM待機、Slackメッセージ、status / health pollはcommand実行として数えない。ファイル転送中は操作との競合を防ぐ短い内部予約を取り、転送終了時刻をcommand終了時刻の代わりにはしない。
 
-監視デーモンは**60秒ごと**に以下を行う。
+API process内の`LifecycleReconciler` taskは**60秒ごと**に以下を行う。
 
-1. 管理対象Sandboxを列挙し、CommandTrackerから実行中commandと最後の終了時刻を取得する。
+1. SessionRepositoryから管理対象sessionと永続command IDを列挙し、各CommandTrackerへID指定で状態を照会する。
 2. 正常取得時に`last_commands_checked_at`と実行数を記録する。実行中commandがある場合は停止しない。stdoutが無い長時間commandも保護する。
 3. 0件なら`last_no_commands_confirmed_at`を今回の確認時刻へ更新する。`idle_since`は最後のcommand終了時刻とし、毎分の確認では後ろへ動かさない。並列commandでは最後の1件が終了した時刻を使う。
 4. `now - idle_since >= 300秒`で、受付中commandと実行中file操作もない場合に停止を試みる。
@@ -157,27 +158,27 @@ stateDiagram-v2
 
 通常は最終終了から300〜360秒後に停止を開始し、Pod終了時間が加わる。作成または再開後、まだcommandを受け付けていない場合はそのReady時刻から5分を数える。再開時に前回の古い終了時刻をそのまま起点にして即停止させない。履歴消失後に実行数0件を確認できた場合は、その確認時刻から新しく5分待つ。
 
-状態照会失敗、trackerの起動世代不一致、未確定のcommand受付がある場合は`command_state_known=false`として停止を保留する。クライアント切断だけで実行数を減らさない。デーモン停止中はidle停止が遅れるが、再起動時にはtrackerとKubernetesメタデータから照合を再開する。
+状態照会失敗、trackerの起動世代不一致、未確定のcommand受付がある場合は`command_state_known=false`として停止を保留する。呼出元のクライアント切断だけで実行数を減らさない。Pod内trackerはsandboxdとの接続を保ち、command追跡を続ける。tracker自体が停止してStart streamが切れた場合はsandboxdが実行中process groupを終了する。tracker再起動後にprocess group不在を確認したcommandはterminalのfinishedとし、exit code / 最終出力が復元できなければ結果不明 / 出力不完全として記録して実行中件数から除く。group状態が分からない場合はunknownとして停止を保留する。
 
 **CommandTrackerは追加実装が必要。** 確認した標準sandboxdのprocess protocolはStart / Execute / stdin / signal / PTYを持つが、実行中command一覧や最後の終了時刻を再照会するRPCは持たない。この部分を既存機能として扱わない。[v1.0.6 process protocol](https://github.com/kubernetes-sigs/agent-sandbox/blob/v1.0.6/packages/sandboxd/spec/process/v1/process.proto)
 
-初期案では同じruntime container内にtrackerを置き、clientはtracker経由でcommandを送り、trackerがsandboxdのStart streamを消費する。buffered runも同じ経路を使って出力を集約する。内部HTTP API（既定TCP 8081）で受付、command状態、stream / stdin / signal、受付gateを提供する。trackerのAPIと永続journalはこのリポジトリで実装するもので、sandboxd標準APIではない。
+session runtime imageではsupervisorとtrackerをsandboxdと同じcontainer内で起動し、trackerはsandboxdのgRPC接続とworkspaceに保存した起動世代をhealth APIで報告する。trackerはcommand IDと要求内容を永続journalへ保存してから受付を返し、同じID・同じ内容の再送を重複受付にまとめ、内容が違う再利用は拒否する。sandboxd Start streamの実行・出力・exit code、状態照会、受付gateまで実装し、stdin / signal / PTY / timeout / cancelを追加している。
 
-command ID、runtime instance ID、process ID、開始 / 終了記録を専用PVCの`/workspace/.session-runtime/`へ保存する。tracker再起動後はjournalと同一Pod内のプロセス状態を照合し、PID再利用を区別する。生存・終了を確定できなければunknownを返し、過去の記録だけで0件と判断しない。trackerとsandboxdが同じPID namespaceで動き、gVisor上で照合可能かをspikeの必須検証項目とする。
+command ID、runtime instance ID、process ID、開始 / 終了記録を専用PVCの`/workspace/.session-runtime/`へ保存する。tracker再起動後はjournalと同一Pod内のプロセス状態を照合し、PID再利用を区別する。sandboxd stream切断でprocess groupが終了し、exit code / 終了eventを保存できなかった場合はterminalのfinished、結果不明 / 出力不完全とする。group不在の確認後は実行中件数から除外し、その再確認時刻をidle起点にする。生死を確定できなければunknownとして停止を保留し、過去の記録だけで0件と判断しない。trackerとsandboxdが同じPID namespaceで動き、gVisor上で照合できることを実測済み。
 
-command受付はセッションLease下でdurableな予約を登録してからtrackerへ送信する。デーモンは未解決予約を停止対象から除外する。tracker内では受付gateと実行数確認を原子的に行い、照会直後のcommand追加と停止の競合を防ぐ。停止開始済みなら新規commandは再開完了まで待ち、同じcommand IDの再受付でも二重実行しない。SDKへの直接command呼出し等、trackerを迂回するユーザcommandはサポート対象外とする。
+command受付はセッションLease下でdurableな予約を登録してからtrackerへ送信する。reconcilerは未解決予約を停止対象から除外する。tracker内では受付gateと実行数確認を原子的に行い、照会直後のcommand追加と停止の競合を防ぐ。停止開始済みなら新規commandは再開完了まで待ち、同じcommand IDの再受付でも二重実行しない。SDKへの直接command呼出し等、trackerを迂回するユーザcommandはサポート対象外とする。
 
 追跡対象は受付したcommandとそのprocess group。shellが子プロセスを残して終了するようなdetached実行は初期版でサポートしない。tracker自身やsandboxd等の常駐プロセスはユーザcommand数に含めない。
 
 ### 実行状態の回復と終了判定
 
-- command状態は`running`、`finished`、`unknown`を区別する。trackerだけの再起動、stream切断、journalとの不一致では、終了を確認できるまで`unknown`とする。実行中と不明のcommandがともに0件になった場合だけidle判定へ進む。
-- Botの再起動・クライアント切断とcommandのキャンセルを区別する。接続が切れただけでは停止要求を出さず、trackerが実行と終了記録を継続する。明示cancel、timeout、出力上限超過は停止要求として扱う。
+- command状態は`running`、`finished`、`unknown`を区別する。呼出元の切断ではtrackerがstreamと出力保存を継続する。tracker停止後はsandboxdがprocess groupを終了するため、再起動後にgroup不在を確認できたcommandはfinished（exit code / 最終出力不明、出力不完全）とし、実行中件数から除く。groupの生死が分からないcommandはunknownのまま停止を保留する。
+- Botの再起動・クライアント切断とtrackerの停止、明示command cancelを区別する。呼出元接続が切れただけでは停止要求を出さず、trackerが実行と終了記録を継続する。tracker自体が停止した場合はsandboxdの仕様により実行中groupが終了し、終了eventを復元できないcommandは不完全結果のfinishedとして扱う。明示cancel、timeout、出力上限超過も停止要求として扱う。
 - command IDは受付前にライブラリが生成し、通信エラーにも含める。利用側はIDで状態と保存済み出力を再取得できる。開始結果が不明なcommandを別IDで自動再送しない。
 - shellのExitEventだけでprocess group全体の終了と見なさない。残った子プロセスはSIGTERM、5秒後にSIGKILLで終了させ、groupの消失を確認してから`finished`と最終終了時刻を記録する。終了を確認できない場合は`unknown`として停止を保留する。groupを離れるdetached実行はサポートしない。
 - 停止直前の再確認とcommand受付gateはtracker内で原子的に処理する。gateが閉じてから届いた要求は実行を開始せず、ライブラリが停止・再開の収束を待ってから同じIDで受け付ける。待機には起動・再開timeoutを適用する。
 
-`last_no_commands_confirmed_at`は最新の観測時刻、`last_command_finished_at`は実際の最終終了時刻として別に保持する。監視デーモンが前者を毎分更新しても、後者と`idle_since`は変更しない。最後の子プロセスの終了確認が遅れた場合は確認時刻を終了時刻として使い、早く停止する方向へ推測しない。
+`last_no_commands_confirmed_at`は最新の観測時刻、`last_command_finished_at`は実際の最終終了時刻として別に保持する。reconciler taskが前者を毎分更新しても、後者と`idle_since`は変更しない。最後の子プロセスの終了確認が遅れた場合は確認時刻を終了時刻として使い、早く停止する方向へ推測しない。
 
 ### 停止・再開・終了
 
@@ -298,7 +299,7 @@ Runtime interfaceは以下を提供する。
 | `commands.run(argv, cwd, env, timeout)` | argvで実行し、stdout / stderr / exit_code / durationを返す |
 | `commands.start(argv, ...)` | ProcessHandleと出力event streamを返す |
 | `commands.get(command_id)` | 保存済みcommandの実行状態、終了情報、出力の保持状況を取得 |
-| `commands.read_output(command_id, cursor=None)` | 保存済みstdout / stderrをcursor付きで再取得 |
+| `commands.read_output(command_id, stream="stdout", cursor=0, limit=64KiB)` | 保存済みstdout / stderrをbyte cursor付きで最大1MiBずつ再取得 |
 | `process.write_stdin(data)`, `close_stdin()` | bytes送信とEOF |
 | `process.signal(signal)`, `resize_tty(cols, rows)` | process groupへのsignalとPTYサイズ変更 |
 | `files.read(path)`, `read_to(path, sink)` | bytes読出し、小容量 / streamingを分ける |
@@ -316,15 +317,17 @@ timeout / cancellation時はtracker経由でSIGTERM、5秒待機後SIGKILLを試
 
 ### 出力の消費と保持
 
-trackerは利用側の読み取り速度や接続状態にかかわらず、sandboxdのstdout / stderr streamを消費し続ける。利用側への配信には容量制限付きqueueを使い、遅いsubscriberを切り離してcursorによる再取得へ切り替える。subscriberの停止をsandboxd streamの読み取り停止へ伝播させない。
+trackerは利用側の読み取り速度や接続状態にかかわらず、sandboxdのstdout / stderr streamを消費し続け、chunkごとにPVCへ保存する。公開APIはcursorによる取得方式で、ライブ購読の読み手を持たない。command IDとstdout / stderrそれぞれのbyte cursorを使って最大1MiBのpageを読むため、利用側の切断・遅い読み取りがsandboxd streamやtrackerのメモリ消費に伝播しない。
 
 出力はcommand ID、連番、stdout / stderrの区別を付けて専用PVCへ順次保存する。メモリ内queueだけを結果の保存先にしない。終了情報は出力とは別のjournalへ保存し、保持範囲、出力欠落の有無、停止理由も返す。tracker再起動でstreamを復元できない場合は、以前保存した出力を提供しつつ、完全な出力を取得できたとは報告しない。
 
-既定の保存上限案はstdout / stderr合計でcommandごと64MiB、セッションごと256MiBとし、設定で変更可能にする。commandごとの上限超過時は`CommandOutputLimitExceeded`、セッション容量超過時は`OutputStorageLimitExceeded`を記録して対象commandの停止を試みる。終了確認まではstreamを読み続け、保存できない部分は明示的な欠落として扱う。PVC書込み失敗にも同じ方針を適用する。黙って切り詰めた出力を正常結果として返さない。
+既定の保存上限はstdout / stderr合計でcommandごと64MiB、セッションごと256MiBで、`LifecycleSettings`から変更できる。commandごとの上限超過時は`CommandOutputLimitExceeded`、セッション容量超過時は`OutputStorageLimitExceeded`を記録して対象commandの停止を試みる。PVC書込み失敗は`output_storage_error`として容量超過と区別する。終了確認まではstreamを読み続け、保存できない部分は欠落byte数と原因を記録する。黙って切り詰めた出力を正常結果として返さない。
 
 既存のbuffered run上限（stdout / stderr各8MiB）は応答をメモリへ集約する上限で、PVCへの保存上限とは別。超過したrunは出力上限の例外を返し、以後の保持範囲はcommand IDで取得できるようにする。
 
 終了済みcommandの出力は既定で終了から7日、または専用workspace削除までの早い方で保持する。期限切れ出力は削除し、照会には`OutputExpiredError`を返す。command終了の要約は世代が存続する間保持し、出力削除でidle起点を失わない。stream購読、結果の照会、出力読出しは新しいcommandとして数えず、読出し中はfile操作と同様の内部予約でサスペンドとの競合を防ぐ。
+
+`commands.read_output(command_id, stream, cursor, limit)`のpageは`data`、次回に渡すbyte位置`cursor`、全byte数`total_bytes`、そのstreamの末尾まで読めたかを示す`complete`、出力全体に欠落がないかを示す`output_complete`を返す。stdoutとstderrは別々に先頭cursor 0から読み、`complete`になるまで同じstreamを繰り返す。command/sessionの保存上限またはPVC障害で出力に欠落があれば、保存済み範囲を読めても`output_complete`はfalseとなり、`wait()`は明示エラーを返す。buffered応答の上限は各stream 8MiB、page上限は1MiB。
 
 本運用とgVisor実クラスタテストは、clientをcluster内で動かし、Sandboxの`service: true`と`status.serviceFQDN`を使う。復帰時にservice情報を再取得する。Pod IP接続も設定で選べる。ローカルport-forwardは選択式の開発用とし、gVisorでの到達性を前提にしない。既存Sandbox Routerはupstream gRPCを運べないため本構成の必須要素にしない。[公式clientの接続制約](https://agent-sandbox.sigs.k8s.io/docs/python-client/)
 
@@ -336,16 +339,18 @@ FQDNNetworkPolicyにはDataplane V2、cluster DNS、feature有効化が必要。
 
 各世代固有のlabelをSandboxのPod templateとpolicy selectorへ付ける。ポリシーは次を基本とする。
 
-- 通常NetworkPolicyでdefault deny ingress / egress、cluster DNSへのUDP / TCP 53と管理client / 監視デーモンからruntimeのTCP 8080 / 8081を許可。9090はtrackerからPod内で使い、外部からのユーザcommand迂回を許可しない。
+- 通常NetworkPolicyでdefault deny ingress / egress、cluster DNSへのUDP / TCP 53と管理API processからruntimeのTCP 8080 / 8081を許可。9090はtrackerからPod内で使い、外部からのユーザcommand迂回を許可しない。
 - 外部egressはFQDNNetworkPolicyで設定されたname / patternとportに限定。
 - cluster内通信は通常NetworkPolicyのnamespace / pod selectorで許可。
 - 管理clientのegressも制限される場合は、sandbox runtimeとKubernetes APIへの必要経路を別途許可。
 
 FQDNと通常policyの許可は加算されるため、別の広いegress許可も監査する。FQDN制御はIP / portベースで、同一IP上の別domainを区別できない。HTTPSのhost単位の強い制御が必要なら後続でproxyを検討する。[GKE policyの併用と共有IP制約](https://docs.cloud.google.com/kubernetes-engine/docs/how-to/fqdn-network-policies)
 
+cluster接続前のAPI / RuntimeClass / StorageClass / namespace / RBAC確認と、resourceのmetadata・UID・ownerReferenceの調査手順は[Preflightと運用](docs/preflight-and-operations.md)を参照。
+
 runtime Podはnon-root、privileged禁止、capabilities drop、service account tokenの自動mount無効、resource requests / limitsを基本とする。外部APIキーはSecret参照またはprocessごとのenvで渡し、ログ・metadata・SessionRecordに保存しない。sandboxdの公開LoadBalancerは作らない。
 
-管理clientは対象namespaceのSandbox / PVC / policy変更、Pod / Service観測、管理namespaceのConfigMap / Lease変更に必要なRBACだけを持つ。port-forwardを使用する開発profileだけ`pods/portforward`を許可する。cluster作成、CRD / controller導入、PV / StorageClass / 共有PVC作成はinfrastructure側の責務とする。
+管理clientは対象namespaceのSandbox / PVC / policy変更、Pod / Service観測に必要なRBACだけを持つ。SessionRepositoryはPV上のSQLiteを使うため、ConfigMap / Lease用RBACは不要。port-forwardを使用する開発profileだけ`pods/portforward`を許可する。cluster作成、CRD / controller導入、PV / StorageClass / PVC作成はinfrastructure側の責務とする。
 
 ## 10. 公開Python API案
 
@@ -363,15 +368,20 @@ async with SandboxManager.from_config("sandbox-config.yaml") as manager:
         await conversation_store.append_once(event.event_id, event.context_message)
         await manager.ack_context_event(session.key, event.event_id)
 
-    # commandを送るだけで自動追跡され、実行中は停止されない。
-    result = await session.commands.run(
-        ["python3", "-c", "print('hello')"],
-        cwd=".",
-        timeout=30,
-    )
-    await session.files.write("result.txt", result.stdout.encode())
+    # command送信時にsessionを確認・再開し、終了まで自動追跡する。
+    async with session.commands as commands:
+        result = await commands.run(
+            ["python3", "-c", "print('hello')"],
+            cwd=".",
+            timeout_seconds=30,
+        )
+    print(result.stdout.decode())
+    async with session.files as files:
+        await files.write("result.txt", result.stdout)
+        saved = await files.read("result.txt")
+        print(saved.decode())
 
-    # manager closeでは削除しない。監視デーモンが毎分確認し、
+    # manager closeでは削除しない。API process内reconcilerが毎分確認し、
     # 最終command終了から5分後以降に停止、停止から7日後に終了する。
 ```
 
@@ -432,7 +442,7 @@ Kubernetes APIを実際に呼ぶテストは**integration / E2Eテスト**とし
 | Integration | 実GKE APIによるCR作成・watch・patch・削除、UID / PVC / policy所有関係、worker再起動 |
 | E2E | gVisor Pod内sandboxd疎通、file / command / signal、永続性、実通信の許可・拒否 |
 
-最初にGKE Standard + Dataplane V2 + FQDN policy + gVisor node poolを候補として構築する。テストclientとreconcilerはcluster内のJob / Deploymentで動かす。クラスタmode・GKE version・node image・controller / CRD・SDK・runtime image digest・StorageClass・テスト結果を検証記録へ残す。
+最初にGKE Standard + Dataplane V2 + FQDN policy + gVisor node poolを候補として構築する。テストclientはcluster内Jobで動かし、reconcilerはAPI processのlifespan内で起動する。クラスタmode・GKE version・node image・controller / CRD・SDK・runtime image digest・StorageClass・テスト結果を検証記録へ残す。
 
 実クラスタの受け入れシナリオ:
 
@@ -448,12 +458,14 @@ Kubernetes APIを実際に呼ぶテストは**integration / E2Eテスト**とし
 10. 管理者によるSandbox / PVC削除、finalizerによる削除遅延、command送信後の接続断を試し、消失通知・CleanupIncompleteError・ExecutionOutcomeUnknownを正しく返す。
 11. テンプレートで指定した自作imageが使われ、作成時USER_EMAILがcommandから取得できる。template envとの衝突、同一世代のenv変更拒否、再開後のenv保持を確認する。
 12. session ID・0件確認時刻・最終終了時刻がSandboxのannotationsへ反映され、Pod削除後も残る。tracker再起動・状態照会失敗・command受付と停止の競合で、実行中commandを誤停止しない。
-13. trackerだけを再起動し、生存するcommandを終了済みと誤認しない。復元不能なcommandはunknownとして停止を保留し、同じcommand IDから保存済み出力を取得できる。
+13. 呼出元だけの切断ではtrackerがcommandを継続する。tracker停止でsandboxd streamが切れた場合はprocess groupが終了し、再起動後に不在を確認したcommandを結果不明 / 出力不完全として記録する。生死を確定できない場合はunknownとして停止を保留する。
 14. clientがstreamを読まない・切断する・遅く読む場合でも出力を消費できる。大量stdout / stderr、保存上限超過、PVC書込み失敗でもメモリが増え続けず、停止理由と出力欠落を報告する。出力の保持期限・cursorによる再取得も確認する。
 15. shell終了後に子プロセスが残るケースではgroup全体の終了確認までidleにしない。停止直前の新規受付は再開後に1回だけ実行される。
 16. Sandbox内Agent runnerはturn完了で終了し、その最終終了時刻から5分後以降に停止する。LLM待機中のrunnerは停止されない。
 
 実クラスタテストは明示指定したkube context / project / namespaceだけを操作する。run ID付きの専用namespaceを用い、共有fixtureもテスト用に用意する。cleanupはlabelとUIDで所有を検証し、失敗時は再実行可能なcleanup情報を残す。ライブラリの通常管理RBACと、テストnamespace作成用RBACは分ける。
+
+16シナリオとunit / GKE実測の対応、未実施の確認項目は[`docs/validation/acceptance-matrix.md`](docs/validation/acceptance-matrix.md)に記録する。
 
 実装後のコマンド案:
 
@@ -465,14 +477,31 @@ uv run gke-session-sandbox preflight --config sandbox-config.yaml
 uv run gke-session-sandbox reconcile --config sandbox-config.yaml
 ```
 
-上記のintegration / E2Eは、実装時にcluster内runnerへtestを渡すentrypointとする。pytestのcontext引数だけで、ローカルからPod IPへ到達できるとは仮定しない。
+上記のintegration / E2Eは [`scripts/run-gke-pytest.py`](scripts/run-gke-pytest.py) を使いcluster内Jobで実行する。pytestのcontext引数だけで、ローカルからPod IPへ到達できるとは仮定しない。
+
+GKE内pytest runnerのimageはlockfileに固定された依存関係と`tests/integration`を含む。Artifact Registryへpushしたdigestを使い、専用のrun namespaceと`session-sandbox-system`内のJob / ServiceAccountで実行する。ServiceAccountにはrun namespaceだけのRoleBindingを作るため、テストPodの管理通信は本番と同じ管理Namespace経由になる。
+
+```bash
+GKE_PROJECT_ID=nnyn-dev \
+GKE_LOCATION=us-central1 \
+SANDBOXD_IMAGE_REPOSITORY=research-gke-agent-sandbox-with-sandboxd-images \
+scripts/build-gke-pytest-image.sh
+
+GKE_PROJECT_ID=nnyn-dev \
+GKE_LOCATION=us-central1 \
+GKE_CLUSTER_NAME=research-gke-agent-sandbox-with-sandboxd \
+GKE_PYTEST_IMAGE='<repository>@sha256:<digest>' \
+uv run python scripts/run-gke-pytest.py
+```
+
+現時点で実行したsession managerのGKE検証は[`docs/validation/session-manager-gke.md`](docs/validation/session-manager-gke.md)に記録する。これは16シナリオすべてを通すcluster内pytest suiteとは別の、project / context照合と一時namespace cleanupを備えた検証scriptである。
 
 ## 13. 実装の順序
 
 1. **互換性spike**: version候補を固定し、最小Sandbox + gVisor + sandboxdでcore API、直接接続、専用PVC、共有ROM、FQDNの実動作を確認する。SDK既存Sandbox接続・切断と、controllerのPVC ownerReference / GC、CommandTrackerのプロセス照合と再起動回復もここで検証する。
 2. **基本ライブラリ**: 型、template、KubernetesBackend、runtime adapter、ensure / suspend / resume / terminateと実クラスタCRUDテスト。
-3. **永続ライフサイクル**: CommandTracker、ConfigMap / Lease Repository、Kubernetes annotations、60秒監視デーモン、5分 / 7日policy、クラッシュ回復と競合テスト。
+3. **永続ライフサイクル**: CommandTracker、PVC上のSQLite Repository、Kubernetes annotations、API process内の60秒reconciler、5分 / 7日policy、クラッシュ回復と競合テスト。
 4. **会話連携契約**: workspaceイベントとack、再作成通知、作成時envとAgent adapter interface。
-5. **Bot連携**: Claude実行方式を決めてSlackBotへ接続。必要になってからWarmPool、snapshot、SQL Repositoryを追加する。
+5. **Bot連携**: Claude実行方式を決めてSlackBotへ接続。必要になってからWarmPoolやsnapshotを追加する。
 
 初期版の完了条件は、実GKEで「セッションを作る → 実行する → 停止する → 同じ作業ファイルで再開する → 保持期限後に削除する → 次回会話へ消失を通知する」が成立し、共有ストレージ保持とネットワーク分離も確認できること。

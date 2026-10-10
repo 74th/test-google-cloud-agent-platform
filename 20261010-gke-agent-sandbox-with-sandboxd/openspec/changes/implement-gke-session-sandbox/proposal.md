@@ -7,9 +7,9 @@ SlackBot / Claude Agent SDKから使うセッション専用workspaceについ�
 ## What Changes
 
 - `gke_session_sandbox` asyncライブラリ、YAMLテンプレート、image指定、作成時env、core Sandbox v1beta1の管理を追加する。
-- Pod内CommandTrackerを実装し、実行中 / 終了 / 不明、process group、切断後の実行、保存出力とcommand IDによる再照会を提供する。
-- 60秒ごとの監視デーモン、最終command終了から300秒で停止、停止完了から604800秒で削除するpolicyを実装する。
-- session ID・実行状態・確認時刻等をKubernetes metadataへ保存し、ConfigMap / Leaseによる永続状態・排他・クラッシュ回復を追加する。
+- Pod内CommandTrackerを実装し、実行中 / 終了 / 不明、process group、呼出元切断後の追跡、保存出力とcommand IDによる再照会を提供する。tracker自体が停止した場合はsandboxdがcommandを終了し、結果不明として記録する。
+- API process内reconcilerによる60秒ごとの監視、最終command終了から300秒で停止、停止完了から604800秒で削除するpolicyを実装する。独立Deploymentは追加しない。
+- session ID・実行状態・確認時刻等をKubernetes metadataへ保存し、管理API専用PVC上のSQLiteによる永続状態・排他・クラッシュ回復を追加する。
 - 専用PVC、readOnly共有PVC、FQDN / 通常NetworkPolicy、workspace消失イベントとackを提供する。
 - `./terraform`へ専用GKE Standard、Dataplane V2、FQDN policy、gVisor node poolと関連インフラの定義を追加する。物理名は`research-gke-agent-sandbox-with-sandboxd`系に統一し、他の検証のstate / リソースから分離する。
 - クラスタ非接続のunit test、実GKE integration / E2E、cluster内runner、診断・cleanupと互換性記録を追加する。

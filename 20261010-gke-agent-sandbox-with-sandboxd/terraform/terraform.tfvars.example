@@ -1,0 +1,13 @@
+project_id = "REPLACE_WITH_EXPLICIT_PROJECT_ID"
+region     = "us-central1"
+
+# Confirm these three ranges against every VPC used by this project before planning.
+network_cidr       = "192.168.0.0/20"
+pods_cidr          = "192.168.32.0/19"
+services_cidr      = "192.168.64.0/20"
+control_plane_cidr = "172.20.0.0/28"
+
+# Set this to the public CIDR used by the operator running kubectl.
+authorized_control_plane_cidrs = [
+  { cidr_block = "REPLACE_WITH_OPERATOR_PUBLIC_CIDR/32", display_name = "operator" }
+]

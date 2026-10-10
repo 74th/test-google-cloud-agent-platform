@@ -55,7 +55,7 @@ Bot側の安定したセッションキーを隔離されたGKE作業環境へ�
 - **THEN** 明示エラーを返す。サスペンドと転送が競合して途中削除されない
 
 ### Requirement: Network and runtime isolation
-Podは SHALL gVisorとnon-rootで実行し、API tokenを自動mountしない。外部通信は設定FQDN / portに限定し、runtime操作は管理client / 監視デーモンだけから許可する。
+Podは SHALL gVisorとnon-rootで実行し、API tokenを自動mountしない。外部通信は設定FQDN / portに限定し、runtime操作は管理client / API process内reconcilerだけから許可する。
 
 #### Scenario: Actual policy enforcement
 - **WHEN** allow / deny宛先と他セッションからruntimeへ通信する

@@ -57,6 +57,17 @@ state変更は SHALL 世代・UID・所有情報を検証し、CAS / 排他と�
 - **WHEN** 作成 / 停止 / 削除中のクラッシュ、Lease喪失、watch切断が起きる
 - **THEN** 同じoperationを照合して収束し、二重作成・誤削除を防ぎ、削除遅延はcleanup未完了として報告する
 
+### Requirement: Persistent session repository
+SessionRecordと操作Leaseは SHALL 管理API専用のReadWriteOnce PVC上のSQLiteへ保存する。トランザクションとversion条件付き更新で並行request・競合書込みを直列化し、ConfigMapのサイズ制限に依存しない。管理APIのPod再起動後は同じPVCから全sessionを復元する。
+
+#### Scenario: API process restart
+- **WHEN** 管理API processまたはPodが再起動する
+- **THEN** 同じPVCをmountしてSessionRecord、operation phase、command ID、eventを読み戻し、reconcileを再開する
+
+#### Scenario: Concurrent state changes
+- **WHEN** 同一または異なるsessionへの更新が同時に到着する
+- **THEN** SQLite transactionが書込みを直列化し、古いversionを使った更新は競合として拒否する
+
 ### Requirement: Workspace loss context events
 workspace消失は SHALL 世代とevent ID付きで永続通知し、context保存後のackまで再配信する。通常のPod再作成だけでは消失通知を出してはならない。
 

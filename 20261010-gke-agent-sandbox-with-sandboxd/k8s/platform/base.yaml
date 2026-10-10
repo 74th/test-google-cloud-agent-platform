@@ -1,0 +1,110 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: session-sandbox-system
+  labels:
+    app.kubernetes.io/part-of: gke-session-sandbox
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: session-sandboxes
+  labels:
+    app.kubernetes.io/part-of: gke-session-sandbox
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: session-sandbox-fixtures
+  labels:
+    app.kubernetes.io/part-of: gke-session-sandbox
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: session-manager-state-rwo
+provisioner: pd.csi.storage.gke.io
+parameters:
+  type: pd-balanced
+  csi.storage.k8s.io/fstype: ext4
+allowVolumeExpansion: true
+reclaimPolicy: Retain
+volumeBindingMode: WaitForFirstConsumer
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: session-manager-state
+  namespace: session-sandbox-system
+  labels:
+    app.kubernetes.io/part-of: gke-session-sandbox
+spec:
+  accessModes: [ReadWriteOnce]
+  storageClassName: session-manager-state-rwo
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: session-sandbox-worker
+  namespace: session-sandbox-system
+automountServiceAccountToken: true
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: sandbox-management
+  namespace: session-sandboxes
+rules:
+  - apiGroups: ["agents.x-k8s.io"]
+    resources: ["sandboxes"]
+    verbs: ["create", "get", "list", "watch", "patch", "update", "delete"]
+  - apiGroups: [""]
+    resources: ["persistentvolumeclaims", "services", "pods", "pods/status", "events"]
+    verbs: ["create", "get", "list", "watch", "patch", "update", "delete"]
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["networkpolicies"]
+    verbs: ["create", "get", "list", "watch", "patch", "update", "delete"]
+  - apiGroups: ["networking.gke.io"]
+    resources: ["fqdnnetworkpolicies"]
+    verbs: ["create", "get", "list", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sandbox-management
+  namespace: session-sandboxes
+subjects:
+  - kind: ServiceAccount
+    name: session-sandbox-worker
+    namespace: session-sandbox-system
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: sandbox-management
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: session-workspace-rwo
+provisioner: pd.csi.storage.gke.io
+parameters:
+  type: pd-balanced
+  csi.storage.k8s.io/fstype: ext4
+allowVolumeExpansion: true
+reclaimPolicy: Delete
+volumeBindingMode: WaitForFirstConsumer
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: sandbox-code-rom
+provisioner: pd.csi.storage.gke.io
+parameters:
+  type: pd-balanced
+  csi.storage.k8s.io/fstype: ext4
+allowVolumeExpansion: false
+reclaimPolicy: Retain
+volumeBindingMode: Immediate
