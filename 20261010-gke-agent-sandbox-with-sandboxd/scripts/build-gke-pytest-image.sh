@@ -5,7 +5,7 @@ set -euo pipefail
 : "${GKE_LOCATION:?Set GKE_LOCATION explicitly}"
 : "${SANDBOXD_IMAGE_REPOSITORY:?Set SANDBOXD_IMAGE_REPOSITORY explicitly}"
 
-version="python-0.1.14"
+version="python-0.1.23"
 image="${GKE_LOCATION}-docker.pkg.dev/${GKE_PROJECT_ID}/${SANDBOXD_IMAGE_REPOSITORY}/gke-pytest:${version}"
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 

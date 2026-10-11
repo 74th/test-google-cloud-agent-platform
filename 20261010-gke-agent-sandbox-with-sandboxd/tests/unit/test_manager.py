@@ -25,6 +25,30 @@ from gke_session_sandbox import (
 )
 
 
+@pytest.mark.asyncio
+async def test_tracker_gate_retries_transient_server_failure() -> None:
+    attempts = 0
+
+    async def set_gate(_request):
+        nonlocal attempts
+        attempts += 1
+        if attempts == 1:
+            return web.Response(status=503)
+        return web.json_response({"active_commands": 0})
+
+    app = web.Application()
+    app.router.add_put("/v1/commands/gate", set_gate)
+    server = TestServer(app)
+    await server.start_server()
+    try:
+        active = await SandboxManager._set_tracker_gate(str(server.make_url("")), True)
+    finally:
+        await server.close()
+
+    assert active == 0
+    assert attempts == 2
+
+
 class MemoryRepository:
     def __init__(self) -> None:
         self.records: dict[str, StoredSession] = {}

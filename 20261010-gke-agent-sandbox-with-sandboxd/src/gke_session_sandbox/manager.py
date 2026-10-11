@@ -504,15 +504,46 @@ class SandboxManager:
 
     @staticmethod
     async def _set_tracker_gate(endpoint: str, accepting: bool) -> int:
-        async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=5)) as http:
-            async with http.put(f"{endpoint}/v1/commands/gate", json={"accepting": accepting}) as response:
-                if response.status != 200:
-                    raise ResourceOwnershipError(f"tracker gate update returned HTTP {response.status}")
-                body = await response.json()
-        active_count = body.get("active_commands")
-        if not isinstance(active_count, int) or isinstance(active_count, bool) or active_count < 0:
-            raise ResourceOwnershipError("tracker returned an invalid active command count")
-        return active_count
+        loop = asyncio.get_running_loop()
+        deadline = loop.time() + 30
+        delay = 0.1
+        last_error: BaseException | None = None
+        while loop.time() < deadline:
+            remaining = deadline - loop.time()
+            try:
+                async with aiohttp.ClientSession(
+                    timeout=aiohttp.ClientTimeout(total=min(5.0, remaining))
+                ) as http:
+                    async with http.put(
+                        f"{endpoint}/v1/commands/gate", json={"accepting": accepting}
+                    ) as response:
+                        if response.status >= 500:
+                            last_error = RuntimeError(
+                                f"tracker gate update returned HTTP {response.status}"
+                            )
+                        elif response.status != 200:
+                            raise ResourceOwnershipError(
+                                f"tracker gate update returned HTTP {response.status}"
+                            )
+                        else:
+                            body = await response.json()
+                            active_count = body.get("active_commands")
+                            if (
+                                not isinstance(active_count, int)
+                                or isinstance(active_count, bool)
+                                or active_count < 0
+                            ):
+                                raise ResourceOwnershipError("tracker returned an invalid active command count")
+                            return active_count
+            except (aiohttp.ClientError, asyncio.TimeoutError, OSError) as exc:
+                last_error = exc
+            remaining = deadline - loop.time()
+            if remaining > 0:
+                await asyncio.sleep(min(delay, remaining))
+                delay = min(delay * 2, 1.0)
+        if last_error is not None:
+            raise last_error
+        raise TimeoutError("tracker gate update exceeded its 30-second deadline")
 
     async def _save_ready(self, token: LeaseToken, key: SessionKey, stored: StoredSession, sandbox: Mapping[str, Any]) -> SessionHandle:
         ready_record = stored.record.model_copy(update={
