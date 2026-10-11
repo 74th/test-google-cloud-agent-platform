@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: workspace-validation
+  namespace: session-sandbox-fixtures
+spec:
+  accessModes: [ReadWriteOnce]
+  storageClassName: session-workspace-rwo
+  resources:
+    requests:
+      storage: 10Gi

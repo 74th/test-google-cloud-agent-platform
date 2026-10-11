@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-sandboxd-smoke-runner
+  namespace: session-sandboxes
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/component: smoke-test
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: session-sandbox-system
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/component: smoke-runner
+      ports:
+        - protocol: TCP
+          port: 8080
+        - protocol: TCP
+          port: 9090

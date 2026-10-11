@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: runtime-code-seed
+  namespace: session-sandbox-fixtures
+spec:
+  accessModes: [ReadWriteOnce]
+  storageClassName: standard-rwo
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: runtime-code-seed
+  namespace: session-sandbox-fixtures
+spec:
+  backoffLimit: 2
+  template:
+    spec:
+      restartPolicy: Never
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65532
+        runAsGroup: 65532
+        fsGroup: 65532
+      containers:
+        - name: seed
+          image: busybox:1.36.1
+          command: ["/bin/sh", "-ec"]
+          args:
+            - mkdir -p /source/code && printf 'shared-fixture-v1\n' > /source/code/runtime-fixture.txt
+          volumeMounts:
+            - name: source
+              mountPath: /source
+      volumes:
+        - name: source
+          persistentVolumeClaim:
+            claimName: runtime-code-seed

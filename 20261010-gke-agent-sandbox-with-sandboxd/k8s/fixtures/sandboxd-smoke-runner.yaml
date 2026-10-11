@@ -1,0 +1,33 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: sandboxd-smoke-runner
+  namespace: session-sandbox-system
+  labels:
+    app.kubernetes.io/part-of: gke-session-sandbox
+    app.kubernetes.io/component: smoke-runner
+spec:
+  backoffLimit: 0
+  ttlSecondsAfterFinished: 300
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/part-of: gke-session-sandbox
+        app.kubernetes.io/component: smoke-runner
+    spec:
+      restartPolicy: Never
+      automountServiceAccountToken: false
+      containers:
+        - name: runner
+          image: ${RUNTIME_SMOKE_IMAGE}
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: SANDBOX_TARGETS
+              value: "sandboxd-smoke.session-sandboxes.svc.cluster.local,${SANDBOXD_POD_IP}"
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 250m
+              memory: 128Mi

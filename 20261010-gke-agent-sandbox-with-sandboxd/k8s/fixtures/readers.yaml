@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: shared-code-reader-a
+  namespace: session-sandbox-fixtures
+  labels:
+    app.kubernetes.io/name: shared-code-reader
+    gke-session-sandbox/reader: a
+spec:
+  runtimeClassName: gvisor
+  restartPolicy: Never
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 65532
+    runAsGroup: 65532
+    fsGroup: 65532
+  containers:
+    - name: reader
+      image: busybox:1.36.1
+      command: ["/bin/sh", "-ec"]
+      args:
+        - test "$(cat /code/runtime-fixture.txt)" = shared-fixture-v1; printf 'session-a\n' > /workspace/session.txt; if touch /code/must-not-write 2>/dev/null; then exit 1; fi; echo fixture-readonly-and-workspace-write-ok
+      volumeMounts:
+        - name: shared-code
+          mountPath: /code
+          readOnly: true
+          subPath: code
+        - name: workspace
+          mountPath: /workspace
+  volumes:
+    - name: shared-code
+      persistentVolumeClaim:
+        claimName: runtime-code-rom
+        readOnly: true
+    - name: workspace
+      persistentVolumeClaim:
+        claimName: workspace-validation
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: shared-code-reader-b
+  namespace: session-sandbox-fixtures
+  labels:
+    app.kubernetes.io/name: shared-code-reader
+    gke-session-sandbox/reader: b
+spec:
+  restartPolicy: Never
+  nodeSelector:
+    cloud.google.com/gke-nodepool: research-gke-as-sbd-system
+    topology.kubernetes.io/zone: FIXTURE_ZONE
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 65532
+    runAsGroup: 65532
+    fsGroup: 65532
+  containers:
+    - name: reader
+      image: busybox:1.36.1
+      command: ["/bin/sh", "-ec"]
+      args:
+        - test "$(cat /code/runtime-fixture.txt)" = shared-fixture-v1; test ! -e /workspace/session.txt; if touch /code/must-not-write 2>/dev/null; then exit 1; fi; echo fixture-readonly-and-session-isolated-ok
+      volumeMounts:
+        - name: shared-code
+          mountPath: /code
+          readOnly: true
+          subPath: code
+  volumes:
+    - name: shared-code
+      persistentVolumeClaim:
+        claimName: runtime-code-rom
+        readOnly: true
